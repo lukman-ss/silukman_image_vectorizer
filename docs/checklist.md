@@ -517,96 +517,96 @@ git push -u origin main
 
 ### CI Build Workflow
 
-* [ ] Create `.github/` directory if it does not exist.
-* [ ] Create `.github/workflows/` directory.
-* [ ] Create GitHub Actions workflow file:
+* [x] Create `.github/` directory if it does not exist.
+* [x] Create `.github/workflows/` directory.
+* [x] Create GitHub Actions workflow file:
 
-  * [ ] `.github/workflows/build.yml`
-* [ ] Configure workflow name as `Build Image Vectorizer`.
-* [ ] Configure workflow trigger for:
+  * [x] `.github/workflows/build.yml`
+* [x] Configure workflow name as `Build Image Vectorizer`.
+* [x] Configure workflow trigger for:
 
-  * [ ] Manual run using `workflow_dispatch`.
-  * [ ] Push to `main` branch.
-  * [ ] Pull request to `main` branch.
-* [ ] Create build matrix for:
+  * [x] Manual run using `workflow_dispatch`.
+  * [x] Push to `main` branch.
+  * [x] Pull request to `main` branch.
+* [x] Create build matrix for:
 
-  * [ ] Windows runner.
-  * [ ] macOS runner.
-  * [ ] Linux runner.
-* [ ] Configure Python version used by all runners.
-* [ ] Checkout repository in workflow.
-* [ ] Install Python dependencies from `requirements.txt`.
-* [ ] Install packaging dependencies if separated from runtime dependencies.
-* [ ] Verify `pyinstaller` is available before build.
-* [ ] Run the existing packaging script:
+  * [x] Windows runner.
+  * [x] macOS runner.
+  * [x] Linux runner.
+* [x] Configure Python version used by all runners.
+* [x] Checkout repository in workflow.
+* [x] Install Python dependencies from `requirements.txt`.
+* [x] Install packaging dependencies if separated from runtime dependencies.
+* [x] Verify `pyinstaller` is available before build.
+* [x] Run the existing packaging script:
 
-  * [ ] `python scripts/build_app.py`
-* [ ] Ensure workflow uses the existing Phase 8 packaging configuration.
-* [ ] Do not duplicate PyInstaller commands directly inside workflow if `scripts/build_app.py` already handles build logic.
-* [ ] Add platform-specific build output naming:
+  * [x] `python scripts/build_app.py`
+* [x] Ensure workflow uses the existing Phase 8 packaging configuration.
+* [x] Do not duplicate PyInstaller commands directly inside workflow if `scripts/build_app.py` already handles build logic.
+* [x] Add platform-specific build output naming:
 
-  * [ ] `Image-Vectorizer-Windows`
-  * [ ] `Image-Vectorizer-macOS`
-  * [ ] `Image-Vectorizer-Linux`
-* [ ] Archive Windows build output as `.zip`.
-* [ ] Archive macOS build output as `.zip` or `.dmg` if already supported.
-* [ ] Archive Linux build output as `.tar.gz` or `.zip`.
-* [ ] Upload each platform build as GitHub Actions artifact.
-* [ ] Add artifact retention setting.
-* [ ] Add build failure handling with clear logs.
-* [ ] Add workflow step to print build output directory contents.
-* [ ] Add workflow step to verify packaged executable exists.
-* [ ] Add workflow step to verify bundled resources exist:
+  * [x] `Image-Vectorizer-Windows`
+  * [x] `Image-Vectorizer-macOS`
+  * [x] `Image-Vectorizer-Linux`
+* [x] Archive Windows build output as `.zip`.
+* [x] Archive macOS build output as `.zip` or `.dmg` if already supported.
+* [x] Archive Linux build output as `.tar.gz` or `.zip`.
+* [x] Upload each platform build as GitHub Actions artifact.
+* [x] Add artifact retention setting.
+* [x] Add build failure handling with clear logs.
+* [x] Add workflow step to print build output directory contents.
+* [x] Add workflow step to verify packaged executable exists.
+* [x] Add workflow step to verify bundled resources exist:
 
-  * [ ] `app/resources/icon.png`
-  * [ ] `app/resources/hero_image.png`
-* [ ] Add workflow step to verify application version exists.
-* [ ] Add workflow step to verify `CHANGELOG.md` exists.
-* [ ] Document CI build usage in `README.md`.
-* [ ] Document manual build and CI build difference in `README.md`.
+  * [x] `app/resources/icon.png`
+  * [x] `app/resources/hero_image.png`
+* [x] Add workflow step to verify application version exists.
+* [x] Add workflow step to verify `CHANGELOG.md` exists.
+* [x] Document CI build usage in `README.md`.
+* [x] Document manual build and CI build difference in `README.md`.
 
 ### Release Workflow
 
-* [ ] Create release workflow file:
+* [x] Create release workflow file:
 
-  * [ ] `.github/workflows/release.yml`
-* [ ] Configure release workflow trigger using Git tags:
+  * [x] `.github/workflows/release.yml`
+* [x] Configure release workflow trigger using Git tags:
 
-  * [ ] `v*.*.*`
-* [ ] Build Windows artifact during release workflow.
-* [ ] Build macOS artifact during release workflow.
-* [ ] Build Linux artifact during release workflow.
-* [ ] Upload Windows artifact to GitHub Release.
-* [ ] Upload macOS artifact to GitHub Release.
-* [ ] Upload Linux artifact to GitHub Release.
-* [ ] Use tag name as release version.
-* [ ] Use `CHANGELOG.md` as release notes source if possible.
-* [ ] Ensure release is not published if any platform build fails.
-* [ ] Document release workflow usage in `README.md`.
+  * [x] `v*.*.*`
+* [x] Build Windows artifact during release workflow.
+* [x] Build macOS artifact during release workflow.
+* [x] Build Linux artifact during release workflow.
+* [x] Upload Windows artifact to GitHub Release.
+* [x] Upload macOS artifact to GitHub Release.
+* [x] Upload Linux artifact to GitHub Release.
+* [x] Use tag name as release version.
+* [x] Use `CHANGELOG.md` as release notes source if possible.
+* [x] Ensure release is not published if any platform build fails.
+* [x] Document release workflow usage in `README.md`.
 
 ### Manual Tag Workflow
 
-* [ ] Create manual tag workflow:
+* [x] Create manual tag workflow:
 
-  * [ ] `.github/workflows/create_tag.yml`
-* [ ] Configure manual tag workflow using `workflow_dispatch`.
-* [ ] Add version input for manual tag creation, for example:
+  * [x] `.github/workflows/create_tag.yml`
+* [x] Configure manual tag workflow using `workflow_dispatch`.
+* [x] Add version input for manual tag creation, for example:
 
-  * [ ] `v1.0.0`
-* [ ] Validate tag format must match:
+  * [x] `v1.0.0`
+* [x] Validate tag format must match:
 
-  * [ ] `v*.*.*`
-* [ ] Prevent duplicate tag creation if tag already exists.
-* [ ] Create Git tag from selected branch.
-* [ ] Push Git tag to repository.
-* [ ] Ensure pushed tag triggers `release.yml`.
-* [ ] Document manual tag flow in `README.md`.
+  * [x] `v*.*.*`
+* [x] Prevent duplicate tag creation if tag already exists.
+* [x] Create Git tag from selected branch.
+* [x] Push Git tag to repository.
+* [x] Ensure pushed tag triggers `release.yml`.
+* [x] Document manual tag flow in `README.md`.
 
 ### Required Workflow Files
 
-* [ ] `.github/workflows/build.yml`
-* [ ] `.github/workflows/release.yml`
-* [ ] `.github/workflows/create_tag.yml`
+* [x] `.github/workflows/build.yml`
+* [x] `.github/workflows/release.yml`
+* [x] `.github/workflows/create_tag.yml`
 
 ### Expected Release Flow
 
@@ -624,27 +624,27 @@ git push -u origin main
 
 ### Windows
 
-* [ ] Build Windows executable from Windows runner.
-* [ ] Ensure generated `.exe` exists.
-* [ ] Include required resource files.
-* [ ] Package Windows output as `.zip`.
-* [ ] Upload Windows artifact.
+* [x] Build Windows executable from Windows runner.
+* [x] Ensure generated `.exe` exists.
+* [x] Include required resource files.
+* [x] Package Windows output as `.zip`.
+* [x] Upload Windows artifact.
 
 ### macOS
 
-* [ ] Build macOS application from macOS runner.
-* [ ] Ensure generated `.app` or executable exists.
-* [ ] Include required resource files.
-* [ ] Package macOS output as `.zip` or `.dmg` if supported.
-* [ ] Upload macOS artifact.
+* [x] Build macOS application from macOS runner.
+* [x] Ensure generated `.app` or executable exists.
+* [x] Include required resource files.
+* [x] Package macOS output as `.zip` or `.dmg` if supported.
+* [x] Upload macOS artifact.
 
 ### Linux
 
-* [ ] Build Linux executable from Linux runner.
-* [ ] Ensure generated binary exists.
-* [ ] Include required resource files.
-* [ ] Package Linux output as `.tar.gz` or `.zip`.
-* [ ] Upload Linux artifact.
+* [x] Build Linux executable from Linux runner.
+* [x] Ensure generated binary exists.
+* [x] Include required resource files.
+* [x] Package Linux output as `.tar.gz` or `.zip`.
+* [x] Upload Linux artifact.
 
 ## Phase 9 Boundaries
 

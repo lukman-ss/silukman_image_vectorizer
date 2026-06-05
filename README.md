@@ -61,3 +61,25 @@ Project documentation is available in `docs/`.
 - `docs/developer/` for setup, verification, benchmark, and packaging guides.
 - `docs/product/` for project overview, glossary, status, and roadmap.
 - `docs/user/` for UI workflow, performance tips, and troubleshooting.
+
+## CI/CD & Release Automation
+
+We use GitHub Actions to automate desktop application builds, version tagging, and release publishing.
+
+### 1. CI Build Workflow (`build.yml`)
+- Triggered automatically on push or pull requests to the `main` branch, or via manual run (`workflow_dispatch`).
+- Builds standalone application packages for Windows, macOS, and Linux in parallel.
+- Uploads the build outputs as workflow artifacts (`Image-Vectorizer-Windows`, `Image-Vectorizer-macOS`, `Image-Vectorizer-Linux`).
+
+### 2. Manual Tag Workflow (`create_tag.yml`)
+- Triggered manually from the Actions tab.
+- Accepts a semantic version tag (e.g. `v1.0.0`) and pushes it to the repository after validating that the format matches `v*.*.*` and the tag does not already exist.
+
+### 3. Release Publication Workflow (`release.yml`)
+- Automatically triggered when a new version tag (`v*.*.*`) is pushed.
+- Re-builds the application packages for all target platforms, compiles them, and attaches the archived builds to a newly created GitHub Release using the version number as the release name.
+
+### Difference Between Manual and CI Build
+- **Manual Build**: Runs locally via `scripts/build_app.py`. Uses local system libraries, virtual environment compilers, and target architecture. Best for fast local verification.
+- **CI Build**: Runs inside clean, isolated containers on GitHub-hosted runners (Windows, macOS, Linux). Guarantees reproducible builds and doesn't pollute local environments.
+

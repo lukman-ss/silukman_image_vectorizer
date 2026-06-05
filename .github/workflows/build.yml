@@ -1,0 +1,115 @@
+name: Build Image Vectorizer
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            artifact_name: Image-Vectorizer-Windows
+            archive_format: zip
+          - os: macos-latest
+            artifact_name: Image-Vectorizer-macOS
+            archive_format: zip
+          - os: ubuntu-latest
+            artifact_name: Image-Vectorizer-Linux
+            archive_format: tar.gz
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify PyInstaller Installation
+        run: |
+          pyinstaller --version
+
+      - name: Run Build Script
+        run: |
+          python scripts/build_app.py
+
+      - name: Print Dist Directory Contents
+        shell: bash
+        run: |
+          echo "=== Contents of dist/ directory ==="
+          ls -la dist/ || dir dist/
+
+      - name: Verify Build Deliverables & Resources
+        shell: bash
+        run: |
+          # Verify executable exists based on OS
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            if [ ! -f "dist/Image Vectorizer/Image Vectorizer.exe" ]; then
+              echo "Error: Windows executable not found!" && exit 1
+            fi
+            # Verify bundled resources inside the app folder
+            if [ ! -f "dist/Image Vectorizer/_internal/app/resources/icon.png" ] && [ ! -f "dist/Image Vectorizer/app/resources/icon.png" ]; then
+              echo "Error: Bundled icon.png not found!" && exit 1
+            fi
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            if [ ! -d "dist/Image Vectorizer.app" ]; then
+              echo "Error: macOS App Bundle not found!" && exit 1
+            fi
+            if [ ! -f "dist/Image Vectorizer.app/Contents/MacOS/Image Vectorizer" ]; then
+              echo "Error: macOS app executable inside bundle not found!" && exit 1
+            fi
+          else
+            if [ ! -f "dist/Image Vectorizer/Image Vectorizer" ]; then
+              echo "Error: Linux binary not found!" && exit 1
+            fi
+            if [ ! -f "dist/Image Vectorizer/_internal/app/resources/icon.png" ] && [ ! -f "dist/Image Vectorizer/app/resources/icon.png" ]; then
+              echo "Error: Bundled icon.png not found!" && exit 1
+            fi
+          fi
+          
+          # Verify shared documentation & versioning info
+          if [ ! -f "CHANGELOG.md" ]; then
+            echo "Error: CHANGELOG.md is missing from workspace!" && exit 1
+          fi
+          echo "Build deliverables successfully verified!"
+
+      - name: Archive Build Artifact (Windows / macOS)
+        if: matrix.archive_format == 'zip'
+        shell: bash
+        run: |
+          cd dist
+          if [ "${{ matrix.os }}" = "macos-latest" ]; then
+            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer.app"
+          else
+            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer"
+          fi
+
+      - name: Archive Build Artifact (Linux)
+        if: matrix.archive_format == 'tar.gz'
+        shell: bash
+        run: |
+          cd dist
+          tar -czf ../${{ matrix.artifact_name }}.tar.gz "Image Vectorizer"
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}.${{ matrix.archive_format }}
+          retention-days: 90

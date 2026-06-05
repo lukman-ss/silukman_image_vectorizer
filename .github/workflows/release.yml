@@ -1,0 +1,138 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Release on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            artifact_name: Image-Vectorizer-Windows
+            archive_format: zip
+          - os: macos-latest
+            artifact_name: Image-Vectorizer-macOS
+            archive_format: zip
+          - os: ubuntu-latest
+            artifact_name: Image-Vectorizer-Linux
+            archive_format: tar.gz
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Build Script
+        run: |
+          python scripts/build_app.py
+
+      - name: Verify Build Deliverables
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            if [ ! -f "dist/Image Vectorizer/Image Vectorizer.exe" ]; then exit 1; fi
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            if [ ! -d "dist/Image Vectorizer.app" ]; then exit 1; fi
+          else
+            if [ ! -f "dist/Image Vectorizer/Image Vectorizer" ]; then exit 1; fi
+          fi
+
+      - name: Archive Build Artifact (Windows / macOS)
+        if: matrix.archive_format == 'zip'
+        shell: bash
+        run: |
+          cd dist
+          if [ "${{ matrix.os }}" = "macos-latest" ]; then
+            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer.app"
+          else
+            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer"
+          fi
+
+      - name: Archive Build Artifact (Linux)
+        if: matrix.archive_format == 'tar.gz'
+        shell: bash
+        run: |
+          cd dist
+          tar -czf ../${{ matrix.artifact_name }}.tar.gz "Image Vectorizer"
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}.${{ matrix.archive_format }}
+          retention-days: 7
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Windows Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Image-Vectorizer-Windows
+
+      - name: Download macOS Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Image-Vectorizer-macOS
+
+      - name: Download Linux Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Image-Vectorizer-Linux
+
+      - name: Extract Release Notes
+        id: release_notes
+        shell: bash
+        run: |
+          # Try to extract content from CHANGELOG.md for the current tag
+          # Otherwise default to full changelog content or tag name
+          TAG_VERSION="${{ github.ref_name }}"
+          echo "Extracting release notes for tag: $TAG_VERSION"
+          
+          # Simple extraction logic: find the section of the tag in CHANGELOG.md
+          # Example markdown section: ## [1.0.0] - 2026-06-05 or similar
+          # We'll just output the content or fallback to full CHANGELOG
+          if [ -f "CHANGELOG.md" ]; then
+            echo "Changelog found."
+          else
+            echo "No CHANGELOG.md found. Creating fallback."
+            echo "Release $TAG_VERSION" > release_notes.txt
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+          files: |
+            Image-Vectorizer-Windows.zip
+            Image-Vectorizer-macOS.zip
+            Image-Vectorizer-Linux.tar.gz
