@@ -1,4 +1,4 @@
-APP_VERSION = "1.0.3"
+APP_VERSION = "1.0.4"
 APPLICATION_TITLE = f"Image Vectorizer v{APP_VERSION}"
 SIDEBAR_TITLE = "Sidebar"
 PREVIEW_AREA_TITLE = "Preview Area"

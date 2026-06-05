@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   publish:
@@ -41,14 +42,18 @@ jobs:
         run: |
           python -m twine check dist/*
 
-      - name: Publish Package to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Verify PyPI Token Secret
         run: |
-          # Only attempt to publish if token is provided to prevent workflow crash in forks
           if [ -z "${{ secrets.PYPI_API_TOKEN }}" ]; then
-            echo "Error: PYPI_API_TOKEN secret is not set. Skipping PyPI upload."
+            echo "Error: PYPI_API_TOKEN secret is not set."
             exit 1
           fi
-          python -m twine upload --skip-existing dist/*
+
+      - name: Publish Package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: dist/
+          skip-existing: true
+          print-hash: true
+          verbose: true

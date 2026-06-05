@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2026-06-05
+
+### Changed
+- Switch PyPI upload workflow to the official PyPA publish action with verbose diagnostics.
+
 ## [1.0.3] - 2026-06-05
 
 ### Changed
