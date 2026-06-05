@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-06-05
+
+### Changed
+- Retrigger PyPI publishing with a fresh release tag after repository secret validation.
+
 ## [1.0.1] - 2026-06-05
 
 ### Added
