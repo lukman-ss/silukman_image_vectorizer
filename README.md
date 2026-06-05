@@ -1,5 +1,9 @@
 # Image Vectorizer
 
+<p align="center">
+  <img src="app/resources/hero_image.png" alt="Image Vectorizer Hero" width="800"/>
+</p>
+
 Last updated: 2026-06-05
 
 Image Vectorizer is a Python and PySide6 desktop application foundation for
