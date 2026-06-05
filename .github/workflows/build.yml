@@ -89,19 +89,21 @@ jobs:
           fi
           echo "Build deliverables successfully verified!"
 
-      - name: Archive Build Artifact (Windows / macOS)
-        if: matrix.archive_format == 'zip'
+      - name: Archive Build Artifact (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "dist/Image Vectorizer" -DestinationPath "${{ matrix.artifact_name }}.zip"
+
+      - name: Archive Build Artifact (macOS)
+        if: matrix.os == 'macos-latest'
         shell: bash
         run: |
           cd dist
-          if [ "${{ matrix.os }}" = "macos-latest" ]; then
-            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer.app"
-          else
-            zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer"
-          fi
+          zip -r ../${{ matrix.artifact_name }}.zip "Image Vectorizer.app"
 
       - name: Archive Build Artifact (Linux)
-        if: matrix.archive_format == 'tar.gz'
+        if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
           cd dist
