@@ -1,8 +1,6 @@
 # Image Vectorizer
 
-<p align="center">
-  <img src="app/resources/hero_image.png" alt="Image Vectorizer Hero" width="800"/>
-</p>
+![Image Vectorizer Hero](app/resources/hero_image.png)
 
 Last updated: 2026-06-05
 
