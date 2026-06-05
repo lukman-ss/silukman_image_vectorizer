@@ -684,3 +684,184 @@ git push -u origin main
 * Tag push can trigger automated release workflow.
 * GitHub Release contains Windows, macOS, and Linux artifacts.
 * Existing PyInstaller packaging logic from Phase 8 remains the source of truth.
+
+# Phase 10 - PyPI Package Publishing Checklist
+
+Last updated: 2026-06-05
+
+## Goal
+
+Publish Image Vectorizer as a Python package to PyPI using GitHub Actions, with the PyPI API token already stored in repository secrets as `PYPI_API_TOKEN`.
+
+## Phase 10 Checklist
+
+### Package Publishing Preparation
+
+* [x] Decide the PyPI package name:
+
+  * [x] `silukman-image-vectorizer`
+* [x] Ensure the package name is consistent across:
+
+  * [x] `pyproject.toml`
+  * [x] README documentation
+  * [x] GitHub workflow
+  * [x] release notes
+* [x] Create or update `pyproject.toml`.
+* [x] Define package metadata:
+
+  * [x] Package name.
+  * [x] Version.
+  * [x] Description.
+  * [x] Author.
+  * [x] License.
+  * [x] Python version requirement.
+  * [x] Project URLs.
+  * [x] Classifiers.
+* [x] Ensure package version uses a single source of truth.
+* [x] Ensure app version and PyPI package version are synchronized.
+* [x] Ensure `README.md` is used as the long description.
+* [x] Ensure required runtime dependencies are declared correctly.
+* [x] Ensure packaging/build dependencies are separated from runtime dependencies if needed.
+* [x] Ensure local-only folders are excluded from package distribution:
+
+  * [x] `dist/`
+  * [x] `build/`
+  * [x] `.github/`
+  * [x] `.venv/`
+  * [x] `venv/`
+  * [x] `samples/`
+  * [x] generated archives
+* [x] Ensure app resource files needed by the package are included:
+
+  * [x] `app/resources/icon.png`
+  * [x] `app/resources/hero_image.png`
+* [x] Ensure package can be imported without launching the GUI automatically.
+* [x] Ensure `main.py` or console entry point can launch the app intentionally.
+* [x] Add optional console script entry point if appropriate:
+
+  * [x] `image-vectorizer`
+
+### Build Validation
+
+* [x] Install package build tools:
+
+  * [x] `python -m pip install build twine`
+* [x] Build source distribution and wheel:
+
+  * [x] `python -m build`
+* [x] Verify build output exists:
+
+  * [x] `dist/*.tar.gz`
+  * [x] `dist/*.whl`
+* [x] Validate package metadata:
+
+  * [x] `python -m twine check dist/*`
+* [x] Ensure generated package does not include ignored folders.
+* [ ] Ensure package can be installed locally from wheel.
+* [ ] Ensure installed package can launch the app.
+* [ ] Ensure package import does not trigger PySide6 GUI startup automatically.
+
+### PyPI Publish Workflow
+
+* [ ] Create GitHub Actions workflow file:
+
+  * [ ] `.github/workflows/publish_pypi.yml`
+* [ ] Configure workflow name:
+
+  * [ ] `Publish to PyPI`
+* [ ] Configure workflow trigger using Git tags:
+
+  * [ ] `v*.*.*`
+* [ ] Add optional manual trigger:
+
+  * [ ] `workflow_dispatch`
+* [ ] Checkout repository in workflow.
+* [ ] Set up Python in workflow.
+* [ ] Install build tools:
+
+  * [ ] `python -m pip install --upgrade pip`
+  * [ ] `python -m pip install build twine`
+* [ ] Build package:
+
+  * [ ] `python -m build`
+* [ ] Validate package:
+
+  * [ ] `python -m twine check dist/*`
+* [ ] Publish package to PyPI using repository secret:
+
+  * [ ] `PYPI_API_TOKEN`
+* [ ] Use token authentication:
+
+  * [ ] `TWINE_USERNAME=__token__`
+  * [ ] `TWINE_PASSWORD=${{ secrets.PYPI_API_TOKEN }}`
+* [ ] Upload only files from `dist/`.
+* [ ] Prevent publish if build or twine check fails.
+* [ ] Prevent duplicate version upload.
+* [ ] Ensure PyPI publish only runs on release/tag workflow, not every push.
+* [ ] Document PyPI publishing workflow in `README.md`.
+
+### Version & Tag Policy
+
+* [ ] Ensure PyPI version matches Git tag.
+* [ ] Use semantic version format:
+
+  * [ ] `v1.0.0`
+* [ ] Strip leading `v` when used as Python package version if needed.
+* [ ] Prevent publishing if package version already exists on PyPI.
+* [ ] Ensure `CHANGELOG.md` includes the release version.
+* [ ] Ensure GitHub Release and PyPI package publish use the same version.
+* [ ] Add release flow documentation:
+
+  * [ ] Update version.
+  * [ ] Update changelog.
+  * [ ] Commit changes.
+  * [ ] Create tag.
+  * [ ] Push tag.
+  * [ ] Build GitHub artifacts.
+  * [ ] Publish package to PyPI.
+
+### Recommended Workflow Order
+
+1. Update package version.
+2. Update `CHANGELOG.md`.
+3. Commit version update.
+4. Create Git tag, for example `v1.0.0`.
+5. Push tag to GitHub.
+6. GitHub release workflow builds Windows, macOS, and Linux artifacts.
+7. PyPI workflow builds source distribution and wheel.
+8. PyPI workflow validates package metadata.
+9. PyPI workflow publishes package using `PYPI_API_TOKEN`.
+
+### Phase 10 Boundaries
+
+* Do not rebuild Phase 1.
+* Do not rebuild Phase 2.
+* Do not rebuild Phase 3.
+* Do not rebuild Phase 4.
+* Do not rebuild Phase 5.
+* Do not rebuild Phase 6.
+* Do not rebuild Phase 7.
+* Do not rebuild Phase 8.
+* Do not rebuild Phase 9.
+* Do not change vectorization logic.
+* Do not change SVG export logic.
+* Do not change batch processing logic.
+* Do not redesign the UI.
+* Do not add new app features.
+* Do not commit PyPI token.
+* Do not print PyPI token in logs.
+* Do not publish to PyPI on every push.
+* Do not publish duplicate versions.
+* Do not include `samples/` in package distribution.
+* Do not include build artifacts inside the PyPI package.
+* Focus only on Python packaging, PyPI metadata, package build validation, and PyPI publish workflow.
+
+## Expected Output
+
+* Project has valid Python package metadata.
+* Package can build `.whl` and `.tar.gz`.
+* Package passes `twine check`.
+* GitHub Actions can publish to PyPI using `PYPI_API_TOKEN`.
+* PyPI publish is triggered safely by version tag.
+* GitHub Release version and PyPI package version stay aligned.
+* `samples/`, build folders, virtual environments, and generated archives are excluded from package distribution.

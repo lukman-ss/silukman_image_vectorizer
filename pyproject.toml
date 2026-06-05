@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "silukman-image-vectorizer"
+version = "1.0.0"
+description = "A PySide6 desktop application for high-quality raster-to-vector (SVG) conversion."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Lukman-ss" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Multimedia :: Graphics :: Convertors",
+]
+dependencies = [
+    "PySide6>=6.0.0",
+    "pillow>=9.0.0",
+    "opencv-python>=4.5.0",
+    "numpy>=1.20.0",
+    "vtracer>=0.1.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/lukman-ss/silukman_image_vectorizer"
+Bug-Tracker = "https://github.com/lukman-ss/silukman_image_vectorizer/issues"
+
+[project.scripts]
+image-vectorizer = "app.cli:main"
+
+[tool.setuptools]
+packages = ["app", "app.config", "app.core", "app.resources", "app.services", "app.ui"]
+
+[tool.setuptools.package-data]
+"app.resources" = ["*.png", "*.icns"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["build*", "dist*", "samples*", "docs*"]
