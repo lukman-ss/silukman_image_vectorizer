@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.5] - 2026-06-05
+
+### Fixed
+- Replace invalid PyPI Trove classifier with a valid graphics conversion classifier.
+
 ## [1.0.4] - 2026-06-05
 
 ### Changed

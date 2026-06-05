@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silukman-image-vectorizer"
-version = "1.0.4"
+version = "1.0.5"
 description = "A PySide6 desktop application for high-quality raster-to-vector (SVG) conversion."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -21,7 +21,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Environment :: X11 Applications :: Qt",
     "Intended Audience :: End Users/Desktop",
-    "Topic :: Multimedia :: Graphics :: Convertors",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
 ]
 dependencies = [
     "PySide6>=6.0.0",
