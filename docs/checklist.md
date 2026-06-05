@@ -805,7 +805,7 @@ Publish Image Vectorizer as a Python package to PyPI using GitHub Actions, with 
 * [x] Ensure PyPI version matches Git tag.
 * [x] Use semantic version format:
 
-  * [x] `v1.0.2`
+  * [x] `v1.0.3`
 * [x] Strip leading `v` when used as Python package version if needed.
 * [x] Prevent publishing if package version already exists on PyPI.
 * [x] Ensure `CHANGELOG.md` includes the release version.
