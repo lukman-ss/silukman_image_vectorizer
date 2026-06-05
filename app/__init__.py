@@ -1,0 +1,1 @@
+"""Image Vectorizer application package."""

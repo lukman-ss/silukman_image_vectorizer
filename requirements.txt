@@ -1,0 +1,6 @@
+PySide6
+pillow
+opencv-python
+numpy
+vtracer
+pyinstaller

@@ -1,0 +1,6 @@
+APP_VERSION = "1.0.0"
+APPLICATION_TITLE = f"Image Vectorizer v{APP_VERSION}"
+SIDEBAR_TITLE = "Sidebar"
+PREVIEW_AREA_TITLE = "Preview Area"
+CONTROL_PANEL_TITLE = "Control Panel"
+STATUS_READY = "Ready"
