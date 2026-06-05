@@ -81,7 +81,12 @@ We use GitHub Actions to automate desktop application builds, version tagging, a
 - Automatically triggered when a new version tag (`v*.*.*`) is pushed.
 - Re-builds the application packages for all target platforms, compiles them, and attaches the archived builds to a newly created GitHub Release using the version number as the release name.
 
+### 4. PyPI Publishing Workflow (`publish_pypi.yml`)
+- Triggered automatically when a new version tag (`v*.*.*`) is pushed, or via manual run (`workflow_dispatch`).
+- Compiles the source distribution and wheel packages, validates package metadata using `twine`, and publishes the package to PyPI under the name `silukman-image-vectorizer` using the repository secret `PYPI_API_TOKEN`.
+
 ### Difference Between Manual and CI Build
 - **Manual Build**: Runs locally via `scripts/build_app.py`. Uses local system libraries, virtual environment compilers, and target architecture. Best for fast local verification.
 - **CI Build**: Runs inside clean, isolated containers on GitHub-hosted runners (Windows, macOS, Linux). Guarantees reproducible builds and doesn't pollute local environments.
+
 

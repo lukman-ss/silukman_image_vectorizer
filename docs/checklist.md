@@ -757,68 +757,68 @@ Publish Image Vectorizer as a Python package to PyPI using GitHub Actions, with 
 
   * [x] `python -m twine check dist/*`
 * [x] Ensure generated package does not include ignored folders.
-* [ ] Ensure package can be installed locally from wheel.
-* [ ] Ensure installed package can launch the app.
-* [ ] Ensure package import does not trigger PySide6 GUI startup automatically.
+* [x] Ensure package can be installed locally from wheel.
+* [x] Ensure installed package can launch the app.
+* [x] Ensure package import does not trigger PySide6 GUI startup automatically.
 
 ### PyPI Publish Workflow
 
-* [ ] Create GitHub Actions workflow file:
+* [x] Create GitHub Actions workflow file:
 
-  * [ ] `.github/workflows/publish_pypi.yml`
-* [ ] Configure workflow name:
+  * [x] `.github/workflows/publish_pypi.yml`
+* [x] Configure workflow name:
 
-  * [ ] `Publish to PyPI`
-* [ ] Configure workflow trigger using Git tags:
+  * [x] `Publish to PyPI`
+* [x] Configure workflow trigger using Git tags:
 
-  * [ ] `v*.*.*`
-* [ ] Add optional manual trigger:
+  * [x] `v*.*.*`
+* [x] Add optional manual trigger:
 
-  * [ ] `workflow_dispatch`
-* [ ] Checkout repository in workflow.
-* [ ] Set up Python in workflow.
-* [ ] Install build tools:
+  * [x] `workflow_dispatch`
+* [x] Checkout repository in workflow.
+* [x] Set up Python in workflow.
+* [x] Install build tools:
 
-  * [ ] `python -m pip install --upgrade pip`
-  * [ ] `python -m pip install build twine`
-* [ ] Build package:
+  * [x] `python -m pip install --upgrade pip`
+  * [x] `python -m pip install build twine`
+* [x] Build package:
 
-  * [ ] `python -m build`
-* [ ] Validate package:
+  * [x] `python -m build`
+* [x] Validate package:
 
-  * [ ] `python -m twine check dist/*`
-* [ ] Publish package to PyPI using repository secret:
+  * [x] `python -m twine check dist/*`
+* [x] Publish package to PyPI using repository secret:
 
-  * [ ] `PYPI_API_TOKEN`
-* [ ] Use token authentication:
+  * [x] `PYPI_API_TOKEN`
+* [x] Use token authentication:
 
-  * [ ] `TWINE_USERNAME=__token__`
-  * [ ] `TWINE_PASSWORD=${{ secrets.PYPI_API_TOKEN }}`
-* [ ] Upload only files from `dist/`.
-* [ ] Prevent publish if build or twine check fails.
-* [ ] Prevent duplicate version upload.
-* [ ] Ensure PyPI publish only runs on release/tag workflow, not every push.
-* [ ] Document PyPI publishing workflow in `README.md`.
+  * [x] `TWINE_USERNAME=__token__`
+  * [x] `TWINE_PASSWORD=${{ secrets.PYPI_API_TOKEN }}`
+* [x] Upload only files from `dist/`.
+* [x] Prevent publish if build or twine check fails.
+* [x] Prevent duplicate version upload.
+* [x] Ensure PyPI publish only runs on release/tag workflow, not every push.
+* [x] Document PyPI publishing workflow in `README.md`.
 
 ### Version & Tag Policy
 
-* [ ] Ensure PyPI version matches Git tag.
-* [ ] Use semantic version format:
+* [x] Ensure PyPI version matches Git tag.
+* [x] Use semantic version format:
 
-  * [ ] `v1.0.0`
-* [ ] Strip leading `v` when used as Python package version if needed.
-* [ ] Prevent publishing if package version already exists on PyPI.
-* [ ] Ensure `CHANGELOG.md` includes the release version.
-* [ ] Ensure GitHub Release and PyPI package publish use the same version.
-* [ ] Add release flow documentation:
+  * [x] `v1.0.0`
+* [x] Strip leading `v` when used as Python package version if needed.
+* [x] Prevent publishing if package version already exists on PyPI.
+* [x] Ensure `CHANGELOG.md` includes the release version.
+* [x] Ensure GitHub Release and PyPI package publish use the same version.
+* [x] Add release flow documentation:
 
-  * [ ] Update version.
-  * [ ] Update changelog.
-  * [ ] Commit changes.
-  * [ ] Create tag.
-  * [ ] Push tag.
-  * [ ] Build GitHub artifacts.
-  * [ ] Publish package to PyPI.
+  * [x] Update version.
+  * [x] Update changelog.
+  * [x] Commit changes.
+  * [x] Create tag.
+  * [x] Push tag.
+  * [x] Build GitHub artifacts.
+  * [x] Publish package to PyPI.
 
 ### Recommended Workflow Order
 
