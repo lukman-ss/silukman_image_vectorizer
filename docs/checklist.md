@@ -449,33 +449,33 @@ Create automated GitHub workflows for Windows, macOS, and Linux builds, add rele
 
 ### Repository Initialization & First Push
 
-* [ ] Ensure the project is already inside the correct root folder.
-* [ ] Ensure `.gitignore` is already configured before first commit.
-* [ ] Ensure `.gitignore` excludes local-only and generated folders:
+* [x] Ensure the project is already inside the correct root folder.
+* [x] Ensure `.gitignore` is already configured before first commit.
+* [x] Ensure `.gitignore` excludes local-only and generated folders:
 
-  * [ ] `dist/`
-  * [ ] `build/`
-  * [ ] `*.spec`
-  * [ ] `.venv/`
-  * [ ] `venv/`
-  * [ ] `__pycache__/`
-  * [ ] `.pytest_cache/`
-  * [ ] `.mypy_cache/`
-  * [ ] `.DS_Store`
-  * [ ] `samples/`
-  * [ ] generated archives such as `*.zip`, `*.tar.gz`, and `*.7z`
-* [ ] Initialize Git repository if `.git/` does not exist:
+  * [x] `dist/`
+  * [x] `build/`
+  * [x] `*.spec`
+  * [x] `.venv/`
+  * [x] `venv/`
+  * [x] `__pycache__/`
+  * [x] `.pytest_cache/`
+  * [x] `.mypy_cache/`
+  * [x] `.DS_Store`
+  * [x] `samples/`
+  * [x] generated archives such as `*.zip`, `*.tar.gz`, and `*.7z`
+* [x] Initialize Git repository if `.git/` does not exist:
 
-  * [ ] `git init`
-* [ ] Ensure the main branch is named `main`:
+  * [x] `git init`
+* [x] Ensure the main branch is named `main`:
 
-  * [ ] `git branch -M main`
-* [ ] Add all project files to Git:
+  * [x] `git branch -M main`
+* [x] Add all project files to Git:
 
-  * [ ] `git add .`
-* [ ] Create the first commit:
+  * [x] `git add .`
+* [x] Create the first commit:
 
-  * [ ] `git commit -m "BIG BANG"`
+  * [x] `git commit -m "BIG BANG"`
 * [ ] Add GitHub remote repository:
 
   * [ ] `git remote add origin https://github.com/lukman-ss/silukman_image_vectorizer.git`
