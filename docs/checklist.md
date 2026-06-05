@@ -476,24 +476,24 @@ Create automated GitHub workflows for Windows, macOS, and Linux builds, add rele
 * [x] Create the first commit:
 
   * [x] `git commit -m "BIG BANG"`
-* [ ] Add GitHub remote repository:
+* [x] Add GitHub remote repository:
 
-  * [ ] `git remote add origin https://github.com/lukman-ss/silukman_image_vectorizer.git`
-* [ ] If remote origin already exists, update it instead:
+  * [x] `git remote add origin https://github.com/lukman-ss/silukman_image_vectorizer.git`
+* [x] If remote origin already exists, update it instead:
 
-  * [ ] `git remote set-url origin https://github.com/lukman-ss/silukman_image_vectorizer.git`
+  * [x] `git remote set-url origin https://github.com/lukman-ss/silukman_image_vectorizer.git`
 * [ ] Push the project to GitHub:
 
   * [ ] `git push -u origin main`
 * [ ] Verify the repository contains the full project, not only `README.md`.
-* [ ] Verify ignored folders are not committed:
+* [x] Verify ignored folders are not committed:
 
-  * [ ] `dist/`
-  * [ ] `build/`
-  * [ ] `.venv/`
-  * [ ] `venv/`
-  * [ ] `samples/`
-  * [ ] generated archives
+  * [x] `dist/`
+  * [x] `build/`
+  * [x] `.venv/`
+  * [x] `venv/`
+  * [x] `samples/`
+  * [x] generated archives
 
 ### Git Bootstrap Commands
 
