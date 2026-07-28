@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.1] - 2026-07-28
+
+### Fixed
+- Fixed GitHub Actions release workflow (`release.yml`) failing on missing dependencies by switching to `pip install .[all]` and installing `libegl1` and `xvfb` for headless GUI tests.
+
 ## [1.13.0] - 2026-07-28
 
 ### Added

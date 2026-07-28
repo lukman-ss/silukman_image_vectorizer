@@ -20,11 +20,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-cov
+          pip install .[all]
+          sudo apt-get update
+          sudo apt-get install -y libegl1 xvfb
       - name: Run Tests
         run: |
-          PYTHONPATH=. pytest tests/ -v
+          xvfb-run -a python -m pytest tests/ -v
 
   build:
     name: Build Release on ${{ matrix.os }}
@@ -58,7 +59,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install .[all]
 
       - name: Run Build Script
         run: |
