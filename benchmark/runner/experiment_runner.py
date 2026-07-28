@@ -15,16 +15,17 @@ from benchmark.runner.env_capture import capture_environment, generate_config_ha
 
 
 class ExperimentRunner:
-    def __init__(self, config_path: str, resume_id: str = None, retry_failed: bool = False):
+    def __init__(self, config_path: str, resume_id: str = None, retry_failed: bool = False, base_dir: str = "experiments"):
         self.config_path = config_path
         self.config = BenchmarkConfig.from_yaml(config_path)
         self.retry_failed = retry_failed
+        self.base_dir = base_dir
         
         from benchmark.runner.env_capture import generate_config_hash
         self.config_hash = generate_config_hash(self.config_path)
         
         self.experiment_id = self._setup_experiment_id(resume_id)
-        self.experiment_dir = os.path.join("experiments", self.experiment_id)
+        self.experiment_dir = os.path.join(self.base_dir, self.experiment_id)
         
         self.runs_file = os.path.join(self.experiment_dir, "runs.jsonl")
         self.summary_file = os.path.join(self.experiment_dir, "summary.json")
@@ -67,7 +68,7 @@ class ExperimentRunner:
 
     def _setup_experiment_id(self, resume_id: str) -> str:
         if resume_id:
-            exp_dir = os.path.join("experiments", resume_id)
+            exp_dir = os.path.join(self.base_dir, resume_id)
             if not os.path.exists(exp_dir):
                 raise ValueError(f"Cannot resume: Experiment directory '{exp_dir}' does not exist.")
             
@@ -228,7 +229,9 @@ class ExperimentRunner:
                             vectorize_result = backend.vectorize(input_path, output_path, preset, category=category)
                             
                             # Check if skipped or failed
-                            is_skipped = vectorize_result.get("error", "").startswith("Skipped") or vectorize_result.get("performance", {}).get("error", "").startswith("Skipped")
+                            err1 = vectorize_result.get("error") or ""
+                            err2 = vectorize_result.get("performance", {}).get("error") or ""
+                            is_skipped = str(err1).startswith("Skipped") or str(err2).startswith("Skipped")
                             
                             from app.core.result import calculate_file_hash
                             input_hash = item.get("sha256") or calculate_file_hash(input_path)

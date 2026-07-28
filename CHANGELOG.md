@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0] - 2026-07-28
+
+### Added
+- **Testing and Quality Assurance (FASE 10)**:
+  - Added unit test suite covering core components (config validation, SVG metrics, result parsing).
+  - Added integration test suite testing vectorization pipelines across multiple file formats (PNG, JPEG, RGBA) and edge cases.
+  - Added Snapshot Regression test validating output SVG structure invariance.
+  - Added CLI test validating all headless commands (`vectorize`, `batch`, `benchmark`).
+  - Added Benchmark Smoke test verifying experiment runner against synthetic data.
+  - Added code coverage reporting configuration (`pytest-cov`) focusing on core logic.
+
 ## [1.10.0] - 2026-07-28
 
 ### Added

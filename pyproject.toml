@@ -51,3 +51,30 @@ packages = ["app", "app.config", "app.core", "app.resources", "app.services", "a
 
 [tool.setuptools.exclude-package-data]
 "*" = ["build*", "dist*", "samples*", "docs*"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=app --cov=benchmark --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["app", "benchmark"]
+omit = [
+    "app/ui/*",
+    "app/cli.py",
+    "benchmark/analysis/plot_generator.py",
+    "benchmark/analysis/table_generator.py",
+    "benchmark/analysis/report_generator.py",
+    "app/resources/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "except ImportError:"
+]

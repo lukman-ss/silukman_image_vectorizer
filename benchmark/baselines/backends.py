@@ -16,7 +16,7 @@ from app.config.preset_manager import PresetManager
 
 class SilukmanBackend(VectorizerBackend):
     def __init__(self):
-        self.preset_manager = PresetManager()
+        self.preset_manager = PresetManager.get_instance()
         
     def name(self) -> str:
         return "Silukman"
@@ -30,8 +30,7 @@ class SilukmanBackend(VectorizerBackend):
         
     def vectorize(self, input_path: str, output_path: str, preset_name: str, category: str = None) -> Dict[str, Any]:
         try:
-            config_dict = self.preset_manager.get_preset_info(preset_name)["config"]
-            config = VectorizationSettings(**config_dict)
+            config = self.preset_manager.get_preset_config(preset_name)
             
             result = vectorize_image(input_path, output_path, config)
             

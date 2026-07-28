@@ -45,7 +45,7 @@ class FailureAnalyzer:
         
         if "category" in lower_err and "unfair" in lower_err:
             return "unsupported format"
-        if "timeout" in lower_err or "time out" in lower_err:
+        if "timeout" in lower_err or "time out" in lower_err or "timed out" in lower_err:
             return "backend timeout"
         if "not installed" in lower_err or "not available" in lower_err or "skipped: backend" in lower_err:
             return "backend unavailable"

@@ -189,7 +189,7 @@ def cmd_vectorize(args: argparse.Namespace) -> int:
     if args.json:
         print(result.to_json())
     else:
-        if result.success:
+        if result.status == "success":
             print(f"Success! Vectorized {input_path} to {output_path}")
             print(f"Paths: {result.path_count}, Elements: {result.element_count}")
             print(f"Duration: {result.duration_seconds:.2f}s")
@@ -201,7 +201,7 @@ def cmd_vectorize(args: argparse.Namespace) -> int:
             print(f"Failed: {result.error_message}")
             return 1
     
-    return 0 if result.success else 1
+    return 0 if result.status == "success" else 1
 
 
 def cmd_batch(args: argparse.Namespace) -> int:
@@ -276,14 +276,15 @@ def cmd_batch(args: argparse.Namespace) -> int:
         try:
             result = vectorize_image(str_in, str(out_path), settings)
             res_dict = json.loads(result.to_json())
-            res_dict["status"] = "success" if result.success else "failed"
+            res_dict["status"] = "success" if result.status == "success" else "failed"
             return res_dict
         except Exception as e:
             with open(log_path, "w") as log_f:
                 log_f.write(traceback.format_exc())
             return {"input_path": str_in, "status": "failed", "error_message": str(e)}
 
-    print(f"Starting batch process: {len(files)} files, {args.workers} workers")
+    if not args.json:
+        print(f"Starting batch process: {len(files)} files, {args.workers} workers")
     
     # We append to runs.jsonl (if not appending, we would rewrite it, but for robust experimental runs append is better).
     # Since we support overwrite/resume, we open in append mode.
