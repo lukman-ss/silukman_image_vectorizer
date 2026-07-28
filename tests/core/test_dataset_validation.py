@@ -17,7 +17,7 @@ def test_dataset_manifest_validation(tmp_path):
 experiment:
   id: "test-dataset"
 dataset:
-  manifest: "{manifest_file}"
+  manifest: "{manifest_file.as_posix()}"
   split: "test"
   categories:
     - logo

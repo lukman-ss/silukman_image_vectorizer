@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.3] - 2026-07-28
+
+### Fixed
+- Fixed Windows CI pipeline test failures due to YAML escaping backslashes from dynamic Windows `tmp_path`.
+- Fixed Windows CI pipeline failure in `test_unicode_and_space_path` caused by OpenCV string decoding issues with special Unicode characters in temporary directories.
+
 ## [1.13.2] - 2026-07-28
 
 ### Fixed

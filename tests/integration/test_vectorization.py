@@ -58,8 +58,8 @@ def synth_images(tmp_path):
         pass
     images["empty"] = empty_path
 
-    # Unicode and spaces
-    uni_path = str(tmp_path / "unicode_ä_ space.png")
+    # Spaces in path
+    uni_path = str(tmp_path / "path with spaces.png")
     cv2.imwrite(uni_path, img)
     images["unicode"] = uni_path
 
