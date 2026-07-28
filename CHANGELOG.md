@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.2] - 2026-07-28
+
+### Fixed
+- Fixed GitHub Actions test workflow (`ci.yml`) where `test_benchmark_config_validation` failed due to missing `libegl1` and display server when importing PySide6 on Ubuntu runners.
+
 ## [1.13.1] - 2026-07-28
 
 ### Fixed
