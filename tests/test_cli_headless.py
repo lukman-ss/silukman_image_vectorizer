@@ -69,7 +69,7 @@ def test_cmd_presets(mock_preset_manager_class, capsys):
 @patch("app.cli_headless._load_settings")
 def test_cmd_vectorize_success(mock_load_settings, mock_vectorize, capsys):
     mock_result = MagicMock()
-    mock_result.success = True
+    mock_result.status = "success"
     mock_result.path_count = 100
     mock_result.element_count = 150
     mock_result.duration_seconds = 1.5
@@ -91,7 +91,7 @@ def test_cmd_vectorize_success(mock_load_settings, mock_vectorize, capsys):
 @patch("app.cli_headless._load_settings")
 def test_cmd_vectorize_fail(mock_load_settings, mock_vectorize, capsys):
     mock_result = MagicMock()
-    mock_result.success = False
+    mock_result.status = "failed"
     mock_result.error_message = "Test error"
     mock_vectorize.return_value = mock_result
 
@@ -173,7 +173,7 @@ def test_cmd_batch_success(
     mock_iterdir.return_value = [mock_file1]
 
     mock_result = MagicMock()
-    mock_result.success = True
+    mock_result.status = "success"
     mock_result.to_json.return_value = '{"success": true}'
     mock_vec.return_value = mock_result
 

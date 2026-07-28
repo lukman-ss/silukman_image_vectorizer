@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.6] - 2026-07-28
+
+### Fixed
+- Fixed GitHub Actions lint failures across Ubuntu, macOS, and Windows runners by importing `pathlib.Path` in the dataset validation test.
+- Updated legacy CLI unit-test mocks to use the current result `status` contract, allowing the complete pre-release test suite to pass.
+- Fixed automated release-note extraction for `v`-prefixed Git tags.
+
 ## [1.13.5] - 2026-07-28
 
 ### Fixed
