@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.4] - 2026-07-28
+
+### Fixed
+- Fixed Windows CI pipeline assertion failure caused by native Windows path separators (`\`) in test expectations after YAML parsing outputted POSIX separators (`/`).
+
 ## [1.13.3] - 2026-07-28
 
 ### Fixed

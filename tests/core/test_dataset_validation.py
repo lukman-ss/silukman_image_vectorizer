@@ -33,6 +33,6 @@ metrics:
 
     cfg = BenchmarkConfig.from_yaml(str(cfg_file))
 
-    assert cfg.dataset.manifest == str(manifest_file)
+    assert str(Path(cfg.dataset.manifest)) == str(Path(manifest_file))
     assert cfg.dataset.split == "test"
     assert "logo" in cfg.dataset.categories
