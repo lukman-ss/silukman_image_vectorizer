@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dataset Manifest Schema",
+  "type": "object",
+  "properties": {
+    "image_id": {
+      "type": "string",
+      "description": "Unique identifier for the image"
+    },
+    "filename": {
+      "type": "string",
+      "description": "Name of the file in the samples directory"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["logo", "icon", "illustration", "complex_artwork", "photograph", "binary_graphic"],
+      "description": "Type of graphic"
+    },
+    "source": {
+      "type": "string",
+      "description": "Name of the source repository or organization"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the original image source"
+    },
+    "creator": {
+      "type": "string",
+      "description": "Name of the original creator or artist"
+    },
+    "license": {
+      "type": "string",
+      "description": "Short name of the license (e.g., CC0, MIT, Public Domain)"
+    },
+    "license_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the license terms"
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": ["png", "jpg", "jpeg", "bmp", "webp"]
+    },
+    "has_alpha": {
+      "type": "boolean"
+    },
+    "color_type": {
+      "type": "string",
+      "enum": ["bw", "grayscale", "rgb", "rgba"]
+    },
+    "complexity_label": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "extreme"]
+    },
+    "split": {
+      "type": "string",
+      "enum": ["train", "validation", "test"]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of the image file"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Any additional notes or edge cases for this image"
+    }
+  },
+  "required": [
+    "image_id", "filename", "category", "license", "sha256"
+  ]
+}

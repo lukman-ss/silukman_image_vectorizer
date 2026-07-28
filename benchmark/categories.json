@@ -1,0 +1,32 @@
+[
+  {
+    "id": "logo",
+    "name": "Logos",
+    "description": "Company or product logos, typically consisting of flat colors, clean geometric shapes, and clear typography. Usually requires high fidelity preservation of sharp corners."
+  },
+  {
+    "id": "icon",
+    "name": "Icons",
+    "description": "Small, simplified symbols used for UI/UX. Often monochromatic or using very few colors. Crucial to preserve symmetry and minimal path count."
+  },
+  {
+    "id": "illustration",
+    "name": "Illustrations",
+    "description": "Digital drawings or vector-style art exported as raster. Features moderate color palettes, distinct regions, but more complexity than logos."
+  },
+  {
+    "id": "complex_artwork",
+    "name": "Complex Artwork",
+    "description": "Highly detailed digital art or paintings with gradients, many colors, and intricate details. Stresses the clustering and hierarchical layers of the vectorizer."
+  },
+  {
+    "id": "photograph",
+    "name": "Photographs",
+    "description": "Real-world camera captures with noise, continuous gradients, and millions of colors. Extremely challenging for vectorization; requires heavy quantization."
+  },
+  {
+    "id": "binary_graphic",
+    "name": "Binary Graphics",
+    "description": "Strictly black and white images (e.g., scanned documents, line art, QR codes, barcodes). Requires thresholding and crisp edge tracing."
+  }
+]

@@ -1,0 +1,162 @@
+{
+  "seed": 42,
+  "purpose": "regression_testing",
+  "images": [
+    {
+      "image_id": "synth_geometric_shapes",
+      "filename": "geometric_shapes.png",
+      "generator_params": {
+        "shapes": [
+          "rectangle",
+          "ellipse",
+          "triangle"
+        ]
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "geometric_shapes"
+      },
+      "sha256": "6cfdc0a486f629bc35cb108fdaf5e0c2c171c1e1147907cdddaa9a424d7d633e"
+    },
+    {
+      "image_id": "synth_flat_logo",
+      "filename": "flat_logo.png",
+      "generator_params": {
+        "style": "minimalist play button"
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "flat_logo"
+      },
+      "sha256": "6be503dcf0dd49585fc9fb81701a099a44babfb8547e96ff100ee5a4f37c73b2"
+    },
+    {
+      "image_id": "synth_gradients",
+      "filename": "gradients.png",
+      "generator_params": {
+        "type": "linear",
+        "direction": "vertical"
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "gradients"
+      },
+      "sha256": "d234b983afc3d6f22131dcc70eff76de05713291c2e0834608b482c759894a0b"
+    },
+    {
+      "image_id": "synth_thin_lines",
+      "filename": "thin_lines.png",
+      "generator_params": {
+        "spacing": 20,
+        "widths": [
+          1,
+          2
+        ]
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "thin_lines"
+      },
+      "sha256": "065a7e96f1a47e80b39471fbe3fbd56a4cd85c634d0ef89cb88f1f5d896ad93c"
+    },
+    {
+      "image_id": "synth_curves",
+      "filename": "curves.png",
+      "generator_params": {
+        "types": [
+          "sine_wave",
+          "arc"
+        ]
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "curves"
+      },
+      "sha256": "bf71329c84a32f426366ca306f1f572499945a0f448cfb67897c659b1a278037"
+    },
+    {
+      "image_id": "synth_pseudo_text",
+      "filename": "pseudo_text.png",
+      "generator_params": {
+        "line_height": 18,
+        "word_height": 8
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "pseudo_text"
+      },
+      "sha256": "ed146f75346b6bf0d4069bdaf0327422cfcceef8ed9e248ccb38a7c8c3a63a95"
+    },
+    {
+      "image_id": "synth_transparent_shapes",
+      "filename": "transparent_shapes.png",
+      "generator_params": {
+        "shapes": [
+          "overlapping_circles"
+        ],
+        "alpha": 128
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "transparent_shapes"
+      },
+      "sha256": "157ca8bbc289b3189d196949bcacef8b20b5ad64d538df047fc9c60b1de3c208"
+    },
+    {
+      "image_id": "synth_noisy_edges",
+      "filename": "noisy_edges.png",
+      "generator_params": {
+        "noise_level": 5
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "noisy_edges"
+      },
+      "sha256": "868fc4a62b0b076f4e50db32537b7bd47282cac46283fa7fab98c7226b68e452"
+    },
+    {
+      "image_id": "synth_overlapping_objects",
+      "filename": "overlapping_objects.png",
+      "generator_params": {
+        "count": 3
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "RGBA",
+        "type": "overlapping_objects"
+      },
+      "sha256": "2556b3d33053850d051e59c7cb17bedf1861dc75763e3eaebbb81bd86bf4fdee"
+    },
+    {
+      "image_id": "synth_monochrome_silhouette",
+      "filename": "monochrome_silhouette.png",
+      "generator_params": {
+        "mode": "1-bit"
+      },
+      "ground_truth": {
+        "width": 256,
+        "height": 256,
+        "mode": "1",
+        "type": "monochrome_silhouette"
+      },
+      "sha256": "1b1e1a0470c977937224e1db9734ee0aac24481483697f736e9da1fd944fbb04"
+    }
+  ]
+}
