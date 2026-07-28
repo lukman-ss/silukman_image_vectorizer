@@ -2,37 +2,37 @@ import argparse
 import json
 import os
 import time
-from typing import Dict, Any
+from typing import Any, Dict
 
 from benchmark.evaluation.performance_metrics import PerformanceTracker
-from benchmark.runner.process_utils import run_isolated_process, ProcessExecutionError
+from benchmark.runner.process_utils import ProcessExecutionError, run_isolated_process
 
 
 class InkscapeBaselineRunner:
     """
     Direct Inkscape Baseline Runner (CLI).
-    
+
     Installation Documentation:
     - macOS: `brew install inkscape`
     - Linux: `sudo apt-get install inkscape`
     - Windows: Download from https://inkscape.org/
-    
+
     LIMITATIONS & FAIRNESS (IMPORTANT):
-    Inkscape's CLI (especially version 1.0+) makes it notoriously difficult and 
-    unstable to precisely control the parameters of the "Trace Bitmap" engine 
-    (which under the hood uses a modified multi-scan Potrace). 
-    While we can trigger a trace action via CLI (`--actions="SelectionTrace"`), 
-    we cannot deterministically pass variables like "color count" or "blur radius" 
-    straight from the standard terminal flags without manipulating the user's 
+    Inkscape's CLI (especially version 1.0+) makes it notoriously difficult and
+    unstable to precisely control the parameters of the "Trace Bitmap" engine
+    (which under the hood uses a modified multi-scan Potrace).
+    While we can trigger a trace action via CLI (`--actions="SelectionTrace"`),
+    we cannot deterministically pass variables like "color count" or "blur radius"
+    straight from the standard terminal flags without manipulating the user's
     global XML preferences file.
-    
+
     Therefore:
-    1. This baseline will likely run using whatever Trace Bitmap settings were 
+    1. This baseline will likely run using whatever Trace Bitmap settings were
        LAST used/saved in the local Inkscape GUI preferences.
     2. It is not fully reproducible across different machines for fine-tuning.
     3. It serves strictly as a "black-box" comparison point.
     """
-    
+
     def __init__(self):
         self.tracker = PerformanceTracker()
         self.inkscape_version = self._get_version()
@@ -41,7 +41,7 @@ class InkscapeBaselineRunner:
         try:
             # Inkscape --version returns something like "Inkscape 1.3.2 (091e20e, 2023-11-25)"
             result = run_isolated_process(["inkscape", "--version"], 5)
-            first_line = result[1].strip().split('\n')[0]
+            first_line = result[1].strip().split("\n")[0]
             return first_line
         except Exception:
             return "not_installed"
@@ -50,15 +50,15 @@ class InkscapeBaselineRunner:
         # Modern Inkscape (1.0+) syntax for batch tracing:
         # We must select all, trace, save, and exit.
         actions = "select-all;SelectionTrace;export-filename:{};export-do".format(output_path)
-        
+
         cmd = [
             "inkscape",
             "--without-gui",  # Deprecated in 1.0 but sometimes still required, modern is --batch-process
             "--batch-process",
             f"--actions={actions}",
-            input_path
+            input_path,
         ]
-        
+
         try:
             exit_code, stdout, stderr = run_isolated_process(cmd, timeout_sec)
             if exit_code != 0:
@@ -67,23 +67,23 @@ class InkscapeBaselineRunner:
             raise RuntimeError("Failed (Time Out)")
         except ProcessExecutionError as e:
             raise RuntimeError(f"Process failed: {str(e)}")
-        
+
         if not os.path.exists(output_path) or os.path.getsize(output_path) == 0:
             raise RuntimeError("Inkscape executed but the SVG output is missing or empty.")
 
     def run(self, input_file: str, output_file: str, timeout: int = 60) -> dict:
         if self.inkscape_version == "not_installed":
             return {"error": "Skipped: Inkscape CLI is not installed or not in PATH."}
-            
+
         if not os.path.exists(input_file):
             return {"error": f"Input file not found: {input_file}"}
 
         os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
-        
+
         try:
             actions = "select-all;SelectionTrace;export-filename:{};export-do".format(output_file)
             cmd = f"inkscape --batch-process --actions='{actions}' {input_file}"
-            
+
             # Measure strictly the CLI execution
             performance = self.tracker.measure(
                 func=self._run_cli,
@@ -92,16 +92,16 @@ class InkscapeBaselineRunner:
                 retries=0,
                 input_path=input_file,
                 output_path=output_file,
-                timeout_sec=timeout
+                timeout_sec=timeout,
             )
-            
+
             return {
                 "inkscape_version": self.inkscape_version,
                 "invocation": cmd,
                 "configuration_note": "GUI preferences fallback (CLI parameter injection not stably supported)",
-                "performance": performance
+                "performance": performance,
             }
-            
+
         except Exception as e:
             return {"error": str(e)}
 
@@ -112,12 +112,12 @@ def main():
     parser.add_argument("output", help="Output SVG image")
     parser.add_argument("--timeout", type=int, default=60, help="CLI timeout in seconds")
     parser.add_argument("--json", action="store_true", help="Output JSON result")
-    
+
     args = parser.parse_args()
-    
+
     runner = InkscapeBaselineRunner()
     result = runner.run(args.input, args.output, args.timeout)
-    
+
     if args.json:
         print(json.dumps(result, indent=2))
     else:

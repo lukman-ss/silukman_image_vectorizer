@@ -1,14 +1,15 @@
-import pytest
 import xml.etree.ElementTree as ET
 
+import pytest
+
 from app.core.postprocessing import (
-    parse_and_validate_svg,
+    SVG_NS,
     calculate_svg_metrics,
     normalize_dimensions,
     optimize_svg,
+    parse_and_validate_svg,
     replace_svg_palette,
     serialize_deterministic_svg,
-    SVG_NS
 )
 
 
@@ -49,7 +50,7 @@ def test_calculate_svg_metrics():
     </svg>"""
     root = parse_and_validate_svg(svg)
     metrics = calculate_svg_metrics(root)
-    
+
     assert metrics["path_count"] == 2
     # 2 paths + 1 circle + 1 g + 1 svg = 5 total elements
     assert metrics["total_elements"] == 5
@@ -63,7 +64,7 @@ def test_normalize_dimensions():
     """Verify viewBox is added if missing but width/height exist."""
     svg = f'<svg xmlns="{SVG_NS}" width="800" height="600"></svg>'
     root = parse_and_validate_svg(svg)
-    
+
     assert root.get("viewBox") is None
     root = normalize_dimensions(root)
     assert root.get("viewBox") == "0 0 800 600"
@@ -78,7 +79,7 @@ def test_optimize_svg():
     </svg>"""
     root = parse_and_validate_svg(svg)
     root = optimize_svg(root)
-    
+
     # Should only have the svg root, the <g id="keep"> and the <path>
     elements = list(root.iter())
     assert len(elements) == 3
@@ -90,15 +91,12 @@ def test_replace_svg_palette():
         <path fill="#FF0000" stroke="#00FF00" d="M0 0" />
     </svg>"""
     root = parse_and_validate_svg(svg)
-    
-    replacements = [
-        ("#FF0000", "#000000"),
-        ("#00FF00", "#0000FF")
-    ]
-    
+
+    replacements = [("#FF0000", "#000000"), ("#00FF00", "#0000FF")]
+
     root = replace_svg_palette(root, replacements)
     path = list(root)[0]
-    
+
     assert path.get("fill") == "#000000"
     assert path.get("stroke") == "#0000FF"
 
@@ -107,7 +105,7 @@ def test_serialize_deterministic_svg():
     """Verify serialization output format."""
     svg = f'<svg xmlns="{SVG_NS}" width="10" height="10"><path d="M0 0" /></svg>'
     root = parse_and_validate_svg(svg)
-    
+
     output = serialize_deterministic_svg(root)
     assert output.startswith('<?xml version="1.0" encoding="UTF-8"?>\n')
-    assert '<path' in output
+    assert "<path" in output

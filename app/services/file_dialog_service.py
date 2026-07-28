@@ -1,4 +1,5 @@
 """Service for opening file/directory dialog windows."""
+
 from __future__ import annotations
 
 from typing import Optional
@@ -16,9 +17,7 @@ class FileDialogService:
         self, parent: Optional[QWidget] = None, initial_dir: str = ""
     ) -> Optional[str]:
         """Open single image file dialog. Returns selected path or None."""
-        path, _ = QFileDialog.getOpenFileName(
-            parent, "Select Image", initial_dir, IMAGE_FILTER
-        )
+        path, _ = QFileDialog.getOpenFileName(parent, "Select Image", initial_dir, IMAGE_FILTER)
         return path if path else None
 
     def open_image_files(
@@ -36,9 +35,7 @@ class FileDialogService:
         initial_path: str = "",
     ) -> Optional[str]:
         """Open save SVG dialog. Returns target path or None."""
-        path, _ = QFileDialog.getSaveFileName(
-            parent, "Export SVG", initial_path, SVG_FILTER
-        )
+        path, _ = QFileDialog.getSaveFileName(parent, "Export SVG", initial_path, SVG_FILTER)
         return path if path else None
 
     def select_directory(

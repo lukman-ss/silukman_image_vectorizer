@@ -8,22 +8,23 @@ Handles:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import math
+from dataclasses import dataclass, field
 
 import cv2
 import numpy as np
-
 
 # ---------------------------------------------------------------------------
 # Vector data model
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class VectorPath:
     """A single detected vector path represented as a sequence of (x, y) points."""
-    points: np.ndarray      # shape (N, 2), dtype int32
-    area: float             # contour area in pixels
+
+    points: np.ndarray  # shape (N, 2), dtype int32
+    area: float  # contour area in pixels
     color: tuple[int, int, int] = (30, 144, 255)
     holes: list[np.ndarray] = field(default_factory=list)
 
@@ -35,6 +36,7 @@ class VectorPath:
 @dataclass
 class VectorResult:
     """Container for all vector paths detected in an image."""
+
     paths: list[VectorPath] = field(default_factory=list)
     image_width: int = 0
     image_height: int = 0
@@ -53,10 +55,10 @@ class VectorResult:
 
 from app.config.settings import VectorizationSettings
 
-
 # ---------------------------------------------------------------------------
 # Engine
 # ---------------------------------------------------------------------------
+
 
 def vectorize(
     binary_array: np.ndarray,
@@ -106,7 +108,11 @@ def vectorize(
 
     # 2. Color Quantization & Background Removal
     alpha_mask = None
-    if color_array is not None and color_array.ndim == 3 and color_array.shape[:2] == (height, width):
+    if (
+        color_array is not None
+        and color_array.ndim == 3
+        and color_array.shape[:2] == (height, width)
+    ):
         if color_array.shape[2] == 4:
             alpha_mask = color_array[:, :, 3] > 0
             valid_pixel_mask &= alpha_mask
@@ -123,12 +129,14 @@ def vectorize(
                 target_color_array[0, 0],
                 target_color_array[0, width - 1],
                 target_color_array[height - 1, 0],
-                target_color_array[height - 1, width - 1]
+                target_color_array[height - 1, width - 1],
             ]
             bg_color = np.mean(corners, axis=0).astype(np.uint8)
 
             # Mask out background colors based on Euclidean distance and tolerance
-            dist = np.linalg.norm(target_color_array.astype(np.float32) - bg_color.astype(np.float32), axis=2)
+            dist = np.linalg.norm(
+                target_color_array.astype(np.float32) - bg_color.astype(np.float32), axis=2
+            )
             bg_mask = dist < settings.bg_tolerance
             foreground_mask = ~bg_mask
             if alpha_mask is not None:
@@ -213,9 +221,7 @@ def vectorize(
                 hole_contours.append(contours[hole_index])
                 hole_index = hierarchy[0][hole_index][0]
 
-            area = cv2.contourArea(contour) - sum(
-                cv2.contourArea(hole) for hole in hole_contours
-            )
+            area = cv2.contourArea(contour) - sum(cv2.contourArea(hole) for hole in hole_contours)
             if area < settings.min_area:
                 continue
 
@@ -255,7 +261,7 @@ def vectorize(
         image_width=width,
         image_height=height,
         original_point_count=original_points,
-        simplified_point_count=simplified_points
+        simplified_point_count=simplified_points,
     )
 
 
@@ -326,12 +332,12 @@ def _quantize_colors(
     chunk_size = 50_000
     center_values = centers.astype(np.int32)
     for start in range(0, len(pixels), chunk_size):
-        chunk = pixels[start:start + chunk_size].astype(np.int32)
+        chunk = pixels[start : start + chunk_size].astype(np.int32)
         distances = np.sum(
             (chunk[:, None, :] - center_values[None, :, :]) ** 2,
             axis=2,
         )
-        quantized_labels[start:start + chunk_size] = np.argmin(distances, axis=1)
+        quantized_labels[start : start + chunk_size] = np.argmin(distances, axis=1)
 
     # Median filtering cluster labels removes isolated photo noise while
     # retaining the finite palette and producing coherent vector regions.

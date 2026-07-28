@@ -1,4 +1,5 @@
 """Custom QGraphicsView with synchronized zoom/pan and color-pick support."""
+
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal

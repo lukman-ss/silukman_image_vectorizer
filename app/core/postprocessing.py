@@ -1,6 +1,6 @@
-import xml.etree.ElementTree as ET
 import re
-from typing import Tuple, Dict, Any, List
+import xml.etree.ElementTree as ET
+from typing import Any, Dict, List, Tuple
 
 # Standard SVG Namespace mapping
 SVG_NS = "http://www.w3.org/2000/svg"
@@ -11,17 +11,17 @@ def parse_and_validate_svg(svg_data: str) -> ET.Element:
     """Parses an SVG string into an ElementTree, validating its root."""
     if not svg_data or not svg_data.strip():
         raise ValueError("SVG data is empty.")
-        
+
     try:
         root = ET.fromstring(svg_data)
     except ET.ParseError as e:
         raise ValueError(f"Invalid XML syntax: {e}")
-        
+
     # Validation: the root must be an SVG tag (accounting for namespace)
     tag = root.tag.replace(f"{{{SVG_NS}}}", "")
     if tag.lower() != "svg":
         raise ValueError(f"Root element is not <svg>, got <{tag}>")
-        
+
     return root
 
 
@@ -30,7 +30,7 @@ def calculate_svg_metrics(root: ET.Element) -> Dict[str, int]:
     path_count = 0
     total_elements = 0
     simplified_points = 0
-    
+
     for element in root.iter():
         total_elements += 1
         tag = element.tag.replace(f"{{{SVG_NS}}}", "")
@@ -42,12 +42,12 @@ def calculate_svg_metrics(root: ET.Element) -> Dict[str, int]:
                 coords = re.findall(r"[-+]?(?:\d*\.\d+|\d+)", d_attr)
                 # Heuristic: 2 coordinates = 1 point
                 simplified_points += len(coords) // 2
-                
+
     return {
         "path_count": path_count,
         "total_elements": total_elements,
         "simplified_point_count": simplified_points,
-        "original_point_count": simplified_points * 3  # Based on old heuristic logic
+        "original_point_count": simplified_points * 3,  # Based on old heuristic logic
     }
 
 
@@ -57,10 +57,10 @@ def normalize_dimensions(root: ET.Element) -> ET.Element:
     w = root.get("width")
     h = root.get("height")
     vb = root.get("viewBox")
-    
+
     if not vb and w and h:
         root.set("viewBox", f"0 0 {w} {h}")
-        
+
     return root
 
 
@@ -81,7 +81,7 @@ def optimize_svg(root: ET.Element) -> ET.Element:
                 if parent is not None:
                     parent.remove(g)
                     changed = True
-                
+
     return root
 
 
@@ -92,19 +92,19 @@ def replace_svg_palette(root: ET.Element, replacements: List[Tuple[str, str]]) -
     """
     if not replacements:
         return root
-        
+
     # Normalize replacements to lower case keys, but keep value case
     normalized_replacements = {old.lower(): new for old, new in replacements}
-    
+
     for element in root.iter():
         fill = element.get("fill")
         if fill and fill.lower() in normalized_replacements:
             element.set("fill", normalized_replacements[fill.lower()])
-            
+
         stroke = element.get("stroke")
         if stroke and stroke.lower() in normalized_replacements:
             element.set("stroke", normalized_replacements[stroke.lower()])
-            
+
     return root
 
 

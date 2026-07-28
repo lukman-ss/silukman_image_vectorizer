@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, cast
 
-from PySide6.QtCore import Qt, QEvent
+from PySide6.QtCore import QEvent, QPoint, Qt
 from PySide6.QtGui import (
     QBrush,
     QColor,
@@ -33,7 +33,6 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-from PySide6.QtCore import QPoint
 
 from app.config.settings import DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, VectorizationSettings
 from app.controllers.vectorizer_controller import VectorizerController
@@ -42,11 +41,11 @@ from app.core.vectorization_engine import VectorResult
 from app.services.color_palette import ColorRGB, color_to_hex, extract_dominant_colors
 from app.services.export_service import ExportService
 from app.services.file_dialog_service import FileDialogService
+from app.services.image_loader import ImageInfo
 from app.services.image_loader_service import ImageLoaderService
 from app.services.image_processing_service import ImageProcessingService
 from app.services.settings_service import SettingsService
 from app.services.validation_service import ValidationService
-from app.services.image_loader import ImageInfo
 from app.ui.sync_graphics_view import SyncGraphicsView
 
 
@@ -91,6 +90,7 @@ class MainWindow(QMainWindow):
 
         # ── Engine availability ────────────────────────────────────────────
         from app.core.vectorizer_backend import VTRACER_AVAILABLE
+
         self._controller.vector_settings.engine_type = (
             "VTracer" if VTRACER_AVAILABLE else "OpenCV Legacy"
         )
@@ -102,6 +102,7 @@ class MainWindow(QMainWindow):
         self.setStatusBar(self._create_status_bar())
 
         from app.ui.theme import normalize_theme_mode
+
         saved_theme = normalize_theme_mode(self._settings_service.get_theme())
         self.theme_combo.setCurrentText(saved_theme)
         self._apply_theme(saved_theme)
@@ -205,9 +206,12 @@ class MainWindow(QMainWindow):
         preset_title = QLabel("<b>Quality Preset:</b>")
         self.preset_combo = QComboBox()
         from app.config.preset_manager import PresetManager
+
         available_presets = PresetManager.get_instance().get_available_presets()
         self.preset_combo.addItems(available_presets + ["Custom"])
-        self.preset_combo.setCurrentText("balanced" if "balanced" in available_presets else "Custom")
+        self.preset_combo.setCurrentText(
+            "balanced" if "balanced" in available_presets else "Custom"
+        )
         self.preset_combo.currentTextChanged.connect(self._on_preset_changed)
         preset_layout.addWidget(preset_title)
         preset_layout.addWidget(self.preset_combo)
@@ -223,6 +227,7 @@ class MainWindow(QMainWindow):
         self.engine_combo.addItems(["VTracer", "OpenCV Legacy"])
         self.engine_combo.currentTextChanged.connect(self._on_engine_changed)
         from app.core.vectorizer_backend import VTRACER_AVAILABLE
+
         if not VTRACER_AVAILABLE:
             self.engine_combo.setEnabled(False)
             self.engine_combo.setCurrentText("OpenCV Legacy")
@@ -251,7 +256,9 @@ class MainWindow(QMainWindow):
         self.threshold_slider.valueChanged.connect(self._on_threshold_changed)
         self.threshold_value_label = QLabel("127")
         self.threshold_value_label.setFixedWidth(30)
-        self.threshold_value_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.threshold_value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         slider_layout.addWidget(self.threshold_slider)
         slider_layout.addWidget(self.threshold_value_label)
         thresh_layout.addWidget(thresh_title)
@@ -276,7 +283,9 @@ class MainWindow(QMainWindow):
         self.min_area_slider.valueChanged.connect(self._on_min_area_changed)
         self.min_area_value_label = QLabel("100")
         self.min_area_value_label.setFixedWidth(30)
-        self.min_area_value_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.min_area_value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         min_area_layout.addWidget(self.min_area_slider)
         min_area_layout.addWidget(self.min_area_value_label)
         handpick_layout.addWidget(min_area_title)
@@ -291,7 +300,9 @@ class MainWindow(QMainWindow):
         self.approx_slider.valueChanged.connect(self._on_approx_tolerance_changed)
         self.approx_value_label = QLabel("2.0")
         self.approx_value_label.setFixedWidth(30)
-        self.approx_value_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.approx_value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         approx_layout.addWidget(self.approx_slider)
         approx_layout.addWidget(self.approx_value_label)
         handpick_layout.addWidget(approx_title)
@@ -327,7 +338,9 @@ class MainWindow(QMainWindow):
         self.bg_tolerance_slider.valueChanged.connect(self._on_bg_tolerance_changed)
         self.bg_tolerance_value_label = QLabel("20")
         self.bg_tolerance_value_label.setFixedWidth(30)
-        self.bg_tolerance_value_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.bg_tolerance_value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         bg_tol_slider_layout.addWidget(self.bg_tolerance_slider)
         bg_tol_slider_layout.addWidget(self.bg_tolerance_value_label)
         bg_tol_layout.addWidget(bg_tol_title)
@@ -356,7 +369,9 @@ class MainWindow(QMainWindow):
         self.color_count_slider.valueChanged.connect(self._on_color_count_changed)
         self.color_count_value_label = QLabel("8")
         self.color_count_value_label.setFixedWidth(30)
-        self.color_count_value_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.color_count_value_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
         color_count_slider_layout.addWidget(self.color_count_slider)
         color_count_slider_layout.addWidget(self.color_count_value_label)
         color_count_layout.addWidget(color_count_title)
@@ -372,13 +387,17 @@ class MainWindow(QMainWindow):
         vtracer_color_mode_title = QLabel("<b>VTracer Color:</b>")
         self.vtracer_color_mode_combo = QComboBox()
         self.vtracer_color_mode_combo.addItems(["Color", "Black & White"])
-        self.vtracer_color_mode_combo.currentTextChanged.connect(self._on_vtracer_color_mode_changed)
+        self.vtracer_color_mode_combo.currentTextChanged.connect(
+            self._on_vtracer_color_mode_changed
+        )
         vtracer_params_layout.addWidget(vtracer_color_mode_title)
         vtracer_params_layout.addWidget(self.vtracer_color_mode_combo)
         vtracer_hierarchical_title = QLabel("<b>VTracer Layers:</b>")
         self.vtracer_hierarchical_combo = QComboBox()
         self.vtracer_hierarchical_combo.addItems(["Stacked", "Cutout"])
-        self.vtracer_hierarchical_combo.currentTextChanged.connect(self._on_vtracer_hierarchical_changed)
+        self.vtracer_hierarchical_combo.currentTextChanged.connect(
+            self._on_vtracer_hierarchical_changed
+        )
         vtracer_params_layout.addWidget(vtracer_hierarchical_title)
         vtracer_params_layout.addWidget(self.vtracer_hierarchical_combo)
         vtracer_mode_title = QLabel("<b>VTracer Mode:</b>")
@@ -397,7 +416,7 @@ class MainWindow(QMainWindow):
         cast(QVBoxLayout, controls.layout()).addWidget(self.handpick_group)
 
         # Engine-specific visibility
-        is_vtracer = (self._controller.vector_settings.engine_type == "VTracer")
+        is_vtracer = self._controller.vector_settings.engine_type == "VTracer"
         self.threshold_group.setVisible(not is_vtracer)
         self.smoothing_checkbox.setVisible(not is_vtracer)
         self.invert_checkbox.setVisible(not is_vtracer)
@@ -585,7 +604,9 @@ class MainWindow(QMainWindow):
         except Exception as error:
             self.export_button.setEnabled(False)
             self.statusBar().showMessage("Vector preview rendering failed.")
-            QMessageBox.warning(self, "Preview Render Error", f"Failed to render vector preview:\n{error}")
+            QMessageBox.warning(
+                self, "Preview Render Error", f"Failed to render vector preview:\n{error}"
+            )
             return
 
         self.processed_pixmap = QPixmap.fromImage(vector_image)
@@ -594,20 +615,26 @@ class MainWindow(QMainWindow):
         if getattr(result, "fallback_error", None):
             self.statusBar().showMessage("VTracer failed! Fallback to OpenCV Legacy.")
             QMessageBox.warning(
-                self, "VTracer Engine Fallback",
-                f"VTracer failed to vectorize the image. Falling back to OpenCV Legacy engine.\n\nError details:\n{result.fallback_error}"
+                self,
+                "VTracer Engine Fallback",
+                f"VTracer failed to vectorize the image. Falling back to OpenCV Legacy engine.\n\nError details:\n{result.fallback_error}",
             )
 
         from app.core.vectorizer_backend import VTracerVectorResult
+
         engine_name = "VTracer" if isinstance(result, VTracerVectorResult) else "OpenCV Legacy"
-        is_large = isinstance(result, VTracerVectorResult) and len(result.svg_data) > 1.5 * 1024 * 1024
+        is_large = (
+            isinstance(result, VTracerVectorResult) and len(result.svg_data) > 1.5 * 1024 * 1024
+        )
         warning_suffix = " (Warn: SVG is complex/large!)" if is_large else ""
 
         if result.path_count == 0:
             self.statusBar().showMessage(f"[{engine_name}] No paths detected. Adjust settings.")
             self.export_button.setEnabled(False)
         else:
-            noise_hint = " (too noisy? Try increasing Min Area)." if result.path_count > 2000 else "."
+            noise_hint = (
+                " (too noisy? Try increasing Min Area)." if result.path_count > 2000 else "."
+            )
             self.statusBar().showMessage(
                 f"[{engine_name}] Vectorized: {result.path_count} paths{noise_hint} "
                 f"Points: {result.simplified_point_count} (reduced from {result.original_point_count}).{warning_suffix}"
@@ -631,7 +658,9 @@ class MainWindow(QMainWindow):
             source_name = self.current_image_info.file_name if self.current_image_info else None
             output_path = self._controller.export_svg(file_path, source_name)
             self.statusBar().showMessage(f"Successfully exported to {output_path.name}")
-            QMessageBox.information(self, "Export Complete", f"Successfully exported SVG to:\n{output_path}")
+            QMessageBox.information(
+                self, "Export Complete", f"Successfully exported SVG to:\n{output_path}"
+            )
         except Exception as error:
             self.statusBar().showMessage("Export failed.")
             QMessageBox.critical(self, "Export Error", f"Failed to export SVG:\n{error}")
@@ -650,13 +679,21 @@ class MainWindow(QMainWindow):
                 self.batch_file_list.addItem(batch_file.file_name)
             else:
                 invalid_count += 1
-                self.batch_file_list.addItem(f"{batch_file.file_name} - Invalid: {batch_file.error}")
+                self.batch_file_list.addItem(
+                    f"{batch_file.file_name} - Invalid: {batch_file.error}"
+                )
 
         valid_count = len(self._controller.state.batch_files) - invalid_count
         self.process_batch_button.setEnabled(valid_count > 0)
-        self.statusBar().showMessage(f"Batch selection: {valid_count} valid, {invalid_count} invalid.")
+        self.statusBar().showMessage(
+            f"Batch selection: {valid_count} valid, {invalid_count} invalid."
+        )
         if invalid_count:
-            QMessageBox.warning(self, "Invalid Batch Images", f"{invalid_count} selected image(s) could not be validated.")
+            QMessageBox.warning(
+                self,
+                "Invalid Batch Images",
+                f"{invalid_count} selected image(s) could not be validated.",
+            )
 
     def _process_batch(self) -> None:
         if self._controller.is_batch_running():
@@ -680,7 +717,9 @@ class MainWindow(QMainWindow):
             on_finished=self._on_batch_thread_finished,
         )
 
-    def _on_batch_progress(self, index: int, total_count: int, filename: str, success: bool) -> None:
+    def _on_batch_progress(
+        self, index: int, total_count: int, filename: str, success: bool
+    ) -> None:
         status = "Success" if success else "Failed"
         self.statusBar().showMessage(f"Processing [{index}/{total_count}]: {filename} ({status})")
 
@@ -688,17 +727,26 @@ class MainWindow(QMainWindow):
         if isinstance(result, tuple) and len(result) >= 2:
             success_count, failed_count = result[0], result[1]
             errors = result[2] if len(result) == 3 else {}
-            self.statusBar().showMessage(f"Batch complete. Success: {success_count}, Failed: {failed_count}.")
+            self.statusBar().showMessage(
+                f"Batch complete. Success: {success_count}, Failed: {failed_count}."
+            )
             error_details = ""
             if errors:
-                error_details = "\n\nFailure Details:\n" + "\n".join(f"- {f}: {e}" for f, e in errors.items())
+                error_details = "\n\nFailure Details:\n" + "\n".join(
+                    f"- {f}: {e}" for f, e in errors.items()
+                )
             QMessageBox.information(
-                self, "Batch Processing Complete",
-                f"Batch processing finished!\n\nSuccessfully exported: {success_count} SVGs\nFailed: {failed_count} images{error_details}"
+                self,
+                "Batch Processing Complete",
+                f"Batch processing finished!\n\nSuccessfully exported: {success_count} SVGs\nFailed: {failed_count} images{error_details}",
             )
         else:
             self.statusBar().showMessage("Batch process failed.")
-            QMessageBox.critical(self, "Batch Processing Error", f"An error occurred during batch processing:\n{result}")
+            QMessageBox.critical(
+                self,
+                "Batch Processing Error",
+                f"An error occurred during batch processing:\n{result}",
+            )
 
     def _on_batch_thread_finished(self) -> None:
         self.process_batch_button.setEnabled(
@@ -786,7 +834,7 @@ class MainWindow(QMainWindow):
 
     def _on_engine_changed(self, text: str) -> None:
         self._controller.vector_settings.engine_type = text
-        is_vtracer = (text == "VTracer")
+        is_vtracer = text == "VTracer"
         self.threshold_group.setVisible(not is_vtracer)
         self.smoothing_checkbox.setVisible(not is_vtracer)
         self.invert_checkbox.setVisible(not is_vtracer)
@@ -795,7 +843,9 @@ class MainWindow(QMainWindow):
         self._run_vectorization()
 
     def _on_vtracer_color_mode_changed(self, text: str) -> None:
-        self._controller.vector_settings.vtracer.colormode = "color" if text == "Color" else "binary"
+        self._controller.vector_settings.vtracer.colormode = (
+            "color" if text == "Color" else "binary"
+        )
         self._set_preset_custom()
         self._run_vectorization()
 
@@ -822,6 +872,7 @@ class MainWindow(QMainWindow):
         if preset_name == "Custom":
             return
         from app.config.preset_manager import PresetManager
+
         try:
             config = PresetManager.get_instance().get_preset_config(preset_name)
         except ValueError:
@@ -830,6 +881,7 @@ class MainWindow(QMainWindow):
         self._updating_from_preset = True
         try:
             import copy
+
             self._controller.vector_settings = copy.deepcopy(config)
 
             self.threshold_slider.blockSignals(True)
@@ -875,25 +927,36 @@ class MainWindow(QMainWindow):
             self.bg_tolerance_slider.blockSignals(False)
 
             self.vtracer_color_mode_combo.blockSignals(True)
-            self.vtracer_color_mode_combo.setCurrentText("Color" if config.colormode == "color" else "Black & White")
+            self.vtracer_color_mode_combo.setCurrentText(
+                "Color" if config.colormode == "color" else "Black & White"
+            )
             self.vtracer_color_mode_combo.blockSignals(False)
 
             self.vtracer_hierarchical_combo.blockSignals(True)
-            self.vtracer_hierarchical_combo.setCurrentText("Stacked" if config.hierarchical == "stacked" else "Cutout")
+            self.vtracer_hierarchical_combo.setCurrentText(
+                "Stacked" if config.hierarchical == "stacked" else "Cutout"
+            )
             self.vtracer_hierarchical_combo.blockSignals(False)
 
             self.vtracer_mode_combo.blockSignals(True)
-            vt_mode = "Spline" if config.mode == "spline" else ("Polygon" if config.mode == "polygon" else "Pixel")
+            vt_mode = (
+                "Spline"
+                if config.mode == "spline"
+                else ("Polygon" if config.mode == "polygon" else "Pixel")
+            )
             self.vtracer_mode_combo.setCurrentText(vt_mode)
             self.vtracer_mode_combo.blockSignals(False)
         finally:
             self._updating_from_preset = False
 
         if self.current_image_info:
-            self._controller.start_processing(self.current_image_info.file_path, config.threshold_val)
+            self._controller.start_processing(
+                self.current_image_info.file_path, config.threshold_val
+            )
 
     def _on_theme_changed(self, theme_name: str) -> None:
         from app.ui.theme import normalize_theme_mode
+
         theme_name = normalize_theme_mode(theme_name)
         self._settings_service.set_theme(theme_name)
         self._apply_theme(theme_name)
@@ -904,6 +967,7 @@ class MainWindow(QMainWindow):
         self._is_applying_theme = True
         try:
             from app.ui.theme import get_stylesheet, is_system_dark_mode, normalize_theme_mode
+
             theme_name = normalize_theme_mode(theme_name)
             is_dark = theme_name == "Dark" or (theme_name == "System" and is_system_dark_mode())
             stylesheet = get_stylesheet(is_dark)
@@ -955,7 +1019,11 @@ class MainWindow(QMainWindow):
             replacement_hex = color_to_hex(replacement_color)
             button.setFixedSize(32, 32)
             button.setText("✓" if source_color in self.palette_replacements else "")
-            button.setToolTip(f"{source_hex} → {replacement_hex}" if source_color in self.palette_replacements else source_hex)
+            button.setToolTip(
+                f"{source_hex} → {replacement_hex}"
+                if source_color in self.palette_replacements
+                else source_hex
+            )
             button.setStyleSheet(
                 "QPushButton {"
                 f"background-color: {replacement_hex};"
@@ -965,13 +1033,17 @@ class MainWindow(QMainWindow):
                 "font-weight: bold;"
                 "}"
             )
-            button.clicked.connect(lambda checked=False, color=source_color: self._choose_palette_replacement(color))
+            button.clicked.connect(
+                lambda checked=False, color=source_color: self._choose_palette_replacement(color)
+            )
             self.palette_grid.addWidget(button, index // 5, index % 5)
             self.palette_buttons.append(button)
 
     def _choose_palette_replacement(self, source_color: ColorRGB) -> None:
         current_color = self.palette_replacements.get(source_color, source_color)
-        selected = QColorDialog.getColor(QColor(*current_color), self, f"Replace {color_to_hex(source_color)}")
+        selected = QColorDialog.getColor(
+            QColor(*current_color), self, f"Replace {color_to_hex(source_color)}"
+        )
         if not selected.isValid():
             return
         replacement = (selected.red(), selected.green(), selected.blue())
@@ -979,9 +1051,13 @@ class MainWindow(QMainWindow):
             self.palette_replacements.pop(source_color, None)
         else:
             self.palette_replacements[source_color] = replacement
-        self._controller.vector_settings.palette_replacements = list(self.palette_replacements.items())
+        self._controller.vector_settings.palette_replacements = list(
+            self.palette_replacements.items()
+        )
         self._update_palette_display()
-        self.statusBar().showMessage(f"Palette color updated: {color_to_hex(source_color)} → {color_to_hex(replacement)}")
+        self.statusBar().showMessage(
+            f"Palette color updated: {color_to_hex(source_color)} → {color_to_hex(replacement)}"
+        )
         self._run_vectorization()
 
     def _toggle_palette_pick_mode(self, checked: bool) -> None:
@@ -1041,7 +1117,12 @@ class MainWindow(QMainWindow):
     def _render_vector_result(self, vector_result: VectorResult) -> QImage:
         """Draw vector paths on a QImage (or overlay on the original image)."""
         from app.core.vectorizer_backend import VTracerVectorResult
-        overlay = hasattr(self, "overlay_checkbox") and self.overlay_checkbox.isChecked() and not self.original_pixmap.isNull()
+
+        overlay = (
+            hasattr(self, "overlay_checkbox")
+            and self.overlay_checkbox.isChecked()
+            and not self.original_pixmap.isNull()
+        )
 
         if isinstance(vector_result, VTracerVectorResult):
             width = max(vector_result.image_width, 1)
@@ -1052,6 +1133,7 @@ class MainWindow(QMainWindow):
                 image = QImage(width, height, QImage.Format.Format_ARGB32)
                 image.fill(Qt.GlobalColor.white)
             from PySide6.QtSvg import QSvgRenderer
+
             renderer = QSvgRenderer(vector_result.svg_data.encode("utf-8"))
             if not renderer.isValid():
                 raise ValueError("Generated SVG is invalid and cannot be rendered.")
@@ -1091,7 +1173,9 @@ class MainWindow(QMainWindow):
                 painter_path.setFillRule(Qt.FillRule.OddEvenFill)
                 painter_path.addPolygon(QPolygon([QPoint(int(pt[0]), int(pt[1])) for pt in points]))
                 for hole in path.holes:
-                    painter_path.addPolygon(QPolygon([QPoint(int(pt[0]), int(pt[1])) for pt in hole]))
+                    painter_path.addPolygon(
+                        QPolygon([QPoint(int(pt[0]), int(pt[1])) for pt in hole])
+                    )
                 painter.drawPath(painter_path)
         finally:
             painter.end()
@@ -1129,7 +1213,12 @@ class MainWindow(QMainWindow):
             view_size = self.original_view.viewport().size()
             pix_size = self.original_pixmap.size()
             if pix_size.width() > 0 and pix_size.height() > 0:
-                zoom = min(view_size.width() / pix_size.width(), view_size.height() / pix_size.height()) * 0.95
+                zoom = (
+                    min(
+                        view_size.width() / pix_size.width(), view_size.height() / pix_size.height()
+                    )
+                    * 0.95
+                )
                 self.original_view.applyZoom(zoom)
                 self.result_view.applyZoom(zoom)
                 self.raster_view.applyZoom(zoom)

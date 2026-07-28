@@ -1,18 +1,22 @@
 from __future__ import annotations
+
 import os
-import cv2
-import numpy as np
 import re
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+import cv2
+import numpy as np
+
 from app.config.settings import VectorizationSettings
-from app.core.vectorization_engine import VectorResult, vectorize as opencv_vectorize
+from app.core.vectorization_engine import VectorResult
+from app.core.vectorization_engine import vectorize as opencv_vectorize
 
 # Safe import handling for vtracer
 try:
     import vtracer
+
     VTRACER_AVAILABLE = True
 except ImportError:
     vtracer = None
@@ -22,6 +26,7 @@ except ImportError:
 @dataclass
 class VTracerVectorResult(VectorResult):
     """Subclass of VectorResult that wraps raw SVG string from vtracer."""
+
     svg_data: str = ""
     _path_count: int = 0
 
@@ -58,7 +63,12 @@ class VectorizerBackend:
 class OpenCVVectorizerBackend(VectorizerBackend):
     """Legacy vectorization backend using OpenCV contour detection and Douglas-Peucker."""
 
-    def vectorize(self, input_path: str, settings: VectorizationSettings, thresholded_array: np.ndarray | None = None) -> VectorResult:
+    def vectorize(
+        self,
+        input_path: str,
+        settings: VectorizationSettings,
+        thresholded_array: np.ndarray | None = None,
+    ) -> VectorResult:
         if thresholded_array is None:
             # We assume grayscale thresholding was already done by preprocessing and saved to input_path,
             # or we do it here if missing. Actually, since we orchestrate it, if it's missing we just read and threshold.
@@ -97,7 +107,9 @@ class VTracerVectorizerBackend(VectorizerBackend):
         thresholded_array: np.ndarray | None = None,
     ) -> VectorResult:
         if not VTRACER_AVAILABLE or vtracer is None:
-            raise RuntimeError("VTracer dependency is missing. Fallback to OpenCV Legacy or install vtracer.")
+            raise RuntimeError(
+                "VTracer dependency is missing. Fallback to OpenCV Legacy or install vtracer."
+            )
 
         if not input_path:
             raise ValueError("VTracer requires a source image path.")
@@ -113,17 +125,29 @@ class VTracerVectorizerBackend(VectorizerBackend):
             # Map settings to vtracer parameters
             kwargs = {}
             vt_settings = getattr(settings, "vtracer", None) or settings
-            
+
             kwargs["colormode"] = getattr(vt_settings, "colormode", "color")
             kwargs["hierarchical"] = getattr(vt_settings, "hierarchical", "stacked")
             kwargs["mode"] = getattr(vt_settings, "mode", "spline")
-            kwargs["filter_speckle"] = _clamp_int(getattr(vt_settings, "filter_speckle", 4), 0, 1024)
+            kwargs["filter_speckle"] = _clamp_int(
+                getattr(vt_settings, "filter_speckle", 4), 0, 1024
+            )
             kwargs["color_precision"] = _clamp_int(getattr(vt_settings, "color_precision", 6), 1, 8)
-            kwargs["layer_difference"] = _clamp_int(getattr(vt_settings, "layer_difference", 16), 0, 255)
-            kwargs["corner_threshold"] = _clamp_int(getattr(vt_settings, "corner_threshold", 60), 0, 180)
-            kwargs["length_threshold"] = _clamp_float(getattr(vt_settings, "length_threshold", 4.0), 3.5, 10.0)
-            kwargs["max_iterations"] = _clamp_int(getattr(vt_settings, "max_iterations", 10), 1, 100)
-            kwargs["splice_threshold"] = _clamp_int(getattr(vt_settings, "splice_threshold", 45), 0, 180)
+            kwargs["layer_difference"] = _clamp_int(
+                getattr(vt_settings, "layer_difference", 16), 0, 255
+            )
+            kwargs["corner_threshold"] = _clamp_int(
+                getattr(vt_settings, "corner_threshold", 60), 0, 180
+            )
+            kwargs["length_threshold"] = _clamp_float(
+                getattr(vt_settings, "length_threshold", 4.0), 3.5, 10.0
+            )
+            kwargs["max_iterations"] = _clamp_int(
+                getattr(vt_settings, "max_iterations", 10), 1, 100
+            )
+            kwargs["splice_threshold"] = _clamp_int(
+                getattr(vt_settings, "splice_threshold", 45), 0, 180
+            )
             kwargs["path_precision"] = _clamp_int(getattr(vt_settings, "path_precision", 8), 0, 16)
 
             # Execute convert
@@ -137,16 +161,19 @@ class VTracerVectorizerBackend(VectorizerBackend):
 
             # Retrieve dimensions
             from PIL import Image
+
             try:
                 with Image.open(source_path) as img_pil:
                     w, h = img_pil.size
             except Exception:
                 img_dims = cv2.imread(str(source_path))
-                h, w = (img_dims.shape[0], img_dims.shape[1]) if img_dims is not None else (400, 400)
+                h, w = (
+                    (img_dims.shape[0], img_dims.shape[1]) if img_dims is not None else (400, 400)
+                )
 
             # Parse path counts and point count heuristics using postprocessing
-            from app.core.postprocessing import parse_and_validate_svg, calculate_svg_metrics
-            
+            from app.core.postprocessing import calculate_svg_metrics, parse_and_validate_svg
+
             try:
                 root = parse_and_validate_svg(svg_data)
                 metrics = calculate_svg_metrics(root)
@@ -163,7 +190,7 @@ class VTracerVectorizerBackend(VectorizerBackend):
                 original_point_count=original_points,
                 simplified_point_count=simplified_points,
                 svg_data=svg_data,
-                _path_count=path_count
+                _path_count=path_count,
             )
             return result
 

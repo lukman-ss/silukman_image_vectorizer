@@ -28,9 +28,9 @@ class SyntheticGenerator:
     def _save(self, img: Image.Image, name: str, params: dict):
         filepath = self.output_dir / f"{name}.png"
         img.save(filepath, "PNG")
-        
+
         sha256 = get_sha256(str(filepath))
-        
+
         meta = {
             "image_id": f"synth_{name}",
             "filename": f"{name}.png",
@@ -39,9 +39,9 @@ class SyntheticGenerator:
                 "width": img.width,
                 "height": img.height,
                 "mode": img.mode,
-                "type": name
+                "type": name,
             },
-            "sha256": sha256
+            "sha256": sha256,
         }
         self.metadata.append(meta)
         print(f"Generated {name}.png (SHA256: {sha256[:8]}...)")
@@ -109,15 +109,15 @@ class SyntheticGenerator:
     def gen_transparent(self):
         img = Image.new("RGBA", (256, 256), (255, 255, 255, 0))
         # Draw on separate images and alpha composite
-        layer1 = Image.new("RGBA", (256, 256), (0,0,0,0))
+        layer1 = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
         ImageDraw.Draw(layer1).ellipse([40, 40, 160, 160], fill=(255, 0, 0, 128))
-        
-        layer2 = Image.new("RGBA", (256, 256), (0,0,0,0))
+
+        layer2 = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
         ImageDraw.Draw(layer2).ellipse([96, 40, 216, 160], fill=(0, 255, 0, 128))
-        
-        layer3 = Image.new("RGBA", (256, 256), (0,0,0,0))
+
+        layer3 = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
         ImageDraw.Draw(layer3).ellipse([68, 96, 188, 216], fill=(0, 0, 255, 128))
-        
+
         img = Image.alpha_composite(img, layer1)
         img = Image.alpha_composite(img, layer2)
         img = Image.alpha_composite(img, layer3)
@@ -135,7 +135,7 @@ class SyntheticGenerator:
             x = 128 + int(r * math.cos(rad))
             y = 128 + int(r * math.sin(rad))
             draw.point((x, y), fill=(0, 0, 0, 255))
-            draw.point((x+1, y), fill=(0, 0, 0, 255))
+            draw.point((x + 1, y), fill=(0, 0, 0, 255))
         self._save(img, "noisy_edges", {"noise_level": 5})
 
     def gen_overlapping(self):
@@ -149,7 +149,7 @@ class SyntheticGenerator:
     def gen_monochrome(self):
         img = Image.new("1", (256, 256), 1)  # 1-bit mode, 1=white
         draw = ImageDraw.Draw(img)
-        draw.ellipse([30, 30, 226, 226], fill=0) # 0=black
+        draw.ellipse([30, 30, 226, 226], fill=0)  # 0=black
         draw.rectangle([80, 80, 176, 176], fill=1)
         draw.polygon([(128, 50), (100, 100), (156, 100)], fill=1)
         self._save(img, "monochrome_silhouette", {"mode": "1-bit"})
@@ -165,26 +165,28 @@ class SyntheticGenerator:
         self.gen_noisy_edges()
         self.gen_overlapping()
         self.gen_monochrome()
-        
+
         # Save manifest
         manifest_path = self.output_dir / "synthetic_manifest.json"
         with open(manifest_path, "w") as f:
-            json.dump({
-                "seed": self.seed,
-                "purpose": "regression_testing",
-                "images": self.metadata
-            }, f, indent=2)
+            json.dump(
+                {"seed": self.seed, "purpose": "regression_testing", "images": self.metadata},
+                f,
+                indent=2,
+            )
         print(f"Saved manifest to {manifest_path}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Synthetic Dataset Generator")
     parser.add_argument("--output", default="benchmark/synthetic", help="Output directory")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
     args = parser.parse_args()
-    
+
     generator = SyntheticGenerator(args.output, args.seed)
     generator.generate_all()
     print("Done generating synthetic dataset.")
+
 
 if __name__ == "__main__":
     main()

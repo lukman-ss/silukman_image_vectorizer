@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0] - 2026-07-28
+
+### Added
+- **Code Quality (FASE 12)**:
+  - Standardized codebase with Black and Isort formatters.
+  - Added robust type hints (PEP 484) to core components and benchmark runner.
+  - Implemented structured JSON logging (`app/core/logging.py`) capturing metadata (timestamp, level, run_id, backend, duration).
+  - Defined explicit exception hierarchy (`SilukmanError` and subclasses) for clearer error classification in CLI/GUI/Benchmarks.
+  - Conducted Determinism Audit across the pipeline (file ordering, timestamps, RNG seeding).
+
+### Fixed
+- Fixed GitHub Actions test dependencies to install `[research]` extras required for benchmark validation (`yaml`, `scipy`).
+- Fixed Windows CI pipeline invoking `PYTHONPATH` incompatibly.
+
 ## [1.12.0] - 2026-07-28
 
 ### Added

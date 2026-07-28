@@ -1,6 +1,8 @@
 import pytest
+
 from app.config.preset_manager import PresetManager
 from benchmark.runner.config_schema import BenchmarkConfig
+
 
 def test_preset_loading():
     pm = PresetManager.get_instance()
@@ -8,7 +10,7 @@ def test_preset_loading():
     assert "balanced" in presets
     assert "low_complexity" in presets
     assert "high_fidelity" in presets
-    
+
     balanced = pm.get_preset_config("balanced")
     assert hasattr(balanced, "colormode")
     assert hasattr(balanced, "hierarchical")
@@ -21,6 +23,7 @@ def test_preset_loading():
     assert hasattr(balanced, "max_iterations")
     assert hasattr(balanced, "splice_threshold")
     assert hasattr(balanced, "path_precision")
+
 
 def test_config_validation(tmp_path):
     valid_yaml = """
@@ -39,11 +42,10 @@ metrics:
 """
     cfg_file = tmp_path / "valid.yaml"
     cfg_file.write_text(valid_yaml)
-    
+
     cfg = BenchmarkConfig.from_yaml(str(cfg_file))
     assert cfg.experiment.id == "test-123"
     assert cfg.dataset.manifest == "dataset.csv"
     assert "silukman" in cfg.backends
     assert "balanced" in cfg.presets
     assert "ssim" in cfg.metrics
-

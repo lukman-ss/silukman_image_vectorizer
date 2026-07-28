@@ -1,4 +1,5 @@
 """Service for exporting vector results to SVG files."""
+
 from __future__ import annotations
 
 import os
@@ -6,8 +7,8 @@ from pathlib import Path
 from typing import Optional
 
 from app.core.vectorization_engine import VectorResult
-from app.services.svg_exporter import export_svg
 from app.services.image_loader import ImageInfo
+from app.services.svg_exporter import export_svg
 
 
 class ExportService:

@@ -1,6 +1,9 @@
 import sys
+
 import pytest
-from benchmark.runner.process_utils import run_isolated_process, ProcessExecutionError
+
+from benchmark.runner.process_utils import ProcessExecutionError, run_isolated_process
+
 
 def test_successful_executable():
     # 'python -c "print(\'hello\')"' should succeed
@@ -9,12 +12,14 @@ def test_successful_executable():
     assert exit_code == 0
     assert "hello" in stdout
 
+
 def test_failed_executable():
     # Executable doesn't exist
     cmd = ["/path/to/some/nonexistent/binary_xyz_123"]
     with pytest.raises(ProcessExecutionError) as exc:
         run_isolated_process(cmd, timeout_sec=5)
     assert "Executable not found" in str(exc.value)
+
 
 def test_dummy_timeout():
     # Process that sleeps forever

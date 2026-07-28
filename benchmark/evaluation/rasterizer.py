@@ -1,7 +1,8 @@
 import os
+
 import PySide6
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QImage, QPainter, QColor
+from PySide6.QtGui import QColor, QImage, QPainter
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import QApplication
 
@@ -17,7 +18,7 @@ if QApplication.instance() is None:
 class SVGRasterizer:
     """
     Rasterizes SVG files back to pixel format for quality evaluation.
-    
+
     Rationale for PySide6:
     We use PySide6.QtSvg because it is already a core dependency of the project.
     Alternative like CairoSVG would require installing native libcairo binaries
@@ -35,38 +36,32 @@ class SVGRasterizer:
         output_path: str,
         target_width: int,
         target_height: int,
-        bg_color: tuple = (0, 0, 0, 0)
+        bg_color: tuple = (0, 0, 0, 0),
     ) -> dict:
         """
         Rasterizes the SVG to a PNG file.
-        
+
         Args:
             svg_path: Path to input SVG.
             output_path: Path to output PNG.
             target_width: Desired output width.
             target_height: Desired output height.
             bg_color: RGBA tuple for the background color (default transparent).
-            
+
         Returns:
             dict containing metadata about the rasterization process.
         """
         if not os.path.exists(svg_path):
-            return {
-                "success": False,
-                "error": f"File not found: {svg_path}"
-            }
+            return {"success": False, "error": f"File not found: {svg_path}"}
 
         try:
             renderer = QSvgRenderer(svg_path)
             if not renderer.isValid():
-                return {
-                    "success": False,
-                    "error": "Invalid SVG format or parsing failed."
-                }
+                return {"success": False, "error": "Invalid SVG format or parsing failed."}
 
             # Create an image with ARGB32 to support alpha transparency
             image = QImage(target_width, target_height, QImage.Format.Format_ARGB32)
-            
+
             # Consistent background handling
             r, g, b, a = bg_color
             image.fill(QColor(r, g, b, a))
@@ -77,18 +72,15 @@ class SVGRasterizer:
             painter.setRenderHint(QPainter.RenderHint.Antialiasing)
             painter.setRenderHint(QPainter.RenderHint.TextAntialiasing)
             painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
-            
+
             renderer.render(painter)
             painter.end()
 
             # Save as PNG
             saved = image.save(output_path, "PNG")
-            
+
             if not saved:
-                return {
-                    "success": False,
-                    "error": f"Failed to save image to {output_path}"
-                }
+                return {"success": False, "error": f"Failed to save image to {output_path}"}
 
             return {
                 "success": True,
@@ -97,11 +89,8 @@ class SVGRasterizer:
                 "output_width": target_width,
                 "output_height": target_height,
                 "background_rgba": bg_color,
-                "output_path": output_path
+                "output_path": output_path,
             }
-            
+
         except Exception as e:
-            return {
-                "success": False,
-                "error": str(e)
-            }
+            return {"success": False, "error": str(e)}

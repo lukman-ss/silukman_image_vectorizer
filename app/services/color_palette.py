@@ -5,7 +5,6 @@ from __future__ import annotations
 import cv2
 import numpy as np
 
-
 ColorRGB = tuple[int, int, int]
 ColorReplacement = tuple[ColorRGB, ColorRGB]
 

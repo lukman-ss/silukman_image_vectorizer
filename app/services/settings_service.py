@@ -1,4 +1,5 @@
 """Service for reading and writing persistent application settings."""
+
 from __future__ import annotations
 
 from PySide6.QtCore import QSettings

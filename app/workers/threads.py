@@ -1,4 +1,5 @@
 """Background worker threads for image processing, vectorization, and batch ops."""
+
 from __future__ import annotations
 
 import copy
@@ -25,6 +26,7 @@ class ImageProcessorThread(QThread):
     def run(self) -> None:
         try:
             import cv2
+
             from app.core.preprocessing import apply_grayscale_threshold
 
             img = cv2.imread(self.file_path, cv2.IMREAD_UNCHANGED)

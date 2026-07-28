@@ -1,4 +1,5 @@
 """Service for validating user inputs and file paths."""
+
 from __future__ import annotations
 
 import os

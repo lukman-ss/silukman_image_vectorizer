@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import sys
+
 import vtracer
 
 from benchmark.evaluation.performance_metrics import PerformanceTracker
@@ -13,13 +14,13 @@ from benchmark.evaluation.performance_metrics import PerformanceTracker
 class VTracerBaselineRunner:
     """
     Direct VTracer baseline runner.
-    
-    Purpose: 
-    To evaluate the bare VTracer performance and output quality WITHOUT 
-    Silukman's preprocessing (blur, quantization, edge-preservation, etc.) 
-    and post-processing pipelines. This ensures we can measure the exact 
+
+    Purpose:
+    To evaluate the bare VTracer performance and output quality WITHOUT
+    Silukman's preprocessing (blur, quantization, edge-preservation, etc.)
+    and post-processing pipelines. This ensures we can measure the exact
     contribution of the Silukman pipeline.
-    
+
     Parameter Mapping:
     Silukman Config -> VTracer Parameter:
     - colormode -> colormode
@@ -33,7 +34,7 @@ class VTracerBaselineRunner:
     - max_iterations -> max_iterations
     - splice_threshold -> splice_threshold
     - path_precision -> path_precision
-    
+
     [UNMAPPED PARAMETERS - Silukman Exclusive]
     - engine_type
     - color_mode (the enum string)
@@ -42,12 +43,14 @@ class VTracerBaselineRunner:
     - remove_background (Preprocessing step is skipped)
     - bg_tolerance (Preprocessing step is skipped)
     """
-    
+
     def __init__(self):
         self.tracker = PerformanceTracker()
-        self.vtracer_version = vtracer.__version__ if hasattr(vtracer, '__version__') else "unknown"
+        self.vtracer_version = vtracer.__version__ if hasattr(vtracer, "__version__") else "unknown"
 
-    def get_preset_config(self, preset_name: str, presets_path: str = "app/config/presets.json") -> dict:
+    def get_preset_config(
+        self, preset_name: str, presets_path: str = "app/config/presets.json"
+    ) -> dict:
         with open(presets_path, "r", encoding="utf-8") as f:
             data = json.load(f)
             if preset_name not in data["presets"]:
@@ -57,12 +60,19 @@ class VTracerBaselineRunner:
     def extract_vtracer_params(self, silukman_config: dict) -> dict:
         """Extracts only the parameters native to VTracer."""
         vtracer_keys = [
-            "colormode", "hierarchical", "mode", "filter_speckle",
-            "color_precision", "layer_difference", "corner_threshold",
-            "length_threshold", "max_iterations", "splice_threshold",
-            "path_precision"
+            "colormode",
+            "hierarchical",
+            "mode",
+            "filter_speckle",
+            "color_precision",
+            "layer_difference",
+            "corner_threshold",
+            "length_threshold",
+            "max_iterations",
+            "splice_threshold",
+            "path_precision",
         ]
-        
+
         params = {}
         for k in vtracer_keys:
             if k in silukman_config:
@@ -79,37 +89,37 @@ class VTracerBaselineRunner:
             return {"error": str(e)}
 
         vtracer_params = self.extract_vtracer_params(silukman_config)
-        
+
         # Unmapped parameters (for logging purposes)
         unmapped = {k: v for k, v in silukman_config.items() if k not in vtracer_params}
 
         # Ensure output directory exists
         os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
-        
+
         # Warmup (on a dummy call or the same call? Warmup might overwrite or take long)
         # We will just do a dry import warmup
-        
+
         # Build the exact kwargs to pass
         kwargs = vtracer_params.copy()
-        
+
         # Measure
         performance = self.tracker.measure(
             func=vtracer.convert_image_to_svg_py,
             input_file=input_file,
             output_file=output_file,
-            retries=0, # Baselines don't retry by default
+            retries=0,  # Baselines don't retry by default
             image_path=input_file,
             out_path=output_file,
-            **kwargs
+            **kwargs,
         )
-        
+
         return {
             "vtracer_version": self.vtracer_version,
             "preset": preset_name,
             "invocation": f"vtracer.convert_image_to_svg_py('{input_file}', '{output_file}', **{vtracer_params})",
             "vtracer_parameters": vtracer_params,
             "unmapped_silukman_parameters": unmapped,
-            "performance": performance
+            "performance": performance,
         }
 
 
@@ -119,12 +129,12 @@ def main():
     parser.add_argument("output", help="Output SVG image")
     parser.add_argument("--preset", default="balanced", help="Silukman preset to map from")
     parser.add_argument("--json", action="store_true", help="Output JSON result")
-    
+
     args = parser.parse_args()
-    
+
     runner = VTracerBaselineRunner()
     result = runner.run(args.input, args.output, args.preset)
-    
+
     if args.json:
         print(json.dumps(result, indent=2))
     else:

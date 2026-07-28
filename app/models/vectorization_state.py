@@ -8,11 +8,12 @@ from typing import Any, Optional
 @dataclass
 class VectorizationState:
     """Application-level mutable state for the vectorization workflow."""
+
     input_path: Optional[Path] = None
     output_path: Optional[Path] = None
-    source_image: Any = None          # QPixmap — held as Any to avoid Qt imports at model level
-    thresholded_array: Any = None     # numpy ndarray
-    vector_result: Any = None         # VectorResult from engine
+    source_image: Any = None  # QPixmap — held as Any to avoid Qt imports at model level
+    thresholded_array: Any = None  # numpy ndarray
+    vector_result: Any = None  # VectorResult from engine
     is_processing: bool = False
     is_vectorizing: bool = False
     progress: int = 0

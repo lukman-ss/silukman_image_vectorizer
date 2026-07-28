@@ -26,11 +26,7 @@ def _validate_runtime_environment() -> None:
         RESOURCES_DIR / "icon.png",
         RESOURCES_DIR / "hero_image.png",
     ]
-    missing_resources = [
-        str(path)
-        for path in required_resources
-        if not path.exists()
-    ]
+    missing_resources = [str(path) for path in required_resources if not path.exists()]
     if missing_resources:
         missing = "\n".join(missing_resources)
         raise RuntimeError(f"Missing packaged resource(s):\n{missing}")

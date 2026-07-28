@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import os
 import copy
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional
@@ -46,11 +46,12 @@ def _validate_batch_file(file_path: str) -> BatchFileValidation:
         return BatchFileValidation(file_path, error)
 
     from app.services.image_loader import SUPPORTED_IMAGE_FORMATS
+
     image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()
     if image_format not in SUPPORTED_IMAGE_FORMATS:
         return BatchFileValidation(
             file_path,
-            f"Unsupported image content format '{image_format or 'Unknown'}'. Accepted: PNG, JPG, JPEG, BMP, WEBP."
+            f"Unsupported image content format '{image_format or 'Unknown'}'. Accepted: PNG, JPG, JPEG, BMP, WEBP.",
         )
 
     return BatchFileValidation(file_path)
@@ -117,7 +118,7 @@ def process_batch(
         filename = os.path.basename(path)
         base_name, _ = os.path.splitext(filename)
         svg_filename = f"{base_name}_vectorized.svg"
-        
+
         try:
             vector_result = None
             if is_vtracer:
@@ -138,13 +139,13 @@ def process_batch(
             else:
                 backend = OpenCVVectorizerBackend()
                 vector_result = backend.vectorize(path, active_settings)
-            
+
             # 3. Safe filename handling to avoid overwrite
             unique_path = get_unique_filepath(str(output_path), svg_filename)
-            
+
             # 4. Export SVG
             export_svg(vector_result, unique_path, filename)
-            
+
             success_count += 1
             _report_progress(progress_callback, idx + 1, total, filename, True)
         except Exception as error:

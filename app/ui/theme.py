@@ -10,13 +10,13 @@ from dataclasses import dataclass
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QGuiApplication, QPalette
 
-
 THEME_MODES = ("System", "Light", "Dark")
 
 
 @dataclass(frozen=True)
 class ColorPalette:
     """Color tokens representing the design system."""
+
     bg_main: str
     bg_panel: str
     bg_input: str
@@ -97,7 +97,7 @@ def get_stylesheet(dark_mode: bool) -> str:
     """Generate global QSS stylesheet based on the active theme mode."""
     p = DARK_PALETTE if dark_mode else LIGHT_PALETTE
 
-    return f'''
+    return f"""
     /* Global Application Background */
     QMainWindow, QDialog {{
         background-color: {p.bg_main};
@@ -313,4 +313,4 @@ def get_stylesheet(dark_mode: bool) -> str:
     QStatusBar QLabel {{
         color: {p.text_secondary};
     }}
-    '''
+    """

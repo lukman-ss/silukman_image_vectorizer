@@ -8,10 +8,10 @@ from typing import Optional
 
 from PySide6.QtGui import QImage, QImageReader, QPixmap
 
-
 # ---------------------------------------------------------------------------
 # Data model for image information
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class ImageInfo:
@@ -70,9 +70,13 @@ def load_image(file_path: str) -> tuple[Optional[QPixmap], Optional[ImageInfo], 
 
     image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()
     if image_format not in SUPPORTED_IMAGE_FORMATS:
-        return None, None, (
-            f"Unsupported image content format '{image_format or 'Unknown'}'. "
-            "Accepted: PNG, JPG, JPEG, BMP, WEBP."
+        return (
+            None,
+            None,
+            (
+                f"Unsupported image content format '{image_format or 'Unknown'}'. "
+                "Accepted: PNG, JPG, JPEG, BMP, WEBP."
+            ),
         )
 
     image = reader.read()

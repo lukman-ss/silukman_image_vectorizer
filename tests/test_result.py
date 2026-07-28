@@ -1,8 +1,9 @@
-import os
 import json
-import pytest
+import os
 import tempfile
 from pathlib import Path
+
+import pytest
 
 from app.core.result import VectorizationResult, calculate_file_hash
 
@@ -12,7 +13,7 @@ def test_calculate_file_hash_success():
     with tempfile.NamedTemporaryFile(mode="w", delete=False) as f:
         f.write("hello world")
         temp_path = f.name
-        
+
     try:
         # sha256 of "hello world"
         expected_hash = "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9"
@@ -34,14 +35,14 @@ def test_vectorization_result_serialization():
         input_path="in.png",
         output_path="out.svg",
         duration_seconds=1.5,
-        configuration={"key": "value"}
+        configuration={"key": "value"},
     )
-    
+
     # dict
     result_dict = result.to_dict()
     assert result_dict["run_id"] == "test-123"
     assert result_dict["duration_seconds"] == 1.5
-    
+
     # json
     result_json = result.to_json()
     parsed = json.loads(result_json)
@@ -55,17 +56,17 @@ def test_vectorization_result_save_to_file(tmp_path):
         run_id="test-save-456",
         status="failed",
         error_type="ValueError",
-        error_message="Something went wrong"
+        error_message="Something went wrong",
     )
-    
+
     output_file = tmp_path / "result.json"
     result.save(str(output_file))
-    
+
     assert output_file.exists()
-    
+
     with open(output_file, "r") as f:
         data = json.load(f)
-        
+
     assert data["run_id"] == "test-save-456"
     assert data["status"] == "failed"
     assert data["error_type"] == "ValueError"

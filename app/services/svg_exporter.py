@@ -12,7 +12,6 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 from app.core.constants import APPLICATION_TITLE
 from app.core.vectorization_engine import VectorPath, VectorResult
 
-
 SVG_NAMESPACE = "http://www.w3.org/2000/svg"
 
 
@@ -82,28 +81,29 @@ def export_svg(
     source_filename: str | None = None,
 ) -> Path:
     """Build and atomically write an SVG document to disk."""
-    from app.core.vectorizer_backend import VTracerVectorResult
     from app.core.postprocessing import (
-        parse_and_validate_svg,
         normalize_dimensions,
         optimize_svg,
+        parse_and_validate_svg,
         serialize_deterministic_svg,
     )
+    from app.core.vectorizer_backend import VTracerVectorResult
+
     output_path = normalize_svg_path(file_path)
-    
+
     if isinstance(vector_result, VTracerVectorResult):
         raw_svg_content = vector_result.svg_data
     else:
         raw_svg_content = build_svg_document(vector_result, source_filename)
-        
+
     try:
         root = parse_and_validate_svg(raw_svg_content)
         root = normalize_dimensions(root)
         root = optimize_svg(root)
-        
+
         metadata = _build_metadata_element(source_filename)
         root.insert(0, metadata)
-        
+
         svg_content = serialize_deterministic_svg(root)
     except Exception:
         # Fallback if parsing fails
@@ -111,7 +111,7 @@ def export_svg(
             svg_content = _insert_metadata_text(raw_svg_content, source_filename)
         else:
             svg_content = raw_svg_content
-            
+
     _atomic_write_text(output_path, svg_content)
     return output_path
 
@@ -179,10 +179,7 @@ def _build_contour_commands(points) -> list[str]:
         return []
     first_x, first_y = points[0]
     commands = [f"M {_format_number(first_x)} {_format_number(first_y)}"]
-    commands.extend(
-        f"L {_format_number(x)} {_format_number(y)}"
-        for x, y in points[1:]
-    )
+    commands.extend(f"L {_format_number(x)} {_format_number(y)}" for x, y in points[1:])
     commands.append("Z")
     return commands
 

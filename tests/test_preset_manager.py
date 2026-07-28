@@ -8,7 +8,7 @@ def test_preset_manager_loads_available_presets():
     """Verify PresetManager loads the presets.json file."""
     manager = PresetManager.get_instance()
     presets = manager.get_available_presets()
-    
+
     assert "low_complexity" in presets
     assert "balanced" in presets
     assert "high_fidelity" in presets
@@ -18,7 +18,7 @@ def test_preset_manager_metadata():
     """Verify PresetManager returns purpose and trade-offs."""
     manager = PresetManager.get_instance()
     info = manager.get_preset_info("low_complexity")
-    
+
     assert "purpose" in info
     assert "trade_off" in info
     assert len(info["purpose"]) > 10
@@ -29,7 +29,7 @@ def test_all_presets_are_valid():
     """Verify that every preset in presets.json can be loaded into VectorizationConfig."""
     manager = PresetManager.get_instance()
     presets = manager.get_available_presets()
-    
+
     for preset_name in presets:
         # Should not raise any validation ValueError from __post_init__
         config = manager.get_preset_config(preset_name)

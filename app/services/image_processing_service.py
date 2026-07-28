@@ -1,4 +1,5 @@
 """Service for headless image preprocessing operations (no Qt widgets)."""
+
 from __future__ import annotations
 
 from typing import Tuple

@@ -1,4 +1,5 @@
 """VectorizerController — orchestration layer between UI events and services."""
+
 from __future__ import annotations
 
 import copy
@@ -51,12 +52,12 @@ class VectorizerController:
         self._discard_vectorization_result = False
 
         # Callbacks — set by MainWindow after construction
-        self.on_processing_done: Optional[Callable] = None     # (q_image, thresholded_array)
-        self.on_processing_error: Optional[Callable] = None    # (error_str)
+        self.on_processing_done: Optional[Callable] = None  # (q_image, thresholded_array)
+        self.on_processing_error: Optional[Callable] = None  # (error_str)
         self.on_vectorization_done: Optional[Callable] = None  # (vector_result)
-        self.on_vectorization_error: Optional[Callable] = None # (error_str)
-        self.on_batch_progress: Optional[Callable] = None      # (index, total, filename, success)
-        self.on_batch_done: Optional[Callable] = None          # (result)
+        self.on_vectorization_error: Optional[Callable] = None  # (error_str)
+        self.on_batch_progress: Optional[Callable] = None  # (index, total, filename, success)
+        self.on_batch_done: Optional[Callable] = None  # (result)
 
     # ── Settings ────────────────────────────────────────────────────────────
 
@@ -73,6 +74,7 @@ class VectorizerController:
         pixmap, info, error = self._image_loader.load(file_path)
         if not error and info:
             from pathlib import Path
+
             self.state.input_path = Path(file_path)
             self.state.source_image = pixmap
             self.state.thresholded_array = None
@@ -99,6 +101,7 @@ class VectorizerController:
         if self._processing_pending:
             return
         from PySide6.QtGui import QImage
+
         if isinstance(result, tuple) and len(result) == 2 and isinstance(result[0], QImage):
             q_img, thresholded = result
             self.state.thresholded_array = thresholded
@@ -148,6 +151,7 @@ class VectorizerController:
         if self._vectorization_pending or self._discard_vectorization_result:
             return
         from app.core.vectorization_engine import VectorResult
+
         if isinstance(result, VectorResult):
             self.state.vector_result = result
             if self.on_vectorization_done:
@@ -223,9 +227,7 @@ class VectorizerController:
         """Export the current vector result. Raises on failure."""
         if not self.state.vector_result:
             raise ValueError("No vector result available to export.")
-        return self._export.export_svg_file(
-            self.state.vector_result, file_path, source_name
-        )
+        return self._export.export_svg_file(self.state.vector_result, file_path, source_name)
 
     def build_default_export_path(self, image_info) -> str:
         return self._export.build_default_export_path(image_info)
