@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-07-28
+
+### Added
+- `CITATION.cff` — standard academic citation metadata (CFF v1.2.0) for software paper reference via GitHub and Zenodo.
+
 ## [1.0.5] - 2026-06-05
 
 ### Fixed

@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+
+title: "Silukman Image Vectorizer"
+abstract: >
+  A PySide6 desktop application for high-quality raster-to-vector (SVG)
+  conversion. Supports dual vectorization backends — Visioncortex VTracer
+  (Rust-based spline tracing) and OpenCV contour-based engine — with
+  preprocessing features including K-Means color quantization, background
+  removal, palette replacement, and batch SVG export.
+
+authors:
+  - family-names: "Lukman-ss"
+    alias: "lukman-ss"
+
+version: "1.0.5"
+date-released: "2026-06-05"
+
+repository-code: "https://github.com/lukman-ss/silukman_image_vectorizer"
+url: "https://github.com/lukman-ss/silukman_image_vectorizer"
+license: MIT
+
+keywords:
+  - raster-to-vector
+  - SVG
+  - image vectorization
+  - VTracer
+  - OpenCV
+  - K-Means color quantization
+  - desktop application
+  - PySide6
+  - Python
+
+references:
+  - type: software
+    title: "VTracer"
+    abstract: "Raster-to-vector conversion tool by Visioncortex"
+    authors:
+      - name: "Visioncortex"
+    repository-code: "https://github.com/visioncortex/vtracer"
+    license: MIT
+
+  - type: software
+    title: "OpenCV"
+    abstract: "Open Source Computer Vision Library"
+    authors:
+      - name: "OpenCV contributors"
+    url: "https://opencv.org"
+    license: "Apache-2.0"
+
+  - type: software
+    title: "PySide6"
+    abstract: "Python bindings for the Qt framework"
+    authors:
+      - name: "The Qt Company"
+    url: "https://www.qt.io/qt-for-python"
+    license: "LGPL-3.0"
