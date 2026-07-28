@@ -238,6 +238,7 @@ class ExperimentRunner:
                                 "run_id": run_id,
                                 "repetition": rep,
                                 "image_id": image_id,
+                                "category": category,
                                 "backend": b_name,
                                 "preset": preset,
                                 "config_hash": self.config_hash,

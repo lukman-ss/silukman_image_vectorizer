@@ -56,6 +56,29 @@ def _build_parser() -> argparse.ArgumentParser:
     parser_bench_run.add_argument("--config", "-c", required=True, help="Path to experiment YAML configuration")
     parser_bench_run.add_argument("--resume-id", help="Experiment ID to resume (e.g., 20260728T..._hash)")
     parser_bench_run.add_argument("--retry-failed", action="store_true", help="If resuming, retry failed runs instead of skipping them")
+    
+    parser_bench_agg = benchmark_subs.add_parser("aggregate", help="Aggregate benchmark raw JSONL results")
+    parser_bench_agg.add_argument("--input", "-i", required=True, help="Path to runs.jsonl")
+    parser_bench_agg.add_argument("--output", "-o", required=True, help="Path to save aggregated summary JSON")
+
+    parser_bench_paired = benchmark_subs.add_parser("paired", help="Run paired comparison between two configs")
+    parser_bench_paired.add_argument("--input", "-i", required=True, help="Path to aggregated.json")
+    parser_bench_paired.add_argument("--output", "-o", required=True, help="Path to save paired report JSON")
+    parser_bench_paired.add_argument("--config-a", required=True, help="Config A (format: backend:preset)")
+    parser_bench_paired.add_argument("--config-b", required=True, help="Config B (format: backend:preset)")
+    parser_bench_paired.add_argument("--metrics", required=True, help="Comma-separated metrics (e.g. ssim,rmse,edge_f1)")
+
+    parser_bench_pareto = benchmark_subs.add_parser("pareto", help="Run Pareto frontier trade-off analysis")
+    parser_bench_pareto.add_argument("--input", "-i", required=True, help="Path to aggregated.json")
+    parser_bench_pareto.add_argument("--output", "-o", required=True, help="Path to save pareto report JSON")
+
+    parser_bench_cat = benchmark_subs.add_parser("category", help="Run Category analysis")
+    parser_bench_cat.add_argument("--input", "-i", required=True, help="Path to aggregated.json")
+    parser_bench_cat.add_argument("--output", "-o", required=True, help="Path to save category report JSON")
+
+    parser_bench_fail = benchmark_subs.add_parser("failure", help="Run Failure analysis")
+    parser_bench_fail.add_argument("--input", "-i", required=True, help="Path to runs.jsonl")
+    parser_bench_fail.add_argument("--output", "-o", required=True, help="Path to save failure report JSON")
 
     return parser
 
@@ -358,6 +381,60 @@ def cmd_benchmark(args: argparse.Namespace) -> int:
             return 0
         except Exception as e:
             print(f"Benchmark Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "aggregate":
+        try:
+            from benchmark.analysis.aggregator import BenchmarkAggregator
+            agg = BenchmarkAggregator(args.input)
+            agg.save(args.output)
+            print(f"Successfully aggregated {args.input} to {args.output}")
+            return 0
+        except Exception as e:
+            print(f"Aggregation Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "paired":
+        try:
+            from benchmark.analysis.paired_analysis import PairedComparison
+            ca = tuple(args.config_a.split(":"))
+            cb = tuple(args.config_b.split(":"))
+            metrics = [m.strip() for m in args.metrics.split(",")]
+            
+            comp = PairedComparison(args.input)
+            comp.save_report(ca, cb, metrics, args.output)
+            print(f"Successfully generated paired comparison report to {args.output}")
+            return 0
+        except Exception as e:
+            print(f"Paired Analysis Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "pareto":
+        try:
+            from benchmark.analysis.pareto_frontier import ParetoFrontier
+            pareto = ParetoFrontier(args.input)
+            pareto.analyze_tradeoffs(args.output)
+            print(f"Successfully generated Pareto frontier report to {args.output}")
+            return 0
+        except Exception as e:
+            print(f"Pareto Analysis Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "category":
+        try:
+            from benchmark.analysis.category_analysis import CategoryAnalyzer
+            analyzer = CategoryAnalyzer(args.input)
+            analyzer.save_report(args.output)
+            print(f"Successfully generated Category analysis report to {args.output}")
+            return 0
+        except Exception as e:
+            print(f"Category Analysis Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "failure":
+        try:
+            from benchmark.analysis.failure_analysis import FailureAnalyzer
+            analyzer = FailureAnalyzer(args.input)
+            analyzer.save_report(args.output)
+            print(f"Successfully generated Failure analysis report to {args.output}")
+            return 0
+        except Exception as e:
+            print(f"Failure Analysis Error: {e}", file=sys.stderr)
             return 1
     else:
         print("Invalid benchmark command.", file=sys.stderr)

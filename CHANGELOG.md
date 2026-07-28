@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] - 2026-07-28
+
+### Added
+- **Statistical Analysis Suite (FASE 8)**:
+  - Added JSONL log aggregation module (`benchmark aggregate`) calculating descriptive statistics (mean, median, standard deviation, min, max, percentiles, confidence intervals, outlier detection) with robustness against missing or failed runs.
+  - Implemented Paired Comparison analysis (`benchmark paired`) calculating per-image deltas, wins/ties/losses, Cohen's *d* effect size, and Wilcoxon signed-rank significance tests.
+  - Added Pareto Frontier analysis (`benchmark pareto`) revealing multi-objective optimal trade-offs (e.g., SSIM vs SVG size) without assuming a universally "best" configuration.
+  - Introduced Category Profiling (`benchmark category`) for evaluating algorithm strengths/weaknesses across specific image genres (logos, photos, icons, etc.) with explicit interpretation guardrails.
+  - Built Failure Analysis system (`benchmark failure`) classifying crash/timeout/OOM logs into known error taxonomies and tracking failure rates while preserving complete trace transparency.
+
 ## [1.8.0] - 2026-07-28
 
 ### Added
