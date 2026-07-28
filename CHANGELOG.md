@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.5] - 2026-07-28
+
+### Fixed
+- Fixed `pytest` import file mismatch error on CI by renaming `tests/core/test_svg_metrics.py` to `tests/core/test_core_svg_metrics.py` to avoid basename collisions with `tests/evaluation/test_svg_metrics.py`.
+
 ## [1.13.4] - 2026-07-28
 
 ### Fixed
