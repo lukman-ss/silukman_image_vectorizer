@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.7] - 2026-07-28
+
+### Fixed
+- Fixed release packaging failures by adding PyInstaller to the `dev` and `all` dependency extras used by the multi-platform release workflow.
+
 ## [1.13.6] - 2026-07-28
 
 ### Fixed

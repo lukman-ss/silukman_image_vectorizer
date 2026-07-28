@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silukman-image-vectorizer"
-version = "1.13.6"
+version = "1.13.7"
 description = "A PySide6 desktop application for high-quality raster-to-vector (SVG) conversion."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -45,6 +45,7 @@ dev = [
     "mypy>=1.0.0",
     "flake8>=6.0.0",
     "build>=1.0.0",
+    "pyinstaller>=6.0.0",
 ]
 all = [
     "scikit-image>=0.19.0",
@@ -56,6 +57,7 @@ all = [
     "mypy>=1.0.0",
     "flake8>=6.0.0",
     "build>=1.0.0",
+    "pyinstaller>=6.0.0",
 ]
 
 [project.urls]
