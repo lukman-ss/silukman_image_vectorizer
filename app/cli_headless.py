@@ -49,6 +49,14 @@ def _build_parser() -> argparse.ArgumentParser:
     parser_inspect.add_argument("input", help="Path to the SVG file to inspect")
     parser_inspect.add_argument("--json", action="store_true", help="Output results as JSON")
 
+    # Benchmark Command
+    parser_benchmark = subparsers.add_parser("benchmark", help="Run benchmark experiments")
+    benchmark_subs = parser_benchmark.add_subparsers(dest="benchmark_command", help="Benchmark subcommands")
+    parser_bench_run = benchmark_subs.add_parser("run", help="Run an experiment configuration")
+    parser_bench_run.add_argument("--config", "-c", required=True, help="Path to experiment YAML configuration")
+    parser_bench_run.add_argument("--resume-id", help="Experiment ID to resume (e.g., 20260728T..._hash)")
+    parser_bench_run.add_argument("--retry-failed", action="store_true", help="If resuming, retry failed runs instead of skipping them")
+
     return parser
 
 
@@ -337,6 +345,24 @@ def cmd_inspect(args: argparse.Namespace) -> int:
         return 1
 
 
+def cmd_benchmark(args: argparse.Namespace) -> int:
+    if args.benchmark_command == "run":
+        try:
+            from benchmark.runner.experiment_runner import ExperimentRunner
+            runner = ExperimentRunner(
+                config_path=args.config, 
+                resume_id=args.resume_id, 
+                retry_failed=args.retry_failed
+            )
+            runner.execute()
+            return 0
+        except Exception as e:
+            print(f"Benchmark Error: {e}", file=sys.stderr)
+            return 1
+    else:
+        print("Invalid benchmark command.", file=sys.stderr)
+        return 1
+
 def main(args: list[str] = None) -> int:
     parser = _build_parser()
     parsed_args = parser.parse_args(args)
@@ -355,6 +381,8 @@ def main(args: list[str] = None) -> int:
         return cmd_batch(parsed_args)
     elif parsed_args.command == "inspect":
         return cmd_inspect(parsed_args)
+    elif parsed_args.command == "benchmark":
+        return cmd_benchmark(parsed_args)
     
     return 1
 

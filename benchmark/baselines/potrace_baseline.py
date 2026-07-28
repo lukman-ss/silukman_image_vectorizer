@@ -4,7 +4,10 @@ import os
 import subprocess
 import tempfile
 import cv2
+import numpy as np
+import time
 
+from benchmark.runner.process_utils import run_isolated_process, ProcessExecutionError
 from benchmark.evaluation.performance_metrics import PerformanceTracker
 
 
@@ -43,7 +46,7 @@ class PotraceBaselineRunner:
             # Example output: "potrace 1.16. ..."
             first_line = result.stdout.split('\n')[0]
             return first_line
-        except (subprocess.CalledProcessError, FileNotFoundError):
+        except Exception:
             return "not_installed"
 
     def _preprocess_to_bmp(self, input_file: str, temp_bmp: str):
@@ -76,7 +79,10 @@ class PotraceBaselineRunner:
     def _run_cli(self, bmp_path: str, svg_path: str, timeout_sec: int):
         # -s outputs SVG.
         cmd = ["potrace", bmp_path, "-s", "-o", svg_path]
-        subprocess.run(cmd, check=True, timeout=timeout_sec, capture_output=True)
+        exit_code, stdout, stderr = run_isolated_process(cmd, timeout_sec)
+        
+        if exit_code != 0:
+            raise RuntimeError(f"Potrace error (Code {exit_code}): {stderr}")
         
         if not os.path.exists(svg_path) or os.path.getsize(svg_path) == 0:
             raise RuntimeError("Potrace succeeded but generated an empty or missing SVG.")

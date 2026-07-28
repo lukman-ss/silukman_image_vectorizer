@@ -1,9 +1,11 @@
 import argparse
 import json
 import os
-import subprocess
+import time
+from typing import Dict, Any
 
 from benchmark.evaluation.performance_metrics import PerformanceTracker
+from benchmark.runner.process_utils import run_isolated_process, ProcessExecutionError
 
 
 class InkscapeBaselineRunner:
@@ -38,10 +40,10 @@ class InkscapeBaselineRunner:
     def _get_version(self) -> str:
         try:
             # Inkscape --version returns something like "Inkscape 1.3.2 (091e20e, 2023-11-25)"
-            result = subprocess.run(["inkscape", "--version"], capture_output=True, text=True, check=True)
-            first_line = result.stdout.strip().split('\n')[0]
+            result = run_isolated_process(["inkscape", "--version"], 5)
+            first_line = result[1].strip().split('\n')[0]
             return first_line
-        except (subprocess.CalledProcessError, FileNotFoundError):
+        except Exception:
             return "not_installed"
 
     def _run_cli(self, input_path: str, output_path: str, timeout_sec: int):
@@ -57,7 +59,14 @@ class InkscapeBaselineRunner:
             input_path
         ]
         
-        subprocess.run(cmd, check=True, timeout=timeout_sec, capture_output=True)
+        try:
+            exit_code, stdout, stderr = run_isolated_process(cmd, timeout_sec)
+            if exit_code != 0:
+                raise RuntimeError(f"Inkscape CLI error (Code {exit_code}): {stderr}")
+        except TimeoutError:
+            raise RuntimeError("Failed (Time Out)")
+        except ProcessExecutionError as e:
+            raise RuntimeError(f"Process failed: {str(e)}")
         
         if not os.path.exists(output_path) or os.path.getsize(output_path) == 0:
             raise RuntimeError("Inkscape executed but the SVG output is missing or empty.")

@@ -1,0 +1,26 @@
+experiment:
+  id: benchmark-v1
+  repetitions: 2
+  warmup_runs: 1
+  timeout_seconds: 60
+
+dataset:
+  manifest: benchmark/dataset_manifest.csv
+  split: test
+  categories:
+    - logo
+    - binary_graphic
+
+backends:
+  - silukman
+  - vtracer
+
+presets:
+  - low_complexity
+  - balanced
+
+metrics:
+  - mae
+  - ssim
+  - edge_f1
+  - svg_complexity

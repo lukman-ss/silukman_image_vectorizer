@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2026-07-28
+
+### Added
+- **Experiment Runner (FASE 7)**: 
+  - Comprehensive `benchmark run` CLI for executing vectorization baselines against a configured dataset.
+  - Deterministic experiment IDs (`timestamp_name_sha_hash`) for full traceability.
+  - Comprehensive environment capture (`env_capture.py`) recording OS, CPU, RAM, Git states, and vectorizer versions.
+  - Append-safe JSONL raw result output (`runs.jsonl`) with resilient parsing against corrupted lines.
+  - Seamless experiment resume mechanism (`--resume-id`) with config hash-matching protections and retry logic (`--retry-failed`).
+  - Strict process isolation (`run_isolated_process`) with group signal termination preventing zombie sub-processes during timeouts.
+
 ## [1.1.0] - 2026-07-28
 
 ### Added
