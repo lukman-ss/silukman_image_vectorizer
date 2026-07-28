@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0] - 2026-07-28
+
+### Added
+- Added comprehensive architecture documentation with dependency, data-flow, and error-flow diagrams.
+- Added implementation-aligned vectorization pipeline and complete parameter reference documentation.
+- Added a runnable reproducibility guide covering dataset validation, benchmark execution, analysis generation, checksum verification, and failure retries.
+- Added an explicit benchmark protocol covering research questions, fairness, statistical analysis, failure handling, and qualitative sample selection.
+- Added honest research limitations for backend dependence, metric coverage, dataset scope, hardware effects, parameter tuning, and cross-platform variance.
+- Added a security audit for untrusted raster/SVG parsing, external executables, path handling, temporary files, command injection, and resource exhaustion.
+
 ## [1.13.7] - 2026-07-28
 
 ### Fixed
