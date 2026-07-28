@@ -37,6 +37,7 @@ Bug-Tracker = "https://github.com/lukman-ss/silukman_image_vectorizer/issues"
 
 [project.scripts]
 image-vectorizer = "app.cli:main"
+silukman-vectorizer = "app.cli_headless:main"
 
 [tool.setuptools]
 packages = ["app", "app.config", "app.core", "app.resources", "app.services", "app.ui"]
