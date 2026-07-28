@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0] - 2026-07-28
+
+### Added
+- **Dependency Locking & Installation Targets**: Reorganized `pyproject.toml` dependencies into `research`, `dev`, and `all` optional packages.
+- **Enhanced Release Workflow**: Added robust checksum generation (SHA256), test prerequisites before releasing, and automatic release note extraction.
+
 ## [1.11.0] - 2026-07-28
 
 ### Added
