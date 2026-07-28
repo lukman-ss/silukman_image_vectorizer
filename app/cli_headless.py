@@ -80,6 +80,15 @@ def _build_parser() -> argparse.ArgumentParser:
     parser_bench_fail.add_argument("--input", "-i", required=True, help="Path to runs.jsonl")
     parser_bench_fail.add_argument("--output", "-o", required=True, help="Path to save failure report JSON")
 
+    parser_bench_tabs = benchmark_subs.add_parser("generate-tables", help="Generate CSV/MD/LaTeX tables")
+    parser_bench_tabs.add_argument("--exp-dir", required=True, help="Path to experiment directory")
+
+    parser_bench_plots = benchmark_subs.add_parser("generate-plots", help="Generate publication plots")
+    parser_bench_plots.add_argument("--exp-dir", required=True, help="Path to experiment directory")
+
+    parser_bench_report = benchmark_subs.add_parser("report", help="Generate automatic comprehensive report")
+    parser_bench_report.add_argument("--run", required=True, help="Path to experiment directory")
+
     return parser
 
 
@@ -435,6 +444,33 @@ def cmd_benchmark(args: argparse.Namespace) -> int:
             return 0
         except Exception as e:
             print(f"Failure Analysis Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "generate-tables":
+        try:
+            from benchmark.analysis.table_generator import TableGenerator
+            gen = TableGenerator(args.exp_dir)
+            gen.generate_all()
+            return 0
+        except Exception as e:
+            print(f"Table Generation Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "generate-plots":
+        try:
+            from benchmark.analysis.plot_generator import PlotGenerator
+            gen = PlotGenerator(args.exp_dir)
+            gen.generate_all()
+            return 0
+        except Exception as e:
+            print(f"Plot Generation Error: {e}", file=sys.stderr)
+            return 1
+    elif args.benchmark_command == "report":
+        try:
+            from benchmark.analysis.report_generator import ReportGenerator
+            rep = ReportGenerator(args.run)
+            rep.run()
+            return 0
+        except Exception as e:
+            print(f"Report Generation Error: {e}", file=sys.stderr)
             return 1
     else:
         print("Invalid benchmark command.", file=sys.stderr)

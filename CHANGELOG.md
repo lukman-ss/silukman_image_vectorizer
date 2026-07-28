@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0] - 2026-07-28
+
+### Added
+- **Qualitative Comparison Generator**: Added `benchmark/analysis/qualitative_generator.py` to automatically compile side-by-side visual comparison sheets (markdown/html). Employs an explicit selection rule (Best, Median, Worst SSIM per category) to prevent cherry-picking.
+- **Automated Comprehensive Reporting (FASE 9)**: 
+  - New `benchmark report` CLI command that acts as an orchestrator.
+  - Generates a full `report/` hierarchy (`summary.md`, `reproducibility.md`, `tables/`, `figures/`, `qualitative/`, `failures/`) derived entirely from raw JSONL data without manual intervention.
+
 ## [1.9.0] - 2026-07-28
 
 ### Added
