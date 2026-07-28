@@ -83,23 +83,35 @@ def export_svg(
 ) -> Path:
     """Build and atomically write an SVG document to disk."""
     from app.core.vectorizer_backend import VTracerVectorResult
+    from app.core.postprocessing import (
+        parse_and_validate_svg,
+        normalize_dimensions,
+        optimize_svg,
+        serialize_deterministic_svg,
+    )
     output_path = normalize_svg_path(file_path)
     
     if isinstance(vector_result, VTracerVectorResult):
-        import xml.etree.ElementTree as ET
-        ET.register_namespace("", "http://www.w3.org/2000/svg")
-        try:
-            root = ET.fromstring(vector_result.svg_data)
-            metadata = _build_metadata_element(source_filename)
-            root.insert(0, metadata)
-            svg_content = ET.tostring(root, encoding="unicode", short_empty_elements=True)
-            if not svg_content.startswith("<?xml"):
-                svg_content = f'<?xml version="1.0" encoding="UTF-8"?>\n{svg_content}\n'
-        except Exception:
-            svg_content = _insert_metadata_text(vector_result.svg_data, source_filename)
+        raw_svg_content = vector_result.svg_data
     else:
-        svg_content = build_svg_document(vector_result, source_filename)
+        raw_svg_content = build_svg_document(vector_result, source_filename)
         
+    try:
+        root = parse_and_validate_svg(raw_svg_content)
+        root = normalize_dimensions(root)
+        root = optimize_svg(root)
+        
+        metadata = _build_metadata_element(source_filename)
+        root.insert(0, metadata)
+        
+        svg_content = serialize_deterministic_svg(root)
+    except Exception:
+        # Fallback if parsing fails
+        if isinstance(vector_result, VTracerVectorResult):
+            svg_content = _insert_metadata_text(raw_svg_content, source_filename)
+        else:
+            svg_content = raw_svg_content
+            
     _atomic_write_text(output_path, svg_content)
     return output_path
 

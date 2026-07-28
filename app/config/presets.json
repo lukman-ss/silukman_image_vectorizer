@@ -1,0 +1,74 @@
+{
+  "$schema_version": "1.0",
+  "presets": {
+    "low_complexity": {
+      "purpose": "Produces a simplified vector with fewer paths and vertices, suitable for flat icons and fast processing.",
+      "trade_off": "Loses fine details and gradients; geometry may be over-simplified.",
+      "config": {
+        "engine_type": "VTracer",
+        "color_mode": "Custom colors",
+        "color_count": 8,
+        "preserve_edges": false,
+        "remove_background": false,
+        "bg_tolerance": 20.0,
+        "colormode": "color",
+        "hierarchical": "stacked",
+        "mode": "spline",
+        "filter_speckle": 16,
+        "color_precision": 5,
+        "layer_difference": 32,
+        "corner_threshold": 60,
+        "length_threshold": 4.5,
+        "max_iterations": 10,
+        "splice_threshold": 45,
+        "path_precision": 4
+      }
+    },
+    "balanced": {
+      "purpose": "Provides a good middle-ground between visual accuracy and SVG file size.",
+      "trade_off": "May still lose some photographic detail but keeps vector complexity reasonable.",
+      "config": {
+        "engine_type": "VTracer",
+        "color_mode": "Custom colors",
+        "color_count": 24,
+        "preserve_edges": true,
+        "remove_background": false,
+        "bg_tolerance": 20.0,
+        "colormode": "color",
+        "hierarchical": "stacked",
+        "mode": "spline",
+        "filter_speckle": 8,
+        "color_precision": 6,
+        "layer_difference": 16,
+        "corner_threshold": 60,
+        "length_threshold": 4.0,
+        "max_iterations": 10,
+        "splice_threshold": 45,
+        "path_precision": 6
+      }
+    },
+    "high_fidelity": {
+      "purpose": "Maximizes detail preservation for photographs and complex artwork.",
+      "trade_off": "Results in significantly larger SVG file sizes and longer processing times.",
+      "config": {
+        "engine_type": "VTracer",
+        "color_mode": "Unlimited colors",
+        "color_count": 64,
+        "preserve_edges": false,
+        "remove_background": false,
+        "bg_tolerance": 20.0,
+        "colormode": "color",
+        "hierarchical": "stacked",
+        "mode": "spline",
+        "filter_speckle": 2,
+        "color_precision": 8,
+        "layer_difference": 8,
+        "corner_threshold": 60,
+        "length_threshold": 3.5,
+        "max_iterations": 16,
+        "splice_threshold": 45,
+        "path_precision": 8
+      }
+    }
+  }
+}

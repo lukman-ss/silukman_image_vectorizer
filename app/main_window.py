@@ -136,9 +136,30 @@ class ImageProcessorThread(QThread):
 
     def run(self) -> None:
         try:
-            from app.core.image_pipeline import process_image_pipeline
-            result_img, thresholded = process_image_pipeline(self.file_path, self.threshold_val)
-            self.result_ready.emit((result_img, thresholded))
+            import numpy as np
+            from PySide6.QtGui import QImage
+            import cv2
+            from app.core.preprocessing import apply_grayscale_threshold
+            
+            img = cv2.imread(self.file_path, cv2.IMREAD_UNCHANGED)
+            if img is None:
+                raise ValueError("Failed to read image")
+            thresholded, _ = apply_grayscale_threshold(img, self.threshold_val)
+            
+            # Convert grayscale/binary numpy array to QImage
+            height, width = thresholded.shape
+            thresholded = np.ascontiguousarray(thresholded)
+            bytes_per_line = thresholded.strides[0]
+            
+            q_image = QImage(
+                thresholded.data,
+                width,
+                height,
+                bytes_per_line,
+                QImage.Format.Format_Grayscale8
+            )
+            
+            self.result_ready.emit((q_image.copy(), thresholded))
         except Exception as error:
             self.result_ready.emit(str(error))
 
@@ -349,8 +370,10 @@ class MainWindow(QMainWindow):
         
         preset_title = QLabel("<b>Quality Preset:</b>")
         self.preset_combo = QComboBox()
-        self.preset_combo.addItems(["Logo", "Artwork", "Icon", "Photo", "Custom"])
-        self.preset_combo.setCurrentText("Logo") # default
+        from app.config.preset_manager import PresetManager
+        available_presets = PresetManager.get_instance().get_available_presets()
+        self.preset_combo.addItems(available_presets + ["Custom"])
+        self.preset_combo.setCurrentText("balanced" if "balanced" in available_presets else "Custom")
         self.preset_combo.currentTextChanged.connect(self._on_preset_changed)
         
         preset_layout.addWidget(preset_title)
@@ -935,148 +958,73 @@ class MainWindow(QMainWindow):
         if preset_name == "Custom":
             return
 
+        from app.config.preset_manager import PresetManager
+        try:
+            config = PresetManager.get_instance().get_preset_config(preset_name)
+        except ValueError:
+            return
+
         self._updating_from_preset = True
         try:
-            if preset_name == "Logo":
-                threshold = 127
-                min_area = 100
-                detail_level = "Low"
-                smoothing = False
-                preserve_edges = False
-                remove_background = False
-                color_mode = "Custom colors"
-                color_count = 6
-                bg_tolerance = 20
-                vt_colormode = "Color"
-                vt_hierarchical = "Stacked"
-                vt_mode = "Spline"
-                vt_layer_difference = 32
-                vt_color_precision = 6
-            elif preset_name == "Artwork":
-                threshold = 127
-                min_area = 20
-                detail_level = "High"
-                smoothing = True
-                preserve_edges = True
-                remove_background = False
-                color_mode = "Custom colors"
-                color_count = 24
-                bg_tolerance = 20
-                vt_colormode = "Color"
-                vt_hierarchical = "Stacked"
-                vt_mode = "Spline"
-                vt_layer_difference = 16
-                vt_color_precision = 6
-            elif preset_name == "Icon":
-                threshold = 127
-                min_area = 5
-                detail_level = "High"
-                smoothing = False
-                preserve_edges = False
-                remove_background = True
-                color_mode = "Custom colors"
-                color_count = 12
-                bg_tolerance = 15
-                vt_colormode = "Color"
-                vt_hierarchical = "Cutout"
-                vt_mode = "Spline"
-                vt_layer_difference = 16
-                vt_color_precision = 5
-            elif preset_name == "Photo":
-                threshold = 127
-                min_area = 10
-                detail_level = "Medium"
-                smoothing = False
-                preserve_edges = False
-                remove_background = False
-                color_mode = "Unlimited colors"
-                color_count = 64
-                bg_tolerance = 20
-                vt_colormode = "Color"
-                vt_hierarchical = "Stacked"
-                vt_mode = "Spline"
-                vt_layer_difference = 8
-                vt_color_precision = 8
-                
-                # Warn user about complexity
-                QMessageBox.information(
-                    self,
-                    "Preset Warning",
-                    "The Photo preset uses higher color tolerance and curve fitting, which may produce a highly complex SVG with a large file size."
-                )
-            else:
-                return
-
-            # Apply settings to internal vector_settings object manually
-            self.vector_settings.threshold_val = threshold
-            self.vector_settings.min_area = float(min_area)
-            self.vector_settings.smoothing_enabled = smoothing
-            self.vector_settings.preserve_edges = preserve_edges
-            self.vector_settings.remove_background = remove_background
-            self.vector_settings.color_mode = color_mode
-            self.vector_settings.color_count = color_count
-            self.vector_settings.bg_tolerance = float(bg_tolerance)
-            self.vector_settings.vtracer.colormode = "color" if vt_colormode == "Color" else "binary"
-            self.vector_settings.vtracer.hierarchical = vt_hierarchical.lower()
-            vt_mode_val = vt_mode.lower()
-            if vt_mode_val == "pixel":
-                vt_mode_val = "none"
-            self.vector_settings.vtracer.mode = vt_mode_val
-            self.vector_settings.vtracer.layer_difference = vt_layer_difference
-            self.vector_settings.vtracer.color_precision = vt_color_precision
+            # Reassign settings directly from preset config
+            import copy
+            self.vector_settings = copy.deepcopy(config)
 
             # Update UI controls safely with signals blocked to avoid redundant threads
             self.threshold_slider.blockSignals(True)
-            self.threshold_slider.setValue(threshold)
-            self.threshold_value_label.setText(str(threshold))
+            self.threshold_slider.setValue(config.threshold_val)
+            self.threshold_value_label.setText(str(config.threshold_val))
             self.threshold_slider.blockSignals(False)
 
             self.min_area_slider.blockSignals(True)
-            self.min_area_slider.setValue(min_area)
-            self.min_area_value_label.setText(str(min_area))
+            self.min_area_slider.setValue(int(config.min_area))
+            self.min_area_value_label.setText(str(int(config.min_area)))
             self.min_area_slider.blockSignals(False)
 
             self.detail_combo.blockSignals(True)
-            self.detail_combo.setCurrentText(detail_level)
+            self.detail_combo.setCurrentText("Custom")
             self.detail_combo.blockSignals(False)
 
             self.smoothing_checkbox.blockSignals(True)
-            self.smoothing_checkbox.setChecked(smoothing)
+            self.smoothing_checkbox.setChecked(config.smoothing_enabled)
             self.smoothing_checkbox.blockSignals(False)
 
             self.preserve_edges_checkbox.blockSignals(True)
-            self.preserve_edges_checkbox.setChecked(preserve_edges)
+            self.preserve_edges_checkbox.setChecked(config.preserve_edges)
             self.preserve_edges_checkbox.blockSignals(False)
 
             self.remove_bg_checkbox.blockSignals(True)
-            self.remove_bg_checkbox.setChecked(remove_background)
+            self.remove_bg_checkbox.setChecked(config.remove_background)
             self.remove_bg_checkbox.blockSignals(False)
-            self.bg_tolerance_widget.setVisible(remove_background)
+            self.bg_tolerance_widget.setVisible(config.remove_background)
 
             self.color_mode_combo.blockSignals(True)
-            self.color_mode_combo.setCurrentText(color_mode)
+            self.color_mode_combo.setCurrentText(config.color_mode)
             self.color_mode_combo.blockSignals(False)
-            self.color_count_widget.setVisible(color_mode == "Custom colors")
+            self.color_count_widget.setVisible(config.color_mode == "Custom colors")
 
             self.color_count_slider.blockSignals(True)
-            self.color_count_slider.setValue(color_count)
-            self.color_count_value_label.setText(str(color_count))
+            self.color_count_slider.setValue(config.color_count)
+            self.color_count_value_label.setText(str(config.color_count))
             self.color_count_slider.blockSignals(False)
 
             self.bg_tolerance_slider.blockSignals(True)
-            self.bg_tolerance_slider.setValue(bg_tolerance)
-            self.bg_tolerance_value_label.setText(str(bg_tolerance))
+            self.bg_tolerance_slider.setValue(int(config.bg_tolerance))
+            self.bg_tolerance_value_label.setText(str(int(config.bg_tolerance)))
             self.bg_tolerance_slider.blockSignals(False)
 
             self.vtracer_color_mode_combo.blockSignals(True)
+            vt_colormode = "Color" if config.colormode == "color" else "Black & White"
             self.vtracer_color_mode_combo.setCurrentText(vt_colormode)
             self.vtracer_color_mode_combo.blockSignals(False)
 
             self.vtracer_hierarchical_combo.blockSignals(True)
-            self.vtracer_hierarchical_combo.setCurrentText(vt_hierarchical)
+            vt_hier = "Stacked" if config.hierarchical == "stacked" else "Cutout"
+            self.vtracer_hierarchical_combo.setCurrentText(vt_hier)
             self.vtracer_hierarchical_combo.blockSignals(False)
 
             self.vtracer_mode_combo.blockSignals(True)
+            vt_mode = "Spline" if config.mode == "spline" else ("Polygon" if config.mode == "polygon" else "Pixel")
             self.vtracer_mode_combo.setCurrentText(vt_mode)
             self.vtracer_mode_combo.blockSignals(False)
             
