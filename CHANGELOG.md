@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.0] - 2026-07-29
+
+### Added
+- Added usability study protocol (`docs/research/USABILITY_PROTOCOL.md`) and task scenarios (`docs/research/USABILITY_SCENARIOS.md`).
+- Added telemetry-free local study logger (`app/core/study_logger.py`) for usability testing.
+
 ## [1.17.0] - 2026-07-29
 
 ### Added
