@@ -24,7 +24,7 @@ def validate_dataset_manifest():
         with open(manifest_path) as f:
             reader = csv.reader(f)
             headers = next(reader)
-            expected = {"image_id", "filename", "split", "category"}
+            expected = {"image_id", "file_path", "split", "category"}
             assert expected.issubset(set(headers)), f"Missing headers. Found: {headers}"
 
 def validate_config_schema():
