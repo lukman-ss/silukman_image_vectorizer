@@ -81,12 +81,19 @@ def test_corrupted_inputs(scenario_key, corrupted_inputs, tmp_path):
     """
     input_path = corrupted_inputs[scenario_key]
     output_path = tmp_path / f"out_{scenario_key}.svg"
-    config = VectorizationConfig(engine="opencv_legacy")
+    config = VectorizationConfig(engine_type="OpenCV Legacy")
 
-    result = vectorize_image(str(input_path), str(output_path), config)
-    
-    assert result.status == "failed"
-    assert "error" in result.error.lower() or "fail" in result.error.lower() or "unsupported" in result.error.lower() or "could not" in result.error.lower()
+    from app.core.exceptions import InputImageError
+    try:
+        result = vectorize_image(str(input_path), str(output_path), config)
+        assert result.status == "failed"
+        assert "error" in result.error.lower() or "fail" in result.error.lower() or "unsupported" in result.error.lower() or "could not" in result.error.lower()
+    except InputImageError:
+        # Expected behavior: fails safely by raising an explicit InputImageError
+        pass
+    except Exception as e:
+        # Catch unexpected generic exceptions and fail the test
+        pytest.fail(f"Failed unsafely with unexpected exception: {e}")
     
     # Ensure no empty/invalid output file was left behind if it failed early
     # (or if it was created, it's cleaned up/managed properly)

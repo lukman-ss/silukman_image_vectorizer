@@ -212,10 +212,10 @@ class ExperimentRunner:
             logger.info("Dataset empty for the given filters.")
             return
 
-        base_img_dir = os.path.join(os.path.dirname(self.config.dataset.manifest), "samples")
+        base_img_dir = os.path.dirname(self.config.dataset.manifest)
 
         # Try to find a valid image for warmup
-        test_img = os.path.join(base_img_dir, dataset[0]["filename"])
+        test_img = os.path.join(base_img_dir, dataset[0]["file_path"])
         self._run_warmups(test_img)
 
         total_tasks = (
@@ -234,7 +234,7 @@ class ExperimentRunner:
             for item in dataset:
                 image_id = item["image_id"]
                 category = item["category"]
-                input_path = os.path.join(base_img_dir, item["filename"])
+                input_path = os.path.join(base_img_dir, item["file_path"])
 
                 for b_name, backend in self.backends.items():
                     for preset in self.config.presets:

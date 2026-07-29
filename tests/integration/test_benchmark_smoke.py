@@ -29,9 +29,9 @@ def smoke_env(tmp_path):
     # Create manifest
     manifest_path = tmp_path / "manifest.csv"
     with open(manifest_path, "w") as f:
-        f.write("image_id,filename,split,category,complexity\n")
-        f.write(f"img1,{img1.name},test,shape,low\n")
-        f.write(f"img2,{img2.name},test,shape,low\n")
+        f.write("image_id,file_path,split,category,complexity\n")
+        f.write(f"img1,samples/{img1.name},test,shape,low\n")
+        f.write(f"img2,samples/{img2.name},test,shape,low\n")
 
     # Create config
     config_data = {

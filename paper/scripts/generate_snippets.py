@@ -32,11 +32,11 @@ def compute_success_rate(runs):
     success = sum(1 for r in runs if r.get('status') == 'success')
     return (success / len(runs)) * 100
 
-def compute_metrics_by_group(runs, group_key, metric='quality_metric'):
+def compute_metrics_by_group(runs, group_key, metric_category, metric_name):
     grouped = defaultdict(list)
     for r in runs:
-        if r.get('status') == 'success' and metric in r.get('metrics', {}):
-            val = r['metrics'][metric]
+        if r.get('status') == 'success' and metric_category in r:
+            val = r[metric_category].get(metric_name)
             if val is not None:
                 grouped[r.get(group_key, 'unknown')].append(val)
     
@@ -63,17 +63,17 @@ def generate_snippets(runs, output_path=None):
     success_rate = compute_success_rate(runs)
     
     # Analyze by backend
-    backend_quality = compute_metrics_by_group(runs, 'backend', 'quality_metric')
+    backend_quality = compute_metrics_by_group(runs, 'backend', 'quality', 'ssim')
     # Rank backends by mean quality
     ranked_backends = sorted(backend_quality.items(), key=lambda x: x[1]['mean'], reverse=True)
     
     # Analyze presets for Silukman
     silukman_runs = [r for r in runs if r.get('backend') == 'silukman']
-    preset_quality = compute_metrics_by_group(silukman_runs, 'preset', 'quality_metric')
-    preset_runtime = compute_metrics_by_group(silukman_runs, 'preset', 'runtime')
+    preset_quality = compute_metrics_by_group(silukman_runs, 'preset', 'quality', 'ssim')
+    preset_runtime = compute_metrics_by_group(silukman_runs, 'preset', 'performance', 'duration_seconds')
     
     # Analyze by category
-    category_quality = compute_metrics_by_group(runs, 'category', 'quality_metric')
+    category_quality = compute_metrics_by_group(runs, 'category', 'quality', 'ssim')
 
     lines = []
     lines.append("## Generated Manuscript Snippets")

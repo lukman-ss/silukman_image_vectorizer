@@ -1,0 +1,25 @@
+experiment:
+  id: "preprint_simulation"
+  repetitions: 1
+  warmup_runs: 0
+  timeout_seconds: 60
+
+dataset:
+  manifest: "benchmark/dataset_manifest.csv"
+  split: "test"
+  categories: ["geometric_shapes", "flat_logo", "gradients", "thin_lines", "curves", "pseudo_text", "transparent_shapes", "noisy_edges", "overlapping_objects", "monochrome_silhouette"]
+
+backends:
+  - "silukman"
+
+presets:
+  - "balanced"
+  - "low_complexity"
+
+metrics:
+  - "pixel"
+  - "edge"
+  - "histogram"
+  - "ssim"
+  - "svg"
+  - "performance"

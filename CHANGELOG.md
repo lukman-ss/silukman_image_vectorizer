@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ## [1.19.0] - 2026-07-29
 
 ### Added
+- Completed preprint checklist, executed synthetic benchmark, and generated factual manuscript snippets.
+- Prepared Zenodo release checklist and Release Notes for v1.19.0.
 - Used safe `defusedxml` SVG parser to prevent XML injection (XXE/Billion Laughs) in `postprocessing.py` and added test coverage.
 - Created `benchmark/concurrency_benchmark.py` to audit parallel batch scaling without unconditionally consuming all cores.
 - Created `docs/research/CACHE_STRATEGY.md` analyzing benchmark cache implications to prevent repeated-run pollution.

@@ -36,7 +36,7 @@ def test_large_image_stress(size, dummy_large_image, tmp_path):
     """
     input_path = dummy_large_image(size)
     output_path = tmp_path / f"out_{size}.svg"
-    config = VectorizationConfig(engine="opencv_legacy")  # Use OpenCV for determinism in CI/stress
+    config = VectorizationConfig(engine_type="OpenCV Legacy")  # Use OpenCV for determinism in CI/stress
 
     start_time = time.time()
     
