@@ -89,4 +89,26 @@ We use GitHub Actions to automate desktop application builds, version tagging, a
 - **Manual Build**: Runs locally via `scripts/build_app.py`. Uses local system libraries, virtual environment compilers, and target architecture. Best for fast local verification.
 - **CI Build**: Runs inside clean, isolated containers on GitHub-hosted runners (Windows, macOS, Linux). Guarantees reproducible builds and doesn't pollute local environments.
 
+## Academic and Research Use
+
+**Research use**
+This software was developed to facilitate research in reproducible image processing pipelines.
+
+**Citation**
+If you use this software in your research, please cite it using the metadata provided in `CITATION.cff` or `.zenodo.json`. A DOI is available at `10.5281/zenodo.21636416`.
+
+**Reproducibility**
+We provide a comprehensive guide for reproducing our vectorization benchmarks in `REPRODUCIBILITY.md`.
+
+**Benchmark**
+See `docs/developer/benchmark.md` (or the equivalent documentation) for information regarding the benchmark protocol, metrics, and dataset usage.
+
+**Dataset policy**
+Any datasets referenced or included in this repository are for testing and benchmarking purposes. Please refer to individual dataset licenses.
+
+**Limitations**
+See the honest research limitations outlined in the documentation regarding backend dependence, metric coverage, hardware effects, and dataset scope.
+
+**Software paper status**
+A software paper for this tool is currently in preparation (not yet published).
 

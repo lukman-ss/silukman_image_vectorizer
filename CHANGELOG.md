@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.0] - 2026-07-29
+
+### Added
+- Added `codemeta.json` to support the CodeMeta standard for software citation and metadata.
+- Added Academic and Research Use section in `README.md`, including citation, reproducibility, benchmark, dataset policy, limitations, and software paper status.
+
 ## [1.15.0] - 2026-07-29
 
 ### Added
