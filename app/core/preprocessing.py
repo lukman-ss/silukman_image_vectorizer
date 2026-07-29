@@ -221,7 +221,8 @@ def preprocess_image(
     if not path.exists():
         raise ValueError(f"Image not found at {input_path}")
 
-    img = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+    img_data = np.fromfile(str(path), np.uint8)
+    img = cv2.imdecode(img_data, cv2.IMREAD_UNCHANGED) if img_data.size > 0 else None
     if img is None:
         raise ValueError(f"Failed to load image for preprocessing from {input_path}")
 

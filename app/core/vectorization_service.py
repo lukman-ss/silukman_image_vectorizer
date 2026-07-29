@@ -70,7 +70,9 @@ def vectorize_image(
     result.input_file_size = os.path.getsize(input_path)
     result.input_format = Path(input_path).suffix.lower().lstrip(".") or "unknown"
 
-    img_info = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
+    import numpy as np
+    img_data = np.fromfile(input_path, np.uint8)
+    img_info = cv2.imdecode(img_data, cv2.IMREAD_UNCHANGED) if img_data.size > 0 else None
     if img_info is None:
         result.error_type = "InputImageError"
         result.error_message = "Failed to read image or unsupported format."

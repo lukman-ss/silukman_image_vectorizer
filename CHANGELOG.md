@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.0] - 2026-07-29
+
+### Added
+- Added `.zenodo.json` and updated `CITATION.cff` for academic citation and metadata matching DOI 10.5281/zenodo.21636416.
+
+### Fixed
+- Fixed OpenCV `imread` failure on Windows when handling paths with Unicode characters or spaces by switching to `imdecode` and `numpy.fromfile`.
+
 ## [1.14.0] - 2026-07-28
 
 ### Added

@@ -72,7 +72,8 @@ class OpenCVVectorizerBackend(VectorizerBackend):
         if thresholded_array is None:
             # We assume grayscale thresholding was already done by preprocessing and saved to input_path,
             # or we do it here if missing. Actually, since we orchestrate it, if it's missing we just read and threshold.
-            gray = cv2.imread(input_path, cv2.IMREAD_GRAYSCALE)
+            img_data = np.fromfile(input_path, np.uint8)
+            gray = cv2.imdecode(img_data, cv2.IMREAD_GRAYSCALE) if img_data.size > 0 else None
             threshold_val = getattr(settings, "threshold_val", 127)
             if gray is not None:
                 _, thresholded = cv2.threshold(gray, threshold_val, 255, cv2.THRESH_BINARY)
@@ -82,7 +83,8 @@ class OpenCVVectorizerBackend(VectorizerBackend):
             thresholded = thresholded_array
 
         # Read color image for path colors (it is already preprocessed in input_path)
-        color_array = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
+        img_data_color = np.fromfile(input_path, np.uint8)
+        color_array = cv2.imdecode(img_data_color, cv2.IMREAD_UNCHANGED) if img_data_color.size > 0 else None
 
         # Call legacy vectorize
         return opencv_vectorize(thresholded, settings, color_array)
@@ -166,7 +168,8 @@ class VTracerVectorizerBackend(VectorizerBackend):
                 with Image.open(source_path) as img_pil:
                     w, h = img_pil.size
             except Exception:
-                img_dims = cv2.imread(str(source_path))
+                img_data_dims = np.fromfile(str(source_path), np.uint8)
+                img_dims = cv2.imdecode(img_data_dims, cv2.IMREAD_COLOR) if img_data_dims.size > 0 else None
                 h, w = (
                     (img_dims.shape[0], img_dims.shape[1]) if img_dims is not None else (400, 400)
                 )
