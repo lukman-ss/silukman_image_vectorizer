@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.17.0] - 2026-07-29
+
+### Added
+- Created `paper` directory structure for the software paper.
+- Added `paper/manuscript.md` draft with placeholders.
+- Added `paper/references.bib` with initial verified citations.
+- Added `paper/scripts/generate_snippets.py` to automate manuscript snippet generation from benchmark results.
+
 ## [1.16.0] - 2026-07-29
 
 ### Added
