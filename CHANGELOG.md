@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.19.5] - 2026-07-30
+## [1.19.6] - 2026-07-30
+
+### Fixed
+- Restored test compatibility for `validate_dataset.py` by rewriting tests to conform to the updated structural schema and `dataset_role`.
+- Fixed missing `typing` imports and unused variables that caused CI pipeline failures for Flake8.
 
 ### Added
 - Created `pre_benchmark_gate.md` to evaluate code quality, dataset readiness, experiment config, and manuscript status before allowing a full evaluation run. Status: `FULL_BENCHMARK_BLOCKED`.
