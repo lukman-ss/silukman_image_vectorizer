@@ -30,9 +30,14 @@ def cmd_add(args: argparse.Namespace) -> int:
     manifest_path = "benchmark/datasets/real_world/dataset_manifest.csv"
     images_dir = "benchmark/datasets/real_world/images"
 
-    # 1. Validation
     if not args.license or args.license.strip() == "":
         print("Error: License cannot be empty.")
+        return 1
+
+    ALLOWED_LICENSES = {"cc0", "public domain", "cc by", "cc-by"}
+    if args.license.strip().lower() not in ALLOWED_LICENSES:
+        print(f"Error: License '{args.license}' is not in the approved list: "
+              f"{sorted(ALLOWED_LICENSES)}. Only CC0, Public Domain, CC BY are accepted.")
         return 1
 
     if not os.path.exists(args.file):

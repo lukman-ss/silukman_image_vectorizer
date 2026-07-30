@@ -604,7 +604,7 @@ None normally required.
 **Required data**
 
 - Every compatible dataset image processed with each preset.
-- `1` measured runs after `[TO_BE_COMPUTED]` warm-up runs.
+- `[REPETITION_COUNT]` measured runs after `[WARMUP_COUNT]` warm-up runs.
 - Rasterized SVG outputs at source dimensions.
 - Raw per-run records and per-image paired aggregates.
 
@@ -775,7 +775,7 @@ Pareto membership depends on the selected metrics and measurement noise. A confi
 
 **Required data**
 
-- At least `1` measured repetitions per image–backend–preset condition.
+- At least `[REPETITION_COUNT]` measured repetitions per image–backend–preset condition.
 - Output hashes.
 - Identical configuration and environment references.
 - Stable source hashes.
@@ -841,7 +841,7 @@ Failure rates are configuration- and environment-dependent. A missing executable
 
 **Software:** We present **Silukman Image Vectorizer**, a Python and PySide6 desktop application with a headless command-line interface for configurable raster-to-SVG conversion. The software integrates typed configuration, named presets, optional preprocessing, VTracer-based color tracing, an OpenCV contour-based legacy backend, SVG validation and export, batch processing, and a benchmark subsystem. It is an integration and reproducibility contribution and does not claim a new tracing algorithm.
 
-**Methodology:** The planned evaluation uses [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compares the Silukman workflow with [REAL_WORLD_BASELINES]. Each compatible image–backend–preset condition is executed for `1` measured repetitions after `[TO_BE_COMPUTED]` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
+**Methodology:** The planned evaluation uses [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compares the Silukman workflow with [REAL_WORLD_BASELINES]. Each compatible image–backend–preset condition is executed for `[REPETITION_COUNT]` measured repetitions after `[WARMUP_COUNT]` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
 
 **Evaluation and results:** The primary result is [REAL_WORLD_PRIMARY_METRIC] under the primary quality measure `SSIM`. Runtime analysis shows [REAL_WORLD_RUNTIME_RESULT], while [REAL_WORLD_FAILURE_RATE] describes unsuccessful or skipped executions. These placeholders must be replaced only after the dataset, experiment configuration, and analysis have been finalized.
 
@@ -1079,7 +1079,7 @@ The experiment will evaluate Silukman Image Vectorizer as an implemented workflo
 
 The frozen experimental matrix will be:
 
-`10 images × [TO_BE_COMPUTED] backends × [PRESET_COUNT] presets × 1 repetitions`
+`10 images × [TO_BE_COMPUTED] backends × [PRESET_COUNT] presets × [REPETITION_COUNT] repetitions`
 
 subject to predefined compatibility and availability rules.
 
@@ -1182,7 +1182,7 @@ Preprocessing logs will be retained. When an operation is not applicable to a so
 
 ### 5.7 Repeated runs and warm-up
 
-Each measured condition will be executed `1` times after `[TO_BE_COMPUTED]` warm-up runs. Warm-ups use a predefined image and preset and are excluded from reported performance statistics.
+Each measured condition will be executed `[REPETITION_COUNT]` times after `[WARMUP_COUNT]` warm-up runs. Warm-ups use a predefined image and preset and are excluded from reported performance statistics.
 
 The repetition count must be fixed before the main experiment. Repetitions will be used to assess runtime variability, output-hash stability, metric consistency, and repeated failure behavior. The execution order will be `[TO_BE_COMPUTED]`. When feasible, order will be randomized or blocked to reduce thermal and temporal bias, while preserving a recorded schedule or random seed.
 

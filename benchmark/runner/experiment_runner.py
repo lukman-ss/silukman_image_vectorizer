@@ -118,7 +118,7 @@ class ExperimentRunner:
                         if category_counts.get(cat, 0) >= self.config.dataset.max_samples_per_category:
                             continue
                         category_counts[cat] = category_counts.get(cat, 0) + 1
-                    
+
                     dataset.append(row)
         return dataset
 
