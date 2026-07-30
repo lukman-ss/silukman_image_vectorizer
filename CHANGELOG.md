@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.1] - 2026-07-30
+
+### Fixed
+- Updated `README.md` and `docs/user/CLI_WORKFLOW.md` to accurately reflect the headless CLI functionalities.
+
 ## [1.19.0] - 2026-07-29
 
 ### Added

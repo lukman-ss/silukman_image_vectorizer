@@ -4,10 +4,9 @@
 
 Last updated: 2026-06-05
 
-Image Vectorizer is a Python and PySide6 desktop application foundation for
-working with raster images. The current application supports local image import,
-original and processed previews, image metadata display, and an initial
-grayscale and threshold processing pipeline. It can also detect, simplify, and
+Image Vectorizer is a Python and PySide6 application for working with raster
+images. The application supports a robust headless CLI for batch processing, 
+as well as a rich graphical desktop interface. It can detect, simplify, and
 preview color-aware vector paths using configurable quality, background removal,
 and comparison controls. The desktop UI supports accessible Light, Dark, and
 System theme modes, single SVG export, and responsive batch SVG processing.
