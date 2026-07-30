@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.19.4] - 2026-07-30
+## [1.19.5] - 2026-07-30
+
+### Added
+- Created `pre_benchmark_gate.md` to evaluate code quality, dataset readiness, experiment config, and manuscript status before allowing a full evaluation run. Status: `FULL_BENCHMARK_BLOCKED`.
 
 ### Added
 - Separated `benchmark/datasets/synthetic` and `benchmark/datasets/real_world` directory structure.
