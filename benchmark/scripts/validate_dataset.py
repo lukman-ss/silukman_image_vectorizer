@@ -2,7 +2,6 @@ import argparse
 import csv
 import hashlib
 import json
-import os
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -38,7 +37,6 @@ def get_image_info(filepath: str):
 
 def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
     manifest_file = Path(manifest_path)
-    schema_file = Path(schema_path)
     samples = Path(samples_dir)
 
     report = {

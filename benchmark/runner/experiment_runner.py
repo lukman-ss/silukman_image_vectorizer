@@ -1,13 +1,9 @@
 import csv
 import json
 import os
-import platform
-import subprocess
-import sys
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Set
 
-import psutil
 
 from benchmark.baselines.backends import (
     InkscapeBackend,
@@ -17,7 +13,7 @@ from benchmark.baselines.backends import (
 )
 from benchmark.evaluation.unified_evaluator import UnifiedQualityEvaluator
 from benchmark.runner.config_schema import BenchmarkConfig
-from benchmark.runner.env_capture import capture_environment, generate_config_hash, get_git_info
+from benchmark.runner.env_capture import capture_environment, get_git_info
 from app.core.logging import logger
 
 

@@ -1,7 +1,6 @@
 import os
 
 import PySide6
-from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor, QImage, QPainter
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import QApplication

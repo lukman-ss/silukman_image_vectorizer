@@ -1,6 +1,6 @@
 import re
 import xml.etree.ElementTree as ET
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List, Tuple
 import defusedxml.ElementTree as DET
 
 # Standard SVG Namespace mapping

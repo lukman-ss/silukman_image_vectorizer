@@ -1,7 +1,6 @@
 import csv
 from pathlib import Path
 
-import pytest
 
 from benchmark.runner.config_schema import BenchmarkConfig
 

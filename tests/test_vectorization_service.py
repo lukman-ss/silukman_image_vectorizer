@@ -1,10 +1,9 @@
 import os
-from pathlib import Path
 
 import pytest
 
 from app.config.settings import VectorizationSettings
-from app.core.exceptions import ExportError, InvalidInputError, ProcessingError
+from app.core.exceptions import ExportError, InvalidInputError
 from app.core.vectorization_service import vectorize_image
 
 

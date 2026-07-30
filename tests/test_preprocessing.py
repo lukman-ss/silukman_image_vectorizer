@@ -1,6 +1,4 @@
-import cv2
 import numpy as np
-import pytest
 
 from app.core.preprocessing import (
     apply_background_removal,

@@ -2,11 +2,10 @@ import argparse
 import hashlib
 import json
 import math
-import os
 import random
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw
 
 
 def get_sha256(filepath: str) -> str:

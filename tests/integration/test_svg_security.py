@@ -1,16 +1,18 @@
 import pytest
 from app.core.postprocessing import parse_and_validate_svg
 
+
 def test_svg_security_xxe():
     """Test parser against XML External Entity (XXE) injection."""
     malicious_svg = """<?xml version="1.0" encoding="ISO-8859-1"?>
     <!DOCTYPE svg [
       <!ELEMENT svg ANY >
       <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><svg>&xxe;</svg>"""
-    
+
     with pytest.raises((ValueError, Exception)):
         # defusedxml should raise an exception on DTD or entity expansion
         parse_and_validate_svg(malicious_svg)
+
 
 def test_svg_security_billion_laughs():
     """Test parser against Billion Laughs (exponential entity expansion)."""
@@ -21,16 +23,18 @@ def test_svg_security_billion_laughs():
      <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
     ]>
     <svg>&lol2;</svg>"""
-    
+
     with pytest.raises((ValueError, Exception)):
         parse_and_validate_svg(malicious_svg)
+
 
 def test_svg_security_malformed_xml():
     """Test parser against strictly malformed XML."""
     malformed_svg = "<svg><path d='M0 0 L10 10'></svg>"
-    
+
     with pytest.raises(ValueError):
         parse_and_validate_svg(malformed_svg)
+
 
 def test_svg_security_deeply_nested():
     """Test parser against deeply nested XML which could cause stack overflow."""
@@ -40,17 +44,18 @@ def test_svg_security_deeply_nested():
     nested_svg = "<svg>" + ("<g>" * depth) + "</g>" * depth + "</svg>"
     try:
         parse_and_validate_svg(nested_svg)
-    except Exception as e:
+    except Exception:
         # It's fine if it throws an error (e.g. recursion error), as long as it's caught
         pass
     assert True
+
 
 def test_svg_security_oversized_path():
     """Test parser handles massive path data gracefully."""
     # 1 million coordinates
     huge_path = "0 0 " * 500000
     svg = f"<svg><path d='M {huge_path}'/></svg>"
-    
+
     try:
         root = parse_and_validate_svg(svg)
         assert root is not None

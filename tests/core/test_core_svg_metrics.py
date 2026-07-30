@@ -1,8 +1,5 @@
 import json
-import os
-import tempfile
 
-import pytest
 
 from app.core.postprocessing import calculate_svg_metrics, parse_and_validate_svg
 from benchmark.analysis.aggregator import BenchmarkAggregator

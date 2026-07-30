@@ -1,6 +1,5 @@
 import json
 import os
-from typing import Any, Dict
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -62,7 +61,7 @@ class PlotGenerator:
         df = pd.DataFrame(points)
 
         plt.figure(figsize=(8, 6))
-        ax = sns.scatterplot(
+        sns.scatterplot(
             data=df, x="Complexity", y="Quality", hue="Backend", style="Preset", s=100
         )
 

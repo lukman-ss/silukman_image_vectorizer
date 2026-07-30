@@ -137,8 +137,6 @@ def capture_environment() -> Dict[str, Any]:
 
     # 6. Safe Environment Variables
     safe_env_keys = {"PATH", "PYTHONPATH", "LANG", "LC_ALL", "TMPDIR", "USER", "SHELL"}
-    unsafe_substrings = {"KEY", "TOKEN", "PASS", "SECRET", "AUTH", "CRED"}
-
     safe_env = {}
     for k, v in os.environ.items():
         # Include if in explicit safe list

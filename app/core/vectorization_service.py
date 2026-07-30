@@ -8,7 +8,7 @@ from pathlib import Path
 import cv2
 
 from app.config.settings import VectorizationSettings
-from app.core.exceptions import InputImageError, PreprocessingError, VectorizationError, SvgValidationError, ConfigurationError
+from app.core.exceptions import InputImageError, PreprocessingError, VectorizationError
 from app.core.result import VectorizationResult, calculate_file_hash
 
 

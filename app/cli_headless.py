@@ -18,7 +18,7 @@ def _build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", help="Available subcommands")
 
     # GUI Command
-    parser_gui = subparsers.add_parser("gui", help="Start the graphical user interface")
+    subparsers.add_parser("gui", help="Start the graphical user interface")
 
     # Presets Command
     parser_presets = subparsers.add_parser("presets", help="List available vectorization presets")
@@ -389,7 +389,7 @@ def cmd_batch(args: argparse.Namespace) -> int:
     if args.json:
         print(json.dumps(summary, indent=2))
     else:
-        print(f"Batch processing complete.")
+        print("Batch processing complete.")
         print(f"Success: {success_count}, Failed: {fail_count}")
         print(f"Outputs written to {outputs_dir}")
 
@@ -555,11 +555,11 @@ def main(args: Optional[List[str]] = None) -> int:
     if not parsed_args.command:
         parser.print_help()
         return 1
-        
+
     as_json = getattr(parsed_args, "json", False)
     from app.core.logging import setup_logger
-    logger = setup_logger("silukman", as_json=as_json)
-    
+    setup_logger("silukman", as_json=as_json)
+
     if parsed_args.command == "gui":
         return cmd_gui()
     elif parsed_args.command == "presets":

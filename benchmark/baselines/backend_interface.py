@@ -12,17 +12,14 @@ class VectorizerBackend(ABC):
     @abstractmethod
     def name(self) -> str:
         """Returns the canonical name of the backend (e.g. 'Potrace', 'Silukman')."""
-        pass
 
     @abstractmethod
     def version(self) -> str:
         """Returns the version of the underlying tool."""
-        pass
 
     @abstractmethod
     def is_available(self) -> bool:
         """Checks if the tool is installed and available in the current environment."""
-        pass
 
     @abstractmethod
     def vectorize(
@@ -40,4 +37,3 @@ class VectorizerBackend(ABC):
         Returns:
             A dictionary containing metadata, performance data, and any errors.
         """
-        pass

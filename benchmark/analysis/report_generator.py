@@ -1,7 +1,6 @@
 import json
 import os
 import shutil
-from typing import Any, Dict
 
 from benchmark.analysis.aggregator import BenchmarkAggregator
 from benchmark.analysis.failure_analysis import FailureAnalyzer

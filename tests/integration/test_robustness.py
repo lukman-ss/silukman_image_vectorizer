@@ -1,17 +1,14 @@
 import pytest
-import os
-import cv2
-import numpy as np
 import struct
-from pathlib import Path
 from app.core.vectorization_service import vectorize_image
 from app.config.settings import VectorizationConfig
+
 
 @pytest.fixture
 def corrupted_inputs(tmp_path):
     """Fixture that generates various corrupted and invalid input files."""
     paths = {}
-    
+
     # 1. Truncated PNG
     trunc_png = tmp_path / "truncated.png"
     # Write a valid header but cut it off
@@ -62,8 +59,9 @@ def corrupted_inputs(tmp_path):
     with open(unsupp, 'wb') as f:
         f.write(b'%PDF-1.4\n%EOF')
     paths["unsupported"] = unsupp
-    
+
     return paths
+
 
 @pytest.mark.parametrize("scenario_key", [
     "truncated_png",
@@ -94,7 +92,7 @@ def test_corrupted_inputs(scenario_key, corrupted_inputs, tmp_path):
     except Exception as e:
         # Catch unexpected generic exceptions and fail the test
         pytest.fail(f"Failed unsafely with unexpected exception: {e}")
-    
+
     # Ensure no empty/invalid output file was left behind if it failed early
     # (or if it was created, it's cleaned up/managed properly)
     if output_path.exists():

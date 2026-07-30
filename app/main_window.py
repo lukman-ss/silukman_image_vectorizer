@@ -34,7 +34,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.config.settings import DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, VectorizationSettings
+from app.config.settings import DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH
 from app.controllers.vectorizer_controller import VectorizerController
 from app.core.constants import APPLICATION_TITLE, CONTROL_PANEL_TITLE, SIDEBAR_TITLE, STATUS_READY
 from app.core.vectorization_engine import VectorResult

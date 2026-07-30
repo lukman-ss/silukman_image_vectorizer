@@ -1,8 +1,6 @@
 import argparse
 import json
 import os
-import time
-from typing import Any, Dict
 
 from benchmark.evaluation.performance_metrics import PerformanceTracker
 from benchmark.runner.process_utils import ProcessExecutionError, run_isolated_process

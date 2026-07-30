@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.2] - 2026-07-30
+
+### Fixed
+- Restored academic integrity of the manuscript by replacing synthetic data with explicit real-world placeholders.
+- Created `paper/MANUSCRIPT_DATA_PROVENANCE.md` to explicitly classify and trace experimental data provenance.
+- Fixed 104 Flake8 issues across the repository (unused imports, trailing whitespaces, and formatting).
+
 ## [1.19.1] - 2026-07-30
 
 ### Fixed

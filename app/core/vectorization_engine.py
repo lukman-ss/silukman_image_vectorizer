@@ -7,6 +7,7 @@ Handles:
 """
 
 from __future__ import annotations
+from app.config.settings import VectorizationSettings
 
 import math
 from dataclasses import dataclass, field
@@ -53,7 +54,6 @@ class VectorResult:
 # Vectorization settings
 # ---------------------------------------------------------------------------
 
-from app.config.settings import VectorizationSettings
 
 # ---------------------------------------------------------------------------
 # Engine

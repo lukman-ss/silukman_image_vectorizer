@@ -5,8 +5,7 @@ import numpy as np
 import pytest
 
 from app.config.preset_manager import PresetManager
-from app.config.settings import VectorizationSettings
-from app.core.exceptions import ExportError, InvalidInputError, ProcessingError
+from app.core.exceptions import ExportError, InvalidInputError
 from app.core.vectorization_service import vectorize_image
 
 

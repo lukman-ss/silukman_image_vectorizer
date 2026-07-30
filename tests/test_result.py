@@ -1,9 +1,7 @@
 import json
 import os
 import tempfile
-from pathlib import Path
 
-import pytest
 
 from app.core.result import VectorizationResult, calculate_file_hash
 

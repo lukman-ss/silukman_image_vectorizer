@@ -1,8 +1,6 @@
-import os
 from typing import Any, Dict, Optional
 
 from app.config.preset_manager import PresetManager
-from app.config.settings import VectorizationSettings
 from app.core.vectorization_service import vectorize_image
 from benchmark.baselines.backend_interface import VectorizerBackend
 from benchmark.baselines.inkscape_baseline import InkscapeBaselineRunner

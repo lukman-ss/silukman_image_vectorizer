@@ -1,4 +1,3 @@
-import pytest
 
 from app.config.preset_manager import PresetManager
 from benchmark.runner.config_schema import BenchmarkConfig

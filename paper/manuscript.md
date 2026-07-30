@@ -841,9 +841,9 @@ Failure rates are configuration- and environment-dependent. A missing executable
 
 **Software:** We present **Silukman Image Vectorizer**, a Python and PySide6 desktop application with a headless command-line interface for configurable raster-to-SVG conversion. The software integrates typed configuration, named presets, optional preprocessing, VTracer-based color tracing, an OpenCV contour-based legacy backend, SVG validation and export, batch processing, and a benchmark subsystem. It is an integration and reproducibility contribution and does not claim a new tracing algorithm.
 
-**Methodology:** The planned evaluation uses `10` images from `10` categories and compares the Silukman workflow with `1 (Silukman)`. Each compatible image–backend–preset condition is executed for `1` measured repetitions after `(resolved)` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
+**Methodology:** The planned evaluation uses [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compares the Silukman workflow with [REAL_WORLD_BASELINES]. Each compatible image–backend–preset condition is executed for `1` measured repetitions after `(resolved)` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
 
-**Evaluation and results:** The primary result is `mean SSIM of 0.8793` under the primary quality measure `SSIM`. Runtime analysis shows `an average of 0.05-0.06 seconds per image`, while `0.0% failure rate` describes unsuccessful or skipped executions. These placeholders must be replaced only after the dataset, experiment configuration, and analysis have been finalized.
+**Evaluation and results:** The primary result is [REAL_WORLD_PRIMARY_METRIC] under the primary quality measure `SSIM`. Runtime analysis shows [REAL_WORLD_RUNTIME_RESULT], while [REAL_WORLD_FAILURE_RATE] describes unsuccessful or skipped executions. These placeholders must be replaced only after the dataset, experiment configuration, and analysis have been finalized.
 
 **Contribution:** The software contributes a desktop and automation-oriented workflow that connects interactive configuration with auditable batch execution, explicit presets, preprocessing logs, source and output hashes, environment capture, repeated experiments, baseline adapters, and analysis support for paired, category-level, failure, and Pareto comparisons.
 
@@ -1133,7 +1133,7 @@ Exclusions will be logged with a reason. No image will be removed because a syst
 
 ### 5.4 Systems under comparison
 
-The planned backend set is `1 (Silukman)`, selected from:
+The planned backend set is [REAL_WORLD_BASELINES], selected from:
 
 - `silukman`;
 - `vtracer`;
@@ -1339,7 +1339,7 @@ No values in this section may be filled until the benchmark dataset is populated
 
 ### 6.1 Dataset summary
 
-The final benchmark contained `10` images across `10` categories. Table 10 reports category counts, dimensions, formats, alpha-channel presence, color type, and complexity labels. The planned experiment generated `(resolved)` run conditions, of which `(resolved)` succeeded, `(resolved)` failed, and `(resolved)` were skipped.
+The final benchmark contained [REAL_WORLD_DATASET_SIZE] images across [REAL_WORLD_CATEGORY_COUNT] categories. Table 10 reports category counts, dimensions, formats, alpha-channel presence, color type, and complexity labels. The planned experiment generated `(resolved)` run conditions, of which `(resolved)` succeeded, `(resolved)` failed, and `(resolved)` were skipped.
 
 **Table 10. Dataset and execution summary**
 
@@ -1357,7 +1357,7 @@ Report exclusions and their reasons here: `(resolved)`.
 
 ### 6.2 Overall quality
 
-Across eligible successful runs, `(resolved)` achieved `mean SSIM of 0.8793` on `SSIM`. The paired difference against `(resolved)` was `(resolved)` with `(resolved)`. Secondary metrics are reported in Table 11.
+Across eligible successful runs, `(resolved)` achieved [REAL_WORLD_PRIMARY_METRIC] on `SSIM`. The paired difference against `(resolved)` was `(resolved)` with `(resolved)`. Secondary metrics are reported in Table 11.
 
 Do not use “better” unless metric direction, paired denominator, uncertainty, and practical magnitude support it.
 
@@ -1397,7 +1397,7 @@ Table 12 reports output size and structural complexity. `(resolved)`.
 
 ### 6.4 Runtime and memory
 
-The end-to-end runtime result was `an average of 0.05-0.06 seconds per image`. Runtime is specific to `(resolved)`. Warm-up runs were excluded.
+The end-to-end runtime result was [REAL_WORLD_RUNTIME_RESULT]. Runtime is specific to `(resolved)`. Warm-up runs were excluded.
 
 **Table 13. Performance measurements**
 
@@ -1455,7 +1455,7 @@ Report backend × category or preset × category results only when supported by 
 | Potrace | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
 | Inkscape | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
 
-Overall failure result: `0.0% failure rate`.
+Overall failure result: [REAL_WORLD_FAILURE_RATE].
 
 Do not merge skipped unavailable backends with execution failures.
 
@@ -1529,7 +1529,7 @@ Selection rule: `(resolved)`.
 
 ### 7.1 Interpretation of the fidelity–complexity trade-off
 
-The results show `balanced preset achieved 0.9053 SSIM vs low_complexity 0.8533`. This observation should be interpreted in terms of paired changes in `SSIM`, SVG bytes, path count, command count, and runtime. A claim that one configuration is preferable must state the target use case and the cost being accepted.
+The results show [REAL_WORLD_COMPLEXITY_RESULT]. This observation should be interpreted in terms of paired changes in `SSIM`, SVG bytes, path count, command count, and runtime. A claim that one configuration is preferable must state the target use case and the cost being accepted.
 
 A possible interpretation is `(resolved)`. This remains an interpretation rather than a causal finding unless the compared conditions differ only in the parameter or stage being discussed.
 
@@ -1704,7 +1704,7 @@ This paper presented **Silukman Image Vectorizer**, a local desktop and command-
 
 The implementation contributes a PySide6 desktop interface, typed vectorization settings, named low-complexity, balanced, and high-fidelity presets, VTracer integration, an OpenCV contour-based legacy path, palette and background operations, atomic SVG export, a headless CLI, and a benchmark subsystem that records configurations, hashes, environments, repeated runs, errors, output artifacts, and quality measurements. These contributions concern workflow integration and reproducibility; they do not constitute a new tracing algorithm.
 
-The evaluation used `10` images from `10` categories and compared `1 (Silukman)` under `2` presets and `1` repeated runs. The principal empirical observation was `mean SSIM of 0.8793`, while the quality–complexity–runtime relationship was `balanced preset achieved 0.9053 SSIM vs low_complexity 0.8533`. Runtime behavior was `an average of 0.05-0.06 seconds per image`, and execution failures or skips were `0.0% failure rate`. These placeholders must remain unresolved until the dataset and experiments are complete.
+The evaluation used [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compared [REAL_WORLD_BASELINES] under `2` presets and `1` repeated runs. The principal empirical observation was [REAL_WORLD_PRIMARY_METRIC], while the quality–complexity–runtime relationship was [REAL_WORLD_COMPLEXITY_RESULT]. Runtime behavior was [REAL_WORLD_RUNTIME_RESULT], and execution failures or skips were [REAL_WORLD_FAILURE_RATE]. These placeholders must remain unresolved until the dataset and experiments are complete.
 
 The conclusions are limited by `(resolved)`, including dataset scope, configuration sensitivity, metric coverage, hardware dependence, baseline compatibility, partially distinct GUI and canonical execution paths, heuristic SVG complexity measures, and incomplete Silukman memory instrumentation. Results should therefore be interpreted within the tested software versions, images, configurations, render procedure, and hardware.
 
@@ -1713,7 +1713,16 @@ Future work will include `(resolved)`, with priorities including population and 
 The evaluated source release, benchmark configuration, dataset manifest, raw run records, generated SVGs, logs, tables, and figures are available through `(resolved)`, `(resolved)`, and `(resolved)`.
 
 
-## Generated Manuscript Snippets
+
+## Synthetic Smoke-Test Validation
+
+Pernyataan eksplisit: Hasil sintetis di bawah ini HANYA membuktikan bahwa:
+- pipeline dapat dijalankan;
+- output dapat dihasilkan;
+- metrik dapat dihitung;
+- artefak eksperimen dapat disimpan.
+Hasil ini BUKAN representasi performa pada dunia nyata, karena dataset yang digunakan murni buatan (sintetis).
+
 
 ### Dataset and Success Rate
 The evaluation dataset consisted of 10 unique images.

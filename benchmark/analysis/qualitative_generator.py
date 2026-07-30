@@ -121,7 +121,7 @@ class QualitativeGenerator:
                 md_lines.append(f"Paths: {paths}<br>")
                 md_lines.append(f"Time: {runtime} s<br>")
                 # Placeholder for SVG embedding
-                md_lines.append(f"<i>(Output SVG linked here)</i>")
+                md_lines.append("<i>(Output SVG linked here)</i>")
                 md_lines.append("</td>")
 
             md_lines.append("</tr></table>\n")

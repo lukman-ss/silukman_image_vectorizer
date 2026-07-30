@@ -1,0 +1,212 @@
+app/cli_headless.py:21:5: F841 local variable 'parser_gui' is assigned to but never used
+app/cli_headless.py:392:15: F541 f-string is missing placeholders
+app/cli_headless.py:558:1: W293 blank line contains whitespace
+app/cli_headless.py:561:5: F841 local variable 'logger' is assigned to but never used
+app/cli_headless.py:562:1: W293 blank line contains whitespace
+app/core/logging.py:5:1: F401 'typing.Optional' imported but unused
+app/core/logging.py:7:1: E302 expected 2 blank lines, found 1
+app/core/logging.py:18:62: W291 trailing whitespace
+app/core/logging.py:21:1: W293 blank line contains whitespace
+app/core/logging.py:31:1: E302 expected 2 blank lines, found 1
+app/core/logging.py:34:1: W293 blank line contains whitespace
+app/core/logging.py:38:1: W293 blank line contains whitespace
+app/core/logging.py:40:1: W293 blank line contains whitespace
+app/core/logging.py:45:1: W293 blank line contains whitespace
+app/core/logging.py:50:1: E305 expected 2 blank lines after class or function definition, found 1
+app/core/postprocessing.py:3:1: F401 'typing.Any' imported but unused
+app/core/study_logger.py:8:1: E302 expected 2 blank lines, found 1
+app/core/study_logger.py:11:1: W293 blank line contains whitespace
+app/core/study_logger.py:21:1: W293 blank line contains whitespace
+app/core/study_logger.py:30:1: W293 blank line contains whitespace
+app/core/study_logger.py:41:1: W293 blank line contains whitespace
+app/core/study_logger.py:47:1: W293 blank line contains whitespace
+app/core/study_logger.py:52:1: W293 blank line contains whitespace
+app/core/study_logger.py:56:1: W293 blank line contains whitespace
+app/core/study_logger.py:61:1: W293 blank line contains whitespace
+app/core/study_logger.py:63:1: W293 blank line contains whitespace
+app/core/study_logger.py:70:1: W293 blank line contains whitespace
+app/core/study_logger.py:73:1: W293 blank line contains whitespace
+app/core/study_logger.py:78:1: W293 blank line contains whitespace
+app/core/study_logger.py:84:1: W293 blank line contains whitespace
+app/core/study_logger.py:89:1: W293 blank line contains whitespace
+app/core/study_logger.py:97:1: W293 blank line contains whitespace
+app/core/study_logger.py:102:1: W293 blank line contains whitespace
+app/core/study_logger.py:106:1: W293 blank line contains whitespace
+app/core/study_logger.py:108:1: W293 blank line contains whitespace
+app/core/study_logger.py:111:1: W293 blank line contains whitespace
+app/core/study_logger.py:117:1: W293 blank line contains whitespace
+app/core/study_logger.py:121:1: E305 expected 2 blank lines after class or function definition, found 1
+app/core/vectorization_engine.py:56:1: E402 module level import not at top of file
+app/core/vectorization_service.py:11:1: F401 'app.core.exceptions.SvgValidationError' imported but unused
+app/core/vectorization_service.py:11:1: F401 'app.core.exceptions.ConfigurationError' imported but unused
+app/core/vectorizer_backend.py:4:1: F401 're' imported but unused
+app/main_window.py:37:1: F401 'app.config.settings.VectorizationSettings' imported but unused
+benchmark/analysis/failure_analysis.py:2:1: F401 'collections.defaultdict' imported but unused
+benchmark/analysis/pareto_frontier.py:2:1: F401 'typing.Tuple' imported but unused
+benchmark/analysis/plot_generator.py:3:1: F401 'typing.Any' imported but unused
+benchmark/analysis/plot_generator.py:3:1: F401 'typing.Dict' imported but unused
+benchmark/analysis/plot_generator.py:65:9: F841 local variable 'ax' is assigned to but never used
+benchmark/analysis/qualitative_generator.py:124:33: F541 f-string is missing placeholders
+benchmark/analysis/report_generator.py:4:1: F401 'typing.Any' imported but unused
+benchmark/analysis/report_generator.py:4:1: F401 'typing.Dict' imported but unused
+benchmark/analysis/table_generator.py:3:1: F401 'typing.Any' imported but unused
+benchmark/analysis/table_generator.py:3:1: F401 'typing.Dict' imported but unused
+benchmark/baselines/backends.py:1:1: F401 'os' imported but unused
+benchmark/baselines/backends.py:5:1: F401 'app.config.settings.VectorizationSettings' imported but unused
+benchmark/baselines/inkscape_baseline.py:4:1: F401 'time' imported but unused
+benchmark/baselines/inkscape_baseline.py:5:1: F401 'typing.Any' imported but unused
+benchmark/baselines/inkscape_baseline.py:5:1: F401 'typing.Dict' imported but unused
+benchmark/baselines/potrace_baseline.py:6:1: F401 'time' imported but unused
+benchmark/baselines/potrace_baseline.py:12:1: F401 'benchmark.runner.process_utils.ProcessExecutionError' imported but unused
+benchmark/baselines/vtracer_baseline.py:4:1: F401 'sys' imported but unused
+benchmark/concurrency_benchmark.py:10:1: F401 'sys' imported but unused
+benchmark/concurrency_benchmark.py:18:1: E302 expected 2 blank lines, found 1
+benchmark/concurrency_benchmark.py:31:1: E302 expected 2 blank lines, found 1
+benchmark/concurrency_benchmark.py:38:1: E302 expected 2 blank lines, found 1
+benchmark/concurrency_benchmark.py:42:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:46:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:48:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:51:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:57:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:68:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:72:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:75:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:86:1: E302 expected 2 blank lines, found 1
+benchmark/concurrency_benchmark.py:91:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:94:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:97:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:100:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:102:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:110:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:116:1: W293 blank line contains whitespace
+benchmark/concurrency_benchmark.py:119:1: E305 expected 2 blank lines after class or function definition, found 1
+benchmark/evaluation/rasterizer.py:4:1: F401 'PySide6.QtCore.QSize' imported but unused
+benchmark/evaluation/rasterizer.py:4:1: F401 'PySide6.QtCore.Qt' imported but unused
+benchmark/run_analysis.py:3:1: F401 'pathlib.Path' imported but unused
+benchmark/run_analysis.py:16:1: E402 module level import not at top of file
+benchmark/run_analysis.py:23:1: E402 module level import not at top of file
+benchmark/run_analysis.py:24:1: E402 module level import not at top of file
+benchmark/run_analysis.py:39:1: E402 module level import not at top of file
+benchmark/run_simulation.py:7:1: E402 module level import not at top of file
+benchmark/run_simulation.py:8:1: F401 'benchmark.runner.config_schema.BenchmarkConfig' imported but unused
+benchmark/run_simulation.py:8:1: E402 module level import not at top of file
+benchmark/runner/env_capture.py:140:5: F841 local variable 'unsafe_substrings' is assigned to but never used
+benchmark/runner/experiment_runner.py:4:1: F401 'platform' imported but unused
+benchmark/runner/experiment_runner.py:5:1: F401 'subprocess' imported but unused
+benchmark/runner/experiment_runner.py:6:1: F401 'sys' imported but unused
+benchmark/runner/experiment_runner.py:10:1: F401 'psutil' imported but unused
+benchmark/runner/experiment_runner.py:20:1: F401 'benchmark.runner.env_capture.generate_config_hash' imported but unused
+benchmark/runner/experiment_runner.py:37:9: F811 redefinition of unused 'generate_config_hash' from line 20
+benchmark/scripts/generate_synthetic.py:5:1: F401 'os' imported but unused
+benchmark/scripts/generate_synthetic.py:9:1: F401 'PIL.ImageFilter' imported but unused
+benchmark/scripts/validate_dataset.py:5:1: F401 'os' imported but unused
+benchmark/scripts/validate_dataset.py:41:5: F841 local variable 'schema_file' is assigned to but never used
+paper/scripts/generate_snippets.py:16:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:25:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:29:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:35:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:42:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:53:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:64:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:69:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:74:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:83:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:88:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:94:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:99:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:106:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:108:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:115:1: E302 expected 2 blank lines, found 1
+paper/scripts/generate_snippets.py:120:1: W293 blank line contains whitespace
+paper/scripts/generate_snippets.py:129:1: E305 expected 2 blank lines after class or function definition, found 1
+paper/scripts/restore_manuscript.py:1:1: F401 'os' imported but unused
+paper/scripts/restore_manuscript.py:2:1: F401 're' imported but unused
+paper/scripts/restore_manuscript.py:28:1: W293 blank line contains whitespace
+paper/scripts/restore_manuscript.py:29:25: F541 f-string is missing placeholders
+paper/scripts/restore_manuscript.py:39:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:1:1: F401 'os' imported but unused
+scripts/run_color_benchmark.py:9:1: E402 module level import not at top of file
+scripts/run_color_benchmark.py:10:1: E402 module level import not at top of file
+scripts/run_color_benchmark.py:12:1: E302 expected 2 blank lines, found 1
+scripts/run_color_benchmark.py:16:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:22:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:26:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:28:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:31:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:35:1: W293 blank line contains whitespace
+scripts/run_color_benchmark.py:48:1: E305 expected 2 blank lines after class or function definition, found 1
+scripts/run_dev.py:9:1: E402 module level import not at top of file
+scripts/validate_research_artifacts.py:7:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:16:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:20:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:30:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:32:5: F401 'benchmark.runner.config_schema.BenchmarkConfig' imported but unused
+scripts/validate_research_artifacts.py:36:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:42:1: W293 blank line contains whitespace
+scripts/validate_research_artifacts.py:43:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:50:13: F841 local variable 'links' is assigned to but never used
+scripts/validate_research_artifacts.py:55:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:59:1: E302 expected 2 blank lines, found 1
+scripts/validate_research_artifacts.py:61:1: W293 blank line contains whitespace
+scripts/validate_research_artifacts.py:71:1: E305 expected 2 blank lines after class or function definition, found 1
+tests/baselines/test_vtracer_baseline.py:1:1: F401 'json' imported but unused
+tests/conftest.py:3:1: E302 expected 2 blank lines, found 1
+tests/conftest.py:8:1: E302 expected 2 blank lines, found 1
+tests/conftest.py:11:1: E302 expected 2 blank lines, found 1
+tests/core/test_config_preset.py:1:1: F401 'pytest' imported but unused
+tests/core/test_core_svg_metrics.py:2:1: F401 'os' imported but unused
+tests/core/test_core_svg_metrics.py:3:1: F401 'tempfile' imported but unused
+tests/core/test_core_svg_metrics.py:5:1: F401 'pytest' imported but unused
+tests/core/test_dataset_validation.py:4:1: F401 'pytest' imported but unused
+tests/core/test_serialization_hash.py:1:1: F401 'os' imported but unused
+tests/core/test_serialization_hash.py:3:1: F401 'pytest' imported but unused
+tests/evaluation/test_performance_metrics.py:3:1: F401 'pathlib.Path' imported but unused
+tests/evaluation/test_rasterizer.py:2:1: F401 'tempfile' imported but unused
+tests/evaluation/test_rasterizer.py:3:1: F401 'pathlib.Path' imported but unused
+tests/evaluation/test_svg_metrics.py:2:1: F401 'os' imported but unused
+tests/evaluation/test_unified_evaluator.py:2:1: F401 'os' imported but unused
+tests/integration/test_robustness.py:2:1: F401 'os' imported but unused
+tests/integration/test_robustness.py:3:1: F401 'cv2' imported but unused
+tests/integration/test_robustness.py:4:1: F401 'numpy as np' imported but unused
+tests/integration/test_robustness.py:6:1: F401 'pathlib.Path' imported but unused
+tests/integration/test_robustness.py:10:1: E302 expected 2 blank lines, found 1
+tests/integration/test_robustness.py:14:1: W293 blank line contains whitespace
+tests/integration/test_robustness.py:65:1: W293 blank line contains whitespace
+tests/integration/test_robustness.py:68:1: E302 expected 2 blank lines, found 1
+tests/integration/test_robustness.py:97:1: W293 blank line contains whitespace
+tests/integration/test_stress.py:3:1: F401 'os' imported but unused
+tests/integration/test_stress.py:6:1: F401 'pathlib.Path' imported but unused
+tests/integration/test_stress.py:13:1: E302 expected 2 blank lines, found 1
+tests/integration/test_stress.py:21:42: E261 at least two spaces before inline comment
+tests/integration/test_stress.py:26:1: E302 expected 2 blank lines, found 1
+tests/integration/test_stress.py:42:1: W293 blank line contains whitespace
+tests/integration/test_stress.py:45:1: W293 blank line contains whitespace
+tests/integration/test_stress.py:47:1: W293 blank line contains whitespace
+tests/integration/test_stress.py:51:1: W293 blank line contains whitespace
+tests/integration/test_stress.py:54:1: W293 blank line contains whitespace
+tests/integration/test_svg_security.py:4:1: E302 expected 2 blank lines, found 1
+tests/integration/test_svg_security.py:10:1: W293 blank line contains whitespace
+tests/integration/test_svg_security.py:15:1: E302 expected 2 blank lines, found 1
+tests/integration/test_svg_security.py:24:1: W293 blank line contains whitespace
+tests/integration/test_svg_security.py:28:1: E302 expected 2 blank lines, found 1
+tests/integration/test_svg_security.py:31:1: W293 blank line contains whitespace
+tests/integration/test_svg_security.py:35:1: E302 expected 2 blank lines, found 1
+tests/integration/test_svg_security.py:43:5: F841 local variable 'e' is assigned to but never used
+tests/integration/test_svg_security.py:48:1: E302 expected 2 blank lines, found 1
+tests/integration/test_svg_security.py:53:1: W293 blank line contains whitespace
+tests/integration/test_vectorization.py:8:1: F401 'app.config.settings.VectorizationSettings' imported but unused
+tests/integration/test_vectorization.py:9:1: F401 'app.core.exceptions.ProcessingError' imported but unused
+tests/runner/test_experiment_runner.py:2:1: F401 'os' imported but unused
+tests/test_cli_headless.py:2:1: F401 'os' imported but unused
+tests/test_cli_headless.py:3:1: F401 'sys' imported but unused
+tests/test_cli_headless.py:4:1: F401 'pathlib.Path' imported but unused
+tests/test_dataset_validator.py:1:1: F401 'json' imported but unused
+tests/test_dataset_validator.py:2:1: F401 'os' imported but unused
+tests/test_postprocessing.py:1:1: F401 'xml.etree.ElementTree as ET' imported but unused
+tests/test_preprocessing.py:1:1: F401 'cv2' imported but unused
+tests/test_preprocessing.py:3:1: F401 'pytest' imported but unused
+tests/test_result.py:4:1: F401 'pathlib.Path' imported but unused
+tests/test_result.py:6:1: F401 'pytest' imported but unused
+tests/test_vectorization_config.py:1:1: F401 'json' imported but unused
+tests/test_vectorization_service.py:2:1: F401 'pathlib.Path' imported but unused
+tests/test_vectorization_service.py:7:1: F401 'app.core.exceptions.ProcessingError' imported but unused

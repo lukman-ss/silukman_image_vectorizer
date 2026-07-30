@@ -1,6 +1,4 @@
 import os
-import tempfile
-from pathlib import Path
 
 import pytest
 from PySide6.QtGui import QImage

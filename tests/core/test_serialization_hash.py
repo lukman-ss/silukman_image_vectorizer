@@ -1,6 +1,4 @@
-import os
 
-import pytest
 
 from app.core.result import calculate_file_hash
 from benchmark.runner.env_capture import generate_config_hash

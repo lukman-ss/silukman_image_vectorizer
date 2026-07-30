@@ -1,0 +1,14 @@
+app/cli_headless.py:21:5: F841 local variable 'parser_gui' is assigned to but never used
+app/cli_headless.py:392:15: F541 f-string is missing placeholders
+app/cli_headless.py:561:5: F841 local variable 'logger' is assigned to but never used
+app/core/logging.py:19:62: W291 trailing whitespace
+app/core/study_logger.py:12:1: W293 blank line contains whitespace
+benchmark/analysis/plot_generator.py:64:9: F841 local variable 'ax' is assigned to but never used
+benchmark/analysis/qualitative_generator.py:124:33: F541 f-string is missing placeholders
+benchmark/runner/env_capture.py:140:5: F841 local variable 'unsafe_substrings' is assigned to but never used
+benchmark/scripts/validate_dataset.py:40:5: F841 local variable 'schema_file' is assigned to but never used
+paper/scripts/restore_manuscript.py:27:25: F541 f-string is missing placeholders
+scripts/run_color_benchmark.py:12:1: E303 too many blank lines (3)
+scripts/run_dev.py:12:1: E303 too many blank lines (3)
+scripts/validate_research_artifacts.py:54:13: F841 local variable 'links' is assigned to but never used
+tests/integration/test_svg_security.py:47:5: F841 local variable 'e' is assigned to but never used

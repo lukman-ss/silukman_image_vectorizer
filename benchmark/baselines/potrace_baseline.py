@@ -3,13 +3,12 @@ import json
 import os
 import subprocess
 import tempfile
-import time
 
 import cv2
 import numpy as np
 
 from benchmark.evaluation.performance_metrics import PerformanceTracker
-from benchmark.runner.process_utils import ProcessExecutionError, run_isolated_process
+from benchmark.runner.process_utils import run_isolated_process
 
 
 class PotraceBaselineRunner:
