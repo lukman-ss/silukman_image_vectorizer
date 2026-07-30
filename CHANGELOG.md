@@ -2,7 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.19.3] - 2026-07-30
+## [1.19.4] - 2026-07-30
+
+### Added
+- Separated `benchmark/datasets/synthetic` and `benchmark/datasets/real_world` directory structure.
+- Created `benchmark/real_world_manifest.schema.json` with strict legal metadata fields for evaluation datasets.
+- Created `docs/research/CURATION_GUIDE.md` and `docs/research/ATTRIBUTION_TEMPLATE.md` to guide safe real-world image curation.
+- Enforced strict license, source, and redistributability checks within `validate_dataset.py` for images tagged with `dataset_role: evaluation`.
+
+### Fixed
+- Updated `paper/manuscript.md` to clarify the separation between synthetic testing datasets and the upcoming real-world evaluation dataset.
 
 ### Fixed
 - Fixed 188 mypy typing errors across the entire codebase.

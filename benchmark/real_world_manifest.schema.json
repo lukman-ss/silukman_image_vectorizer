@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dataset Manifest",
+  "type": "object",
+  "properties": {
+    "image_id": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["logo", "icon", "flat illustration", "complex illustration", "photograph", "binary graphic", "geometric_shapes", "gradients", "line_art"]
+    },
+    "source": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "creator": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "license_url": {
+      "type": "string"
+    },
+    "redistribution_allowed": {
+      "type": "boolean"
+    },
+    "attribution": {
+      "type": "string"
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": ["png", "jpg", "jpeg", "webp"]
+    },
+    "has_alpha": {
+      "type": "boolean"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "date_accessed": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "dataset_role": {
+      "type": "string",
+      "enum": ["testing_only", "evaluation", "qualitative_only"]
+    }
+  },
+  "required": [
+    "image_id",
+    "filename",
+    "category",
+    "source",
+    "source_url",
+    "creator",
+    "license",
+    "license_url",
+    "redistribution_allowed",
+    "attribution",
+    "width",
+    "height",
+    "format",
+    "has_alpha",
+    "sha256",
+    "date_accessed",
+    "dataset_role"
+  ],
+  "additionalProperties": false
+}

@@ -1096,21 +1096,21 @@ The benchmark dataset will contain `10` images assigned to `10` categories. The 
 5. photographs;
 6. binary graphics.
 
-Each image must be registered in `benchmark/dataset_manifest.csv` with:
+Each image must be registered in the evaluation dataset manifest with:
 
-- stable image identifier;
-- filename;
-- category;
-- source and source URL;
-- creator;
-- license and license URL;
-- width and height;
-- format;
-- alpha-channel status;
-- color type;
-- complexity label;
-- dataset split;
-- SHA-256 hash;
+- stable image identifier (`image_id`);
+- file name (`filename`);
+- benchmark category (`category`);
+- original source (`source`);
+- source URL (`source_url`);
+- creator identity (`creator`);
+- explicit license (`license`);
+- explicit redistribution consent (`redistribution_allowed`);
+- full attribution string (`attribution`);
+- dimensions (`width`, `height`);
+- format and alpha channel presence (`format`, `has_alpha`);
+- dataset split role (`dataset_role` set to `evaluation`);
+- SHA-256 hash (`sha256`);
 - notes.
 
 Only images with redistribution-compatible licenses will be included in the distributable benchmark archive. The final paper will report category counts, formats, dimensions, alpha-channel distribution, color-type distribution, complexity labels, and exclusions.

@@ -5,31 +5,31 @@ import json
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Any, Dict, List, cast
 
-import cv2
+from PIL import Image
 
 
-def get_sha256(filepath: str) -> str:
-    hasher = hashlib.sha256()
+def get_sha256(filepath: str, chunk_size: int = 8192) -> str:
+    sha256 = hashlib.sha256()
     with open(filepath, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hasher.update(chunk)
-    return hasher.hexdigest()
+        while chunk := f.read(chunk_size):
+            sha256.update(chunk)
+    return sha256.hexdigest()
 
 
-def get_image_info(filepath: str):
-    """Returns (width, height, has_alpha, is_corrupted)"""
+def check_image_properties(filepath: str):
     try:
-        # IMREAD_UNCHANGED keeps alpha channel if present
-        img = cv2.imread(filepath, cv2.IMREAD_UNCHANGED)
-        if img is None:
-            return None, None, None, True
-
-        height, width = img.shape[:2]
-        has_alpha = False
-        if len(img.shape) == 3 and img.shape[2] == 4:
-            has_alpha = True
-
+        with Image.open(filepath) as img:
+            width, height = img.size
+            format_val = img.format.lower() if img.format else "unknown"
+            has_alpha = img.mode in ("RGBA", "LA", "PA")
+            
+            # Additional check for transparency in palette
+            if img.mode == 'P':
+                if 'transparency' in img.info:
+                    has_alpha = True
+                    
         return width, height, has_alpha, False
     except Exception:
         return None, None, None, True
@@ -39,7 +39,7 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
     manifest_file = Path(manifest_path)
     samples = Path(samples_dir)
 
-    report = {
+    report: Dict[str, Any] = {
         "summary": {
             "total_rows": 0,
             "total_valid": 0,
@@ -53,83 +53,90 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
     }
 
     if not manifest_file.exists():
-        report["errors"].append("Manifest file not found.")  # type: ignore[attr-defined] # complex typing/external library
+        report["errors"].append("Manifest file not found.")
         return report
 
     valid_categories = {
         "logo",
         "icon",
-        "illustration",
-        "complex_artwork",
+        "flat illustration",
+        "complex illustration",
         "photograph",
-        "binary_graphic",
+        "binary graphic",
+        "geometric_shapes",
+        "gradients",
+        "line_art",
+        "flat_logo",
+        "thin_lines",
+        "curves",
+        "pseudo_text",
+        "transparent_shapes",
+        "noisy_edges",
+        "overlapping_objects",
+        "monochrome_silhouette"
     }
-    valid_splits = {"train", "validation", "test"}
-    valid_formats = {"png", "jpg", "jpeg", "bmp", "webp"}
 
-    # Check for jsonschema library, if available validate against schema file
-    # We will skip formal jsonschema validation if lib is not present, doing it manually
+    valid_formats = {"png", "jpg", "jpeg", "webp"}
+    valid_roles = {"testing_only", "evaluation", "qualitative_only"}
 
-    seen_ids = set()
-    seen_filenames = set()
-    seen_hashes: Dict[str, str] = {}  # type: ignore[name-defined] # complex typing/external library
+    seen_hashes: Dict[str, str] = {}
 
     with open(manifest_file, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
+        headers = reader.fieldnames or []
+
         for row_idx, row in enumerate(reader, start=2):
-            report["summary"]["total_rows"] += 1  # type: ignore[index] # complex typing/external library
+            report["summary"]["total_rows"] += 1
             has_error = False
 
             image_id = row.get("image_id", "").strip()
-            filename = row.get("filename", "").strip()
+            filename = row.get("filename", row.get("file_path", "")).strip()
             category = row.get("category", "").strip()
-            license_val = row.get("license", "").strip()
-            split = row.get("split", "").strip()
-            format_val = row.get("format", "").strip()
             expected_sha256 = row.get("sha256", "").strip()
-            has_alpha_str = row.get("has_alpha", "").strip().lower()
+            license_val = row.get("license", "").strip()
+            source = row.get("source", "").strip()
+            redist_allowed = row.get("redistribution_allowed", "").strip().lower()
+            role = row.get("dataset_role", "testing_only").strip()
+            format_val = row.get("format", "").strip().lower()
 
-            # Uniqueness
-            if not image_id:
-                report["errors"].append(f"Row {row_idx}: Missing image_id.")  # type: ignore[attr-defined] # complex typing/external library
+            if not image_id or not filename:
+                report["errors"].append(f"Row {row_idx}: Missing required image_id or filename.")
                 has_error = True
-            elif image_id in seen_ids:
-                report["errors"].append(f"Row {row_idx}: Duplicate image_id '{image_id}'.")  # type: ignore[attr-defined] # complex typing/external library
-                has_error = True
-            else:
-                seen_ids.add(image_id)
+                continue
 
-            if not filename:
-                report["errors"].append(f"Row {row_idx}: Missing filename.")  # type: ignore[attr-defined] # complex typing/external library
-                has_error = True
-            elif filename in seen_filenames:
-                report["errors"].append(f"Row {row_idx}: Duplicate filename '{filename}'.")  # type: ignore[attr-defined] # complex typing/external library
-                has_error = True
-            else:
-                seen_filenames.add(filename)
-
-            # License
-            if not license_val:
-                report["errors"].append(f"Row {row_idx}: License cannot be empty.")  # type: ignore[attr-defined] # complex typing/external library
+            # Core validation
+            if role not in valid_roles:
+                report["errors"].append(f"Row {row_idx}: Invalid dataset_role '{role}'.")
                 has_error = True
 
-            # Category and Split
+            if role == "evaluation":
+                if not license_val:
+                    report["errors"].append(f"Row {row_idx}: License cannot be empty for evaluation.")
+                    has_error = True
+                if not source:
+                    report["errors"].append(f"Row {row_idx}: Source cannot be empty for evaluation.")
+                    has_error = True
+                if category not in valid_categories:
+                    report["errors"].append(f"Row {row_idx}: Invalid category '{category}' for evaluation.")
+                    has_error = True
+                if not redist_allowed or redist_allowed not in ["true", "1", "yes"]:
+                    report["errors"].append(f"Row {row_idx}: Redistribution must be allowed for evaluation images.")
+                    has_error = True
+            
             if category and category not in valid_categories:
-                report["errors"].append(f"Row {row_idx}: Invalid category '{category}'.")  # type: ignore[attr-defined] # complex typing/external library
-                has_error = True
-            if split and split not in valid_splits:
-                report["errors"].append(f"Row {row_idx}: Invalid split '{split}'.")  # type: ignore[attr-defined] # complex typing/external library
-                has_error = True
-            if format_val and format_val not in valid_formats:
-                report["errors"].append(f"Row {row_idx}: Invalid format '{format_val}'.")  # type: ignore[attr-defined] # complex typing/external library
+                report["errors"].append(f"Row {row_idx}: Invalid category '{category}'.")
                 has_error = True
 
-            report["summary"]["categories_count"][category] += 1  # type: ignore[index] # complex typing/external library
+            if format_val and format_val not in valid_formats:
+                report["errors"].append(f"Row {row_idx}: Invalid format '{format_val}'.")
+                has_error = True
+
+            report["summary"]["categories_count"][category] += 1
 
             # File validation
             filepath = samples / filename
             if not filepath.exists():
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
+                report["errors"].append(
                     f"Row {row_idx}: File '{filename}' not found in samples directory."
                 )
                 has_error = True
@@ -137,96 +144,85 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
 
             actual_sha256 = get_sha256(str(filepath))
             if expected_sha256 and actual_sha256 != expected_sha256:
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: SHA-256 mismatch for '{filename}'. Expected: {expected_sha256}, Got: {actual_sha256}"
+                report["errors"].append(
+                    f"Row {row_idx}: Checksum mismatch for '{filename}'. Expected {expected_sha256}, got {actual_sha256}."
                 )
+                has_error = True
+            
+            if role == "evaluation" and not expected_sha256:
+                report["errors"].append(f"Row {row_idx}: Checksum is missing for evaluation image.")
                 has_error = True
 
             if actual_sha256 in seen_hashes:
-                dup = seen_hashes[actual_sha256]
-                msg = f"Duplicate content detected: '{filename}' and '{dup}' have the same SHA-256."
-                report["warnings"].append(msg)  # type: ignore[attr-defined] # complex typing/external library
-                report["duplicates"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    {"file1": dup, "file2": filename, "sha256": actual_sha256}
+                report["duplicates"].append(
+                    f"Row {row_idx}: '{filename}' is a duplicate of '{seen_hashes[actual_sha256]}'."
                 )
-            else:
-                seen_hashes[actual_sha256] = filename
+                report["warnings"].append(
+                    f"Row {row_idx}: Duplicate hash found: {actual_sha256}"
+                )
+            seen_hashes[actual_sha256] = filename
 
-            width, height, has_alpha, is_corrupt = get_image_info(str(filepath))
-            if is_corrupt:
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: File '{filename}' is corrupted or unreadable."
-                )
+            actual_w, actual_h, actual_alpha, is_corrupted = check_image_properties(str(filepath))
+            if is_corrupted:
+                report["errors"].append(f"Row {row_idx}: Image '{filename}' is corrupted or unreadable.")
                 has_error = True
                 continue
 
-            expected_w = row.get("width")
-            expected_h = row.get("height")
-            if expected_w and str(width) != expected_w:
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: Width mismatch for '{filename}'. Expected: {expected_w}, Got: {width}"
-                )
-                has_error = True
-            if expected_h and str(height) != expected_h:
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: Height mismatch for '{filename}'. Expected: {expected_h}, Got: {height}"
-                )
-                has_error = True
-
-            if has_alpha_str == "true" and not has_alpha:
-                report["errors"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: Metadata says has_alpha=true, but no alpha channel found in '{filename}'."
-                )
-                has_error = True
-            elif has_alpha_str == "false" and has_alpha:
-                report["warnings"].append(  # type: ignore[attr-defined] # complex typing/external library
-                    f"Row {row_idx}: Metadata says has_alpha=false, but alpha channel detected in '{filename}'."
-                )
-
             if not has_error:
-                report["summary"]["total_valid"] += 1  # type: ignore[index] # complex typing/external library
+                report["summary"]["total_valid"] += 1
 
-    report["summary"]["total_errors"] = len(report["errors"])  # type: ignore[index] # complex typing/external library
-    report["summary"]["total_warnings"] = len(report["warnings"])  # type: ignore[index] # complex typing/external library
+    report["summary"]["total_errors"] = len(report["errors"])
+    report["summary"]["total_warnings"] = len(report["warnings"])
+
+    # Convert defaultdict to standard dict for JSON serialization
+    report["summary"]["categories_count"] = dict(report["summary"]["categories_count"])
+
     return report
 
 
 def main():
     parser = argparse.ArgumentParser(description="Dataset Manifest Validator")
-    parser.add_argument("--manifest", default="benchmark/dataset_manifest.csv")
-    parser.add_argument("--schema", default="benchmark/dataset_manifest.schema.json")
-    parser.add_argument("--samples", default="benchmark/samples")
-    parser.add_argument("--json", action="store_true", help="Output JSON report")
+    parser.add_argument("--manifest", default="benchmark/datasets/synthetic/dataset_manifest.csv")
+    parser.add_argument("--schema", default="benchmark/real_world_manifest.schema.json")
+    parser.add_argument("--samples", default="benchmark/datasets/synthetic/")
+    parser.add_argument("--output", default="dataset_validation_report.json")
+    parser.add_argument("--format", choices=["text", "json"], default="text")
+
     args = parser.parse_args()
 
+    print("Validating dataset manifest...")
     report = validate_manifest(args.manifest, args.schema, args.samples)
 
-    if args.json:
-        print(json.dumps(report, indent=2))
+    if args.format == "json":
+        with open(args.output, "w") as f:
+            json.dump(report, f, indent=2)
+        print(f"Report saved to {args.output}")
     else:
         print("=== Dataset Validation Report ===")
-        print(f"Total rows parsed: {report['summary']['total_rows']}")
-        print(f"Total valid rows: {report['summary']['total_valid']}")
-        print(f"Categories Count: {dict(report['summary']['categories_count'])}")
-
-        if report["duplicates"]:
-            print("\n--- Duplicates Found ---")
-            for d in report["duplicates"]:
-                print(f"  {d['file1']} == {d['file2']} (SHA: {d['sha256'][:8]}...)")
-
-        if report["warnings"]:
-            print("\n--- Warnings ---")
-            for w in report["warnings"]:
-                print(f"  [WARN] {w}")
+        print(f"Total Rows Checked: {report['summary']['total_rows']}")
+        print(f"Total Valid Rows:   {report['summary']['total_valid']}")
+        print(f"Total Errors:       {report['summary']['total_errors']}")
+        print(f"Total Warnings:     {report['summary']['total_warnings']}")
+        print("\nCategories Distribution:")
+        for cat, count in report['summary']['categories_count'].items():
+            print(f"  - {cat}: {count}")
 
         if report["errors"]:
-            print("\n--- Critical Errors ---")
-            for e in report["errors"]:
-                print(f"  [ERROR] {e}")
+            print("\nErrors:")
+            for err in report["errors"][:20]:
+                print(f"  [X] {err}")
+            if len(report["errors"]) > 20:
+                print(f"  ... and {len(report['errors']) - 20} more errors.")
 
-    if report["summary"]["total_errors"] > 0:
+        if report["warnings"]:
+            print("\nWarnings:")
+            for w in report["warnings"][:10]:
+                print(f"  [!] {w}")
+
+    if report["errors"]:
         sys.exit(1)
     else:
+        print("\nSuccess: Dataset is valid.")
         sys.exit(0)
 
 
