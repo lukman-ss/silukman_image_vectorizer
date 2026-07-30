@@ -26,7 +26,7 @@ Implemented and available for description:
 
 Not yet available for empirical claims:
 
-- A populated benchmark dataset. The current `benchmark/dataset_manifest.csv` contains only its header.
+- A populated benchmark dataset. The current `benchmark/datasets/real_world/dataset_manifest.csv` contains only its header.
 - Completed benchmark runs.
 - Final aggregate statistics.
 - Validated cross-platform benchmark results.
@@ -1096,7 +1096,7 @@ The benchmark dataset will contain `[NUMBER_OF_IMAGES]` images assigned to `[NUM
 5. photographs;
 6. binary graphics.
 
-Each image must be registered in `benchmark/dataset_manifest.csv` with:
+Each image must be registered in `benchmark/datasets/real_world/dataset_manifest.csv` with:
 
 - stable image identifier;
 - filename;

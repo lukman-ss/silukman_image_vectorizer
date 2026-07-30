@@ -26,7 +26,7 @@ Implemented and available for description:
 
 Not yet available for empirical claims:
 
-- A populated benchmark dataset. The current `benchmark/dataset_manifest.csv` contains only its header.
+- A populated benchmark dataset. The current `benchmark/datasets/real_world/dataset_manifest.csv` contains only its header.
 - Completed benchmark runs.
 - Final aggregate statistics.
 - Validated cross-platform benchmark results.
@@ -604,7 +604,7 @@ None normally required.
 **Required data**
 
 - Every compatible dataset image processed with each preset.
-- `1` measured runs after `(resolved)` warm-up runs.
+- `1` measured runs after `[TO_BE_COMPUTED]` warm-up runs.
 - Rasterized SVG outputs at source dimensions.
 - Raw per-run records and per-image paired aggregates.
 
@@ -613,7 +613,7 @@ None normally required.
 - Use image-level paired comparisons among presets.
 - Report median and interquartile range for skewed metrics.
 - Report mean and standard deviation only where distributional assumptions are reasonable.
-- Estimate paired differences with `(resolved)%` confidence intervals.
+- Estimate paired differences with `[TO_BE_COMPUTED]%` confidence intervals.
 - Apply a repeated-measures or non-parametric paired procedure selected before inspecting final effects.
 - Correct for multiple comparisons across the three presets.
 - Supplement aggregate findings with category-stratified analysis.
@@ -635,8 +635,8 @@ The presets change multiple parameters simultaneously. The analysis identifies p
   - Direct VTracer baseline.
 - Preprocessing condition:
   - none;
-  - `(resolved)`;
-  - `(resolved)`, where applicable.
+  - `[TO_BE_COMPUTED]`;
+  - `[TO_BE_COMPUTED]`, where applicable.
 
 **Controlled variables**
 
@@ -841,13 +841,13 @@ Failure rates are configuration- and environment-dependent. A missing executable
 
 **Software:** We present **Silukman Image Vectorizer**, a Python and PySide6 desktop application with a headless command-line interface for configurable raster-to-SVG conversion. The software integrates typed configuration, named presets, optional preprocessing, VTracer-based color tracing, an OpenCV contour-based legacy backend, SVG validation and export, batch processing, and a benchmark subsystem. It is an integration and reproducibility contribution and does not claim a new tracing algorithm.
 
-**Methodology:** The planned evaluation uses [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compares the Silukman workflow with [REAL_WORLD_BASELINES]. Each compatible image–backend–preset condition is executed for `1` measured repetitions after `(resolved)` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
+**Methodology:** The planned evaluation uses [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compares the Silukman workflow with [REAL_WORLD_BASELINES]. Each compatible image–backend–preset condition is executed for `1` measured repetitions after `[TO_BE_COMPUTED]` warm-up runs. Outputs are evaluated using raster fidelity metrics, edge similarity, SVG structural complexity, file size, runtime, failure behavior, and repeated-run consistency.
 
 **Evaluation and results:** The primary result is [REAL_WORLD_PRIMARY_METRIC] under the primary quality measure `SSIM`. Runtime analysis shows [REAL_WORLD_RUNTIME_RESULT], while [REAL_WORLD_FAILURE_RATE] describes unsuccessful or skipped executions. These placeholders must be replaced only after the dataset, experiment configuration, and analysis have been finalized.
 
 **Contribution:** The software contributes a desktop and automation-oriented workflow that connects interactive configuration with auditable batch execution, explicit presets, preprocessing logs, source and output hashes, environment capture, repeated experiments, baseline adapters, and analysis support for paired, category-level, failure, and Pareto comparisons.
 
-**Availability:** Source code is available at `(resolved)`. The evaluated release is `(resolved)` at commit `(resolved)`, archived as `(resolved)`. The benchmark dataset, configuration, raw run records, generated SVGs, logs, and analysis outputs will be deposited at `(resolved)`.
+**Availability:** Source code is available at `[TO_BE_COMPUTED]`. The evaluated release is `[TO_BE_COMPUTED]` at commit `[TO_BE_COMPUTED]`, archived as `[TO_BE_COMPUTED]`. The benchmark dataset, configuration, raw run records, generated SVGs, logs, and analysis outputs will be deposited at `[TO_BE_COMPUTED]`.
 
 ---
 
@@ -855,15 +855,15 @@ Failure rates are configuration- and environment-dependent. A missing executable
 
 ## 1. Introduction
 
-Raster images represent visual content as arrays of sampled pixels, whereas vector graphics describe geometry, color, and drawing operations in a resolution-independent form. Converting raster images to vector representations is therefore useful when graphics must be resized, edited, reused in print or interface assets, or stored as structured shapes rather than fixed-resolution samples (resolved). Common target materials include logos, icons, line art, illustrations, scanned binary graphics, and, in more demanding cases, photographs or artwork containing gradients and many colors.
+Raster images represent visual content as arrays of sampled pixels, whereas vector graphics describe geometry, color, and drawing operations in a resolution-independent form. Converting raster images to vector representations is therefore useful when graphics must be resized, edited, reused in print or interface assets, or stored as structured shapes rather than fixed-resolution samples [TO_BE_COMPUTED]. Common target materials include logos, icons, line art, illustrations, scanned binary graphics, and, in more demanding cases, photographs or artwork containing gradients and many colors.
 
 Raster-to-vector conversion is not a single-objective problem. A result that closely reproduces the source raster may require many paths, commands, colors, and control points. Such an SVG can be expensive to render, difficult to edit, and substantially larger than a simplified alternative. Conversely, aggressive filtering or simplification may reduce file size and path count while removing thin structures, corners, small regions, gradients, or color variation. Runtime and failure behavior add further practical constraints. A useful workflow must therefore expose and record choices that balance visual fidelity, geometric complexity, output size, and execution cost.
 
-Existing tracing engines provide strong algorithmic foundations for this task. Potrace is widely associated with tracing bitmap images into smooth vector paths, particularly for binary input (resolved). VTracer provides color raster-to-vector conversion with controls for hierarchical layering, curve fitting, color precision, speckle filtering, and path precision (resolved). General-purpose graphics software can also expose tracing operations through interactive or command-line interfaces (resolved). These tools address core tracing operations, but practical use still requires decisions about image decoding, alpha handling, background removal, color reduction, parameter selection, output validation, naming, export, batch execution, and comparison of alternative configurations.
+Existing tracing engines provide strong algorithmic foundations for this task. Potrace is widely associated with tracing bitmap images into smooth vector paths, particularly for binary input [TO_BE_COMPUTED]. VTracer provides color raster-to-vector conversion with controls for hierarchical layering, curve fitting, color precision, speckle filtering, and path precision [TO_BE_COMPUTED]. General-purpose graphics software can also expose tracing operations through interactive or command-line interfaces [TO_BE_COMPUTED]. These tools address core tracing operations, but practical use still requires decisions about image decoding, alpha handling, background removal, color reduction, parameter selection, output validation, naming, export, batch execution, and comparison of alternative configurations.
 
 The configuration burden is significant because tracing parameters interact. Increasing color precision can preserve additional variation while increasing SVG complexity. Speckle filtering can reduce noise but remove small intentional details. Curve and corner thresholds affect geometry differently across logos, icons, illustrations, and photographs. Background removal may simplify an image when the background is correctly inferred, but it may delete foreground content when corner colors are not representative. A command that produces an acceptable result for one image category may be unsuitable for another. Consequently, a fixed default or undocumented manual tuning procedure is difficult to evaluate and difficult for another researcher or practitioner to repeat.
 
-Reproducibility requires more than publishing source code. A conversion result can depend on the exact input file, preprocessing sequence, configuration values, tracing backend, software versions, native executable availability, hardware, operating system, and rendering procedure used for evaluation. Repeated-run behavior must also be distinguished from cross-platform reproducibility. Without source and output hashes, frozen presets, explicit experiment manifests, environment records, and raw per-run measurements, a reported quality or runtime comparison cannot be audited reliably (resolved).
+Reproducibility requires more than publishing source code. A conversion result can depend on the exact input file, preprocessing sequence, configuration values, tracing backend, software versions, native executable availability, hardware, operating system, and rendering procedure used for evaluation. Repeated-run behavior must also be distinguished from cross-platform reproducibility. Without source and output hashes, frozen presets, explicit experiment manifests, environment records, and raw per-run measurements, a reported quality or runtime comparison cannot be audited reliably [TO_BE_COMPUTED].
 
 There is also a practical gap between command-line tracing engines and users who need an interactive desktop workflow. A CLI is effective for automation and reproducible batch processing, but it is less suitable for visually inspecting an image, changing settings, comparing previews, editing palette mappings, or exporting a selected result. A desktop interface supports these exploratory activities, yet manual GUI use can weaken reproducibility when settings and outputs are not connected to an auditable execution model. A useful software system should therefore support both interactive and automated use without presenting them as unrelated products.
 
@@ -1079,7 +1079,7 @@ The experiment will evaluate Silukman Image Vectorizer as an implemented workflo
 
 The frozen experimental matrix will be:
 
-`10 images × (resolved) backends × 2 presets × 1 repetitions`
+`10 images × [TO_BE_COMPUTED] backends × [PRESET_COUNT] presets × 1 repetitions`
 
 subject to predefined compatibility and availability rules.
 
@@ -1119,14 +1119,14 @@ The current repository manifest is empty apart from the header. `10` must not be
 
 ### 5.3 Dataset split and inclusion criteria
 
-The primary analysis will use split `(resolved)`. Images will be included when they:
+The primary analysis will use split `[TO_BE_COMPUTED]`. Images will be included when they:
 
 - decode successfully through the benchmark input path;
 - have a valid manifest row;
 - match the recorded SHA-256 hash;
 - have a license permitting the intended use;
 - belong to a predefined category;
-- satisfy `(resolved)` and `(resolved)` policies;
+- satisfy `[TO_BE_COMPUTED]` and `[TO_BE_COMPUTED]` policies;
 - do not duplicate another source image.
 
 Exclusions will be logged with a reason. No image will be removed because a system performs poorly on it after results are observed.
@@ -1144,15 +1144,15 @@ The Silukman backend calls the application’s canonical vectorization service. 
 
 The final paper will report:
 
-- Silukman version `(resolved)`;
-- Silukman commit `(resolved)`;
-- VTracer version `(resolved)`;
-- Potrace version `(resolved)`;
-- Inkscape version `(resolved)`;
-- Python version `(resolved)`;
-- PySide6 version `(resolved)`;
-- OpenCV version `(resolved)`;
-- operating system `(resolved)`.
+- Silukman version `[TO_BE_COMPUTED]`;
+- Silukman commit `[TO_BE_COMPUTED]`;
+- VTracer version `[TO_BE_COMPUTED]`;
+- Potrace version `[TO_BE_COMPUTED]`;
+- Inkscape version `[TO_BE_COMPUTED]`;
+- Python version `[TO_BE_COMPUTED]`;
+- PySide6 version `[TO_BE_COMPUTED]`;
+- OpenCV version `[TO_BE_COMPUTED]`;
+- operating system `[TO_BE_COMPUTED]`.
 
 Unavailable baselines will be marked skipped rather than failed. Baseline-specific input conversions must be documented, especially for binary-only or command-specific behavior.
 
@@ -1170,7 +1170,7 @@ For direct VTracer comparisons, a parameter-mapping table will identify equivale
 
 ### 5.6 Preprocessing conditions
 
-Preprocessing will be evaluated using `(resolved)`. At minimum, the analysis should distinguish:
+Preprocessing will be evaluated using `[TO_BE_COMPUTED]`. At minimum, the analysis should distinguish:
 
 - Silukman with preprocessing disabled;
 - Silukman with the predefined preprocessing condition enabled;
@@ -1182,23 +1182,23 @@ Preprocessing logs will be retained. When an operation is not applicable to a so
 
 ### 5.7 Repeated runs and warm-up
 
-Each measured condition will be executed `1` times after `(resolved)` warm-up runs. Warm-ups use a predefined image and preset and are excluded from reported performance statistics.
+Each measured condition will be executed `1` times after `[TO_BE_COMPUTED]` warm-up runs. Warm-ups use a predefined image and preset and are excluded from reported performance statistics.
 
-The repetition count must be fixed before the main experiment. Repetitions will be used to assess runtime variability, output-hash stability, metric consistency, and repeated failure behavior. The execution order will be `(resolved)`. When feasible, order will be randomized or blocked to reduce thermal and temporal bias, while preserving a recorded schedule or random seed.
+The repetition count must be fixed before the main experiment. Repetitions will be used to assess runtime variability, output-hash stability, metric consistency, and repeated failure behavior. The execution order will be `[TO_BE_COMPUTED]`. When feasible, order will be randomized or blocked to reduce thermal and temporal bias, while preserving a recorded schedule or random seed.
 
 ### 5.8 Hardware and execution environment
 
 Experiments will run on:
 
-- CPU: `(resolved)`;
-- physical cores: `(resolved)`;
-- logical cores: `(resolved)`;
-- memory: `(resolved)`;
-- storage: `(resolved)`;
-- GPU: `(resolved)`;
-- operating system: `(resolved)`;
-- architecture: `(resolved)`;
-- power mode: `(resolved)`.
+- CPU: `[TO_BE_COMPUTED]`;
+- physical cores: `[TO_BE_COMPUTED]`;
+- logical cores: `[TO_BE_COMPUTED]`;
+- memory: `[TO_BE_COMPUTED]`;
+- storage: `[TO_BE_COMPUTED]`;
+- GPU: `[TO_BE_COMPUTED]`;
+- operating system: `[TO_BE_COMPUTED]`;
+- architecture: `[TO_BE_COMPUTED]`;
+- power mode: `[TO_BE_COMPUTED]`.
 
 The environment manifest generated by the runner will be archived. Background applications, thermal policy, power source, and filesystem location will be held as stable as practical and described.
 
@@ -1208,9 +1208,9 @@ Runtime comparisons will be interpreted as measurements on this environment, not
 
 Each successful SVG will be rasterized at the dimensions of its source image using the benchmark rasterizer based on PySide6 Qt SVG rendering. The renderer version will be recorded.
 
-Source and rendered images must be aligned in width, height, channel interpretation, and alpha treatment. Any compositing background used for transparent images will be fixed as `(resolved)`.
+Source and rendered images must be aligned in width, height, channel interpretation, and alpha treatment. Any compositing background used for transparent images will be fixed as `[TO_BE_COMPUTED]`.
 
-A valid XML document that cannot be rendered successfully will be treated according to `(resolved)` and included in failure analysis.
+A valid XML document that cannot be rendered successfully will be treated according to `[TO_BE_COMPUTED]` and included in failure analysis.
 
 ### 5.10 Quality metrics
 
@@ -1259,7 +1259,7 @@ Skipped runs include unavailable backends or predefined incompatibilities. Faile
 
 Failures will not be assigned zero quality. Denominators will be reported for every rate. Both complete-case quality summaries and execution-coverage summaries will be provided so that a system is not rewarded for producing metrics only on easier cases.
 
-The timeout will be `(resolved)` seconds. Retry behavior will be `(resolved)`. The raw error message, log, backend, image, preset, repetition, and environment reference will be retained.
+The timeout will be `[TO_BE_COMPUTED]` seconds. Retry behavior will be `[TO_BE_COMPUTED]`. The raw error message, log, backend, image, preset, repetition, and environment reference will be retained.
 
 ### 5.14 Statistical analysis
 
@@ -1270,13 +1270,13 @@ The primary analysis will use image-level paired observations. For each metric a
 - central tendency;
 - dispersion;
 - paired difference;
-- `(resolved)%` confidence interval;
-- effect-size measure `(resolved)`;
+- `[TO_BE_COMPUTED]%` confidence interval;
+- effect-size measure `[TO_BE_COMPUTED]`;
 - adjusted significance value only where hypothesis testing is used.
 
-The exact inferential method will be `(resolved)`. The selection must account for repeated observations of the same image and possible non-normality. Multiple comparisons will use `(resolved)`.
+The exact inferential method will be `[TO_BE_COMPUTED]`. The selection must account for repeated observations of the same image and possible non-normality. Multiple comparisons will use `[TO_BE_COMPUTED]`.
 
-Category analysis will use `(resolved)`. Runtime distributions will be inspected for skew and outliers. Sensitivity analyses will evaluate the effect of image dimensions, alpha presence, complexity labels, failed runs, and metric missingness.
+Category analysis will use `[TO_BE_COMPUTED]`. Runtime distributions will be inspected for skew and outliers. Sensitivity analyses will evaluate the effect of image dimensions, alpha presence, complexity labels, failed runs, and metric missingness.
 
 Statistical significance will not be treated as practical importance. Raw distributions and effect sizes will be emphasized.
 
@@ -1293,7 +1293,7 @@ Pareto fronts will be calculated per image and for predefined aggregate summarie
 
 ### 5.16 Qualitative analysis
 
-Qualitative panels will display the source raster, rasterized SVG outputs, and selected zoomed regions. Selection will follow `(resolved)`, such as:
+Qualitative panels will display the source raster, rasterized SVG outputs, and selected zoomed regions. Selection will follow `[TO_BE_COMPUTED]`, such as:
 
 - median case;
 - best and worst paired differences;
@@ -1302,7 +1302,7 @@ Qualitative panels will display the source raster, rasterized SVG outputs, and s
 
 Panels will not be selected solely to favor Silukman. Captions will state the backend, preset, configuration, metric values, source license, and any compositing applied.
 
-Subjective assessment, if added, will use `(resolved)` raters, a predefined rubric, blinded output ordering, and an inter-rater agreement measure. Without this procedure, qualitative examples will remain illustrative rather than inferential.
+Subjective assessment, if added, will use `[TO_BE_COMPUTED]` raters, a predefined rubric, blinded output ordering, and an inter-rater agreement measure. Without this procedure, qualitative examples will remain illustrative rather than inferential.
 
 ### 5.17 Reproducibility artifacts
 
@@ -1327,7 +1327,7 @@ The release accompanying the paper will include:
 - qualitative panels;
 - exact reproduction commands.
 
-An independent clean-environment reproduction status will be reported as `(resolved)`.
+An independent clean-environment reproduction status will be reported as `[TO_BE_COMPUTED]`.
 
 ---
 
@@ -1339,25 +1339,25 @@ No values in this section may be filled until the benchmark dataset is populated
 
 ### 6.1 Dataset summary
 
-The final benchmark contained [REAL_WORLD_DATASET_SIZE] images across [REAL_WORLD_CATEGORY_COUNT] categories. Table 10 reports category counts, dimensions, formats, alpha-channel presence, color type, and complexity labels. The planned experiment generated `(resolved)` run conditions, of which `(resolved)` succeeded, `(resolved)` failed, and `(resolved)` were skipped.
+The final benchmark contained [REAL_WORLD_DATASET_SIZE] images across [REAL_WORLD_CATEGORY_COUNT] categories. Table 10 reports category counts, dimensions, formats, alpha-channel presence, color type, and complexity labels. The planned experiment generated `[TO_BE_COMPUTED]` run conditions, of which `[TO_BE_COMPUTED]` succeeded, `[TO_BE_COMPUTED]` failed, and `[TO_BE_COMPUTED]` were skipped.
 
 **Table 10. Dataset and execution summary**
 
 | Category | Images | Median width | Median height | Alpha present | Formats | Successful runs | Failed runs | Skipped runs |
 |---|---:|---:|---:|---:|---|---:|---:|---:|
-| Logo | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Icon | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Illustration | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Complex artwork | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Photograph | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Binary graphic | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Total | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Logo | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Icon | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Illustration | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Complex artwork | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Photograph | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Binary graphic | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Total | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
-Report exclusions and their reasons here: `(resolved)`.
+Report exclusions and their reasons here: `[TO_BE_COMPUTED]`.
 
 ### 6.2 Overall quality
 
-Across eligible successful runs, `(resolved)` achieved [REAL_WORLD_PRIMARY_METRIC] on `SSIM`. The paired difference against `(resolved)` was `(resolved)` with `(resolved)`. Secondary metrics are reported in Table 11.
+Across eligible successful runs, `[TO_BE_COMPUTED]` achieved [REAL_WORLD_PRIMARY_METRIC] on `SSIM`. The paired difference against `[TO_BE_COMPUTED]` was `[TO_BE_COMPUTED]` with `[TO_BE_COMPUTED]`. Secondary metrics are reported in Table 11.
 
 Do not use “better” unless metric direction, paired denominator, uncertainty, and practical magnitude support it.
 
@@ -1365,12 +1365,12 @@ Do not use “better” unless metric direction, paired denominator, uncertainty
 
 | Backend | Preset | Eligible images | SSIM | MAE | RMSE | PSNR | Edge F1 | Histogram correlation |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| Silukman | Low complexity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Silukman | Balanced | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Silukman | High fidelity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| VTracer | [PRESET/CONFIG] | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace | [PRESET/CONFIG] | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape | [PRESET/CONFIG] | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman | Low complexity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman | Balanced | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman | High fidelity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| VTracer | [PRESET/CONFIG] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace | [PRESET/CONFIG] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape | [PRESET/CONFIG] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
 **Figure 8.** Distribution of `SSIM` by backend and preset.
 
@@ -1378,18 +1378,18 @@ Do not use “better” unless metric direction, paired denominator, uncertainty
 
 ### 6.3 SVG complexity
 
-Table 12 reports output size and structural complexity. `(resolved)`.
+Table 12 reports output size and structural complexity. `[TO_BE_COMPUTED]`.
 
 **Table 12. SVG complexity**
 
 | Backend | Preset | SVG bytes | Path count | Command count | Total elements | Valid render rate |
 |---|---|---:|---:|---:|---:|---:|
-| Silukman | Low complexity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Silukman | Balanced | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Silukman | High fidelity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| VTracer | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman | Low complexity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman | Balanced | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman | High fidelity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| VTracer | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
 **Figure 10.** SVG file-size distribution.
 
@@ -1397,18 +1397,18 @@ Table 12 reports output size and structural complexity. `(resolved)`.
 
 ### 6.4 Runtime and memory
 
-The end-to-end runtime result was [REAL_WORLD_RUNTIME_RESULT]. Runtime is specific to `(resolved)`. Warm-up runs were excluded.
+The end-to-end runtime result was [REAL_WORLD_RUNTIME_RESULT]. Runtime is specific to `[TO_BE_COMPUTED]`. Warm-up runs were excluded.
 
 **Table 13. Performance measurements**
 
 | Backend | Preset | Runs | Median runtime | IQR | Mean runtime | Runtime CV | Peak memory | Memory availability |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Silukman | Low complexity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | [MISSING/VALUE] | (resolved) |
-| Silukman | Balanced | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | [MISSING/VALUE] | (resolved) |
-| Silukman | High fidelity | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | [MISSING/VALUE] | (resolved) |
-| VTracer | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman | Low complexity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [MISSING/VALUE] | [TO_BE_COMPUTED] |
+| Silukman | Balanced | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [MISSING/VALUE] | [TO_BE_COMPUTED] |
+| Silukman | High fidelity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [MISSING/VALUE] | [TO_BE_COMPUTED] |
+| VTracer | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
 **Figure 12.** Runtime distributions by backend and preset.
 
@@ -1420,12 +1420,12 @@ Paired comparisons used only images for which both systems produced evaluable ou
 
 | Comparison | Metric | Paired N | Median difference | Confidence interval | Effect size | Adjusted p-value |
 |---|---|---:|---:|---|---:|---:|
-| Silukman balanced vs direct VTracer | `SSIM` | (resolved) | (resolved) | [LOW, HIGH] | (resolved) | (resolved) |
-| Silukman preprocessing on vs off | `SSIM` | (resolved) | (resolved) | [LOW, HIGH] | (resolved) | (resolved) |
-| Silukman low complexity vs balanced | SVG bytes | (resolved) | (resolved) | [LOW, HIGH] | (resolved) | (resolved) |
-| Silukman balanced vs high fidelity | Path count | (resolved) | (resolved) | [LOW, HIGH] | (resolved) | (resolved) |
+| Silukman balanced vs direct VTracer | `SSIM` | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [LOW, HIGH] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman preprocessing on vs off | `SSIM` | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [LOW, HIGH] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman low complexity vs balanced | SVG bytes | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [LOW, HIGH] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman balanced vs high fidelity | Path count | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [LOW, HIGH] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
-Narrative result: `(resolved)`.
+Narrative result: `[TO_BE_COMPUTED]`.
 
 ### 6.6 Category analysis
 
@@ -1433,14 +1433,14 @@ Narrative result: `(resolved)`.
 
 | Category | Backend/preset | `SSIM` | SVG bytes | Path count | Runtime | Failure rate |
 |---|---|---:|---:|---:|---:|---:|
-| Logo | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Icon | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Illustration | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Complex artwork | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Photograph | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Binary graphic | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Logo | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Icon | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Illustration | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Complex artwork | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Photograph | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Binary graphic | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
-Report backend × category or preset × category results only when supported by sample size: `(resolved)`.
+Report backend × category or preset × category results only when supported by sample size: `[TO_BE_COMPUTED]`.
 
 **Figure 13.** Category-stratified quality and complexity.
 
@@ -1450,10 +1450,10 @@ Report backend × category or preset × category results only when supported by 
 
 | Backend | Planned | Success | Failed | Skipped | Timeout | Invalid SVG | Evaluation failure | Other |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Silukman | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| VTracer | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| VTracer | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
 Overall failure result: [REAL_WORLD_FAILURE_RATE].
 
@@ -1461,16 +1461,16 @@ Do not merge skipped unavailable backends with execution failures.
 
 ### 6.8 Repeated-run consistency
 
-Output hashes were identical across all repetitions for `(resolved)` of `(resolved)` conditions. Runtime variability was `(resolved)`.
+Output hashes were identical across all repetitions for `[TO_BE_COMPUTED]` of `[TO_BE_COMPUTED]` conditions. Runtime variability was `[TO_BE_COMPUTED]`.
 
 **Table 17. Repeatability**
 
 | Backend | Preset | Conditions | Identical output hashes | Median runtime CV | Metric variation | Repeated failure consistency |
 |---|---|---:|---:|---:|---:|---:|
-| Silukman | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| VTracer | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| VTracer | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
 ### 6.9 Pareto analysis
 
@@ -1484,14 +1484,14 @@ The Pareto analysis considered `SSIM`, SVG bytes, path or command count, and run
 
 | Backend/preset | Per-image Pareto appearances | Percentage | Aggregate Pareto status |
 |---|---:|---:|---|
-| Silukman low complexity | (resolved) | (resolved) | (resolved) |
-| Silukman balanced | (resolved) | (resolved) | (resolved) |
-| Silukman high fidelity | (resolved) | (resolved) | (resolved) |
-| VTracer (resolved) | (resolved) | (resolved) | (resolved) |
-| Potrace (resolved) | (resolved) | (resolved) | (resolved) |
-| Inkscape (resolved) | (resolved) | (resolved) | (resolved) |
+| Silukman low complexity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman balanced | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Silukman high fidelity | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| VTracer [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Potrace [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
+| Inkscape [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] | [TO_BE_COMPUTED] |
 
-Narrative result: `(resolved)`.
+Narrative result: `[TO_BE_COMPUTED]`.
 
 ### 6.10 Qualitative examples
 
@@ -1519,7 +1519,7 @@ Each panel must include:
 - runtime;
 - source attribution and license.
 
-Selection rule: `(resolved)`.
+Selection rule: `[TO_BE_COMPUTED]`.
 
 ---
 
@@ -1531,23 +1531,23 @@ Selection rule: `(resolved)`.
 
 The results show [REAL_WORLD_COMPLEXITY_RESULT]. This observation should be interpreted in terms of paired changes in `SSIM`, SVG bytes, path count, command count, and runtime. A claim that one configuration is preferable must state the target use case and the cost being accepted.
 
-A possible interpretation is `(resolved)`. This remains an interpretation rather than a causal finding unless the compared conditions differ only in the parameter or stage being discussed.
+A possible interpretation is `[TO_BE_COMPUTED]`. This remains an interpretation rather than a causal finding unless the compared conditions differ only in the parameter or stage being discussed.
 
 ### 7.2 When low complexity is useful
 
-The `low_complexity` preset is intended for outputs where small files, fewer paths, faster downstream rendering, or easier editing matter more than preserving every raster detail. The benchmark result relevant to this intent is `(resolved)`.
+The `low_complexity` preset is intended for outputs where small files, fewer paths, faster downstream rendering, or easier editing matter more than preserving every raster detail. The benchmark result relevant to this intent is `[TO_BE_COMPUTED]`.
 
-Low complexity may be practically useful for `(resolved)` if the observed decrease in complexity is large enough and the measured fidelity loss remains acceptable for those categories. No recommendation should be made for categories that were absent or underrepresented.
+Low complexity may be practically useful for `[TO_BE_COMPUTED]` if the observed decrease in complexity is large enough and the measured fidelity loss remains acceptable for those categories. No recommendation should be made for categories that were absent or underrepresented.
 
 ### 7.3 When high fidelity is useful
 
-The `high_fidelity` preset is intended to preserve more color and detail at the cost of larger or more complex SVG output. The observed evidence is `(resolved)`.
+The `high_fidelity` preset is intended to preserve more color and detail at the cost of larger or more complex SVG output. The observed evidence is `[TO_BE_COMPUTED]`.
 
-A high-fidelity configuration may be useful for `(resolved)` when the improvement in `SSIM` or edge preservation justifies `(resolved)`. The term “high fidelity” is a preset label and must not be treated as proof of superior fidelity without the measured comparison.
+A high-fidelity configuration may be useful for `[TO_BE_COMPUTED]` when the improvement in `SSIM` or edge preservation justifies `[TO_BE_COMPUTED]`. The term “high fidelity” is a preset label and must not be treated as proof of superior fidelity without the measured comparison.
 
 ### 7.4 Role of preprocessing
 
-The preprocessing analysis produced `(resolved)`. Interpretation must separate:
+The preprocessing analysis produced `[TO_BE_COMPUTED]`. Interpretation must separate:
 
 1. the effect of enabling preprocessing within Silukman;
 2. the difference between the complete Silukman workflow and direct VTracer;
@@ -1557,13 +1557,13 @@ When preprocessing and backend parameters change simultaneously, a causal attrib
 
 ### 7.5 Differences among image categories
 
-Category analysis indicates `(resolved)`. Potential explanations include differences in color count, texture, gradients, edge density, alpha channels, dimensions, and source noise.
+Category analysis indicates `[TO_BE_COMPUTED]`. Potential explanations include differences in color count, texture, gradients, edge density, alpha channels, dimensions, and source noise.
 
 These explanations are hypotheses unless controlled analyses support them. Semantic category labels should not be treated as isolated causal variables.
 
 ### 7.6 Differences among baselines
 
-The paired baseline analysis shows `(resolved)`. Direct VTracer is the closest comparison for tracing behavior, but the Silukman workflow adds preprocessing, configuration validation, temporary-file handling, SVG validation, metadata, export, and metric recording. Potrace is especially relevant to binary tracing and may not be comparable to color workflows under identical assumptions. Inkscape results depend on the exact command and version.
+The paired baseline analysis shows `[TO_BE_COMPUTED]`. Direct VTracer is the closest comparison for tracing behavior, but the Silukman workflow adds preprocessing, configuration validation, temporary-file handling, SVG validation, metadata, export, and metric recording. Potrace is especially relevant to binary tracing and may not be comparable to color workflows under identical assumptions. Inkscape results depend on the exact command and version.
 
 Comparisons must therefore state whether they measure tracing-only behavior or complete workflow behavior. Unavailable and skipped runs must remain separate from failures.
 
@@ -1575,19 +1575,19 @@ The benchmark does not by itself measure usability, learnability, user satisfact
 
 ### 7.8 Repeatability and reproducibility
 
-Repeated-run analysis found `(resolved)`. Identical output hashes under fixed conditions support short-term repeatability for those tested conditions. Different hashes with similar metrics may indicate serialization, backend, or numerical variation that does not substantially affect rendered appearance.
+Repeated-run analysis found `[TO_BE_COMPUTED]`. Identical output hashes under fixed conditions support short-term repeatability for those tested conditions. Different hashes with similar metrics may indicate serialization, backend, or numerical variation that does not substantially affect rendered appearance.
 
-Single-machine repeated runs do not establish reproduction across operating systems, CPUs, package versions, or native executable builds. Cross-environment experiments remain `(resolved)`.
+Single-machine repeated runs do not establish reproduction across operating systems, CPUs, package versions, or native executable builds. Cross-environment experiments remain `[TO_BE_COMPUTED]`.
 
 ### 7.9 Generalizability
 
-The findings apply to `(resolved)`: the included dataset, categories, dimensions, formats, licenses, software versions, presets, baseline configurations, render procedure, and hardware.
+The findings apply to `[TO_BE_COMPUTED]`: the included dataset, categories, dimensions, formats, licenses, software versions, presets, baseline configurations, render procedure, and hardware.
 
-Generalization beyond that scope is limited by `(resolved)`. In particular, conclusions from a small or convenience dataset must not be extended to all logos, photographs, documents, artwork, or production workloads.
+Generalization beyond that scope is limited by `[TO_BE_COMPUTED]`. In particular, conclusions from a small or convenience dataset must not be extended to all logos, photographs, documents, artwork, or production workloads.
 
 ### 7.10 Unexpected results
 
-Unexpected observations include `(resolved)`. Each observation should be accompanied by:
+Unexpected observations include `[TO_BE_COMPUTED]`. Each observation should be accompanied by:
 
 - the affected run count;
 - the relevant category or backend;
@@ -1609,12 +1609,12 @@ A practical configuration should be selected according to the user’s dominant 
 
 | Objective | Evidence to consult | Candidate configuration | Required caution |
 |---|---|---|---|
-| Minimize SVG size | SVG bytes and validity | `(resolved)` | Check fidelity loss |
-| Minimize path complexity | Path and command count | `(resolved)` | Heuristic metric limitation |
-| Maximize raster similarity | `SSIM` and edge F1 | `(resolved)` | Larger files may result |
-| Minimize runtime | End-to-end runtime | `(resolved)` | Hardware-specific |
-| Preserve small edges | Edge F1 and qualitative crops | `(resolved)` | Category-dependent |
-| Robust batch execution | Success, failure, timeout rates | `(resolved)` | Environment-dependent |
+| Minimize SVG size | SVG bytes and validity | `[TO_BE_COMPUTED]` | Check fidelity loss |
+| Minimize path complexity | Path and command count | `[TO_BE_COMPUTED]` | Heuristic metric limitation |
+| Maximize raster similarity | `SSIM` and edge F1 | `[TO_BE_COMPUTED]` | Larger files may result |
+| Minimize runtime | End-to-end runtime | `[TO_BE_COMPUTED]` | Hardware-specific |
+| Preserve small edges | Edge F1 and qualitative crops | `[TO_BE_COMPUTED]` | Category-dependent |
+| Robust batch execution | Success, failure, timeout rates | `[TO_BE_COMPUTED]` | Environment-dependent |
 
 This table must be completed only from measured results.
 
@@ -1704,13 +1704,13 @@ This paper presented **Silukman Image Vectorizer**, a local desktop and command-
 
 The implementation contributes a PySide6 desktop interface, typed vectorization settings, named low-complexity, balanced, and high-fidelity presets, VTracer integration, an OpenCV contour-based legacy path, palette and background operations, atomic SVG export, a headless CLI, and a benchmark subsystem that records configurations, hashes, environments, repeated runs, errors, output artifacts, and quality measurements. These contributions concern workflow integration and reproducibility; they do not constitute a new tracing algorithm.
 
-The evaluation used [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compared [REAL_WORLD_BASELINES] under `2` presets and `1` repeated runs. The principal empirical observation was [REAL_WORLD_PRIMARY_METRIC], while the quality–complexity–runtime relationship was [REAL_WORLD_COMPLEXITY_RESULT]. Runtime behavior was [REAL_WORLD_RUNTIME_RESULT], and execution failures or skips were [REAL_WORLD_FAILURE_RATE]. These placeholders must remain unresolved until the dataset and experiments are complete.
+The evaluation used [REAL_WORLD_DATASET_SIZE] images from [REAL_WORLD_CATEGORY_COUNT] categories and compared [REAL_WORLD_BASELINES] under `[PRESET_COUNT]` presets and `[REPETITION_COUNT]` repeated runs. The principal empirical observation was [REAL_WORLD_PRIMARY_METRIC], while the quality–complexity–runtime relationship was [REAL_WORLD_COMPLEXITY_RESULT]. Runtime behavior was [REAL_WORLD_RUNTIME_RESULT], and execution failures or skips were [REAL_WORLD_FAILURE_RATE]. These placeholders must remain unresolved until the dataset and experiments are complete.
 
-The conclusions are limited by `(resolved)`, including dataset scope, configuration sensitivity, metric coverage, hardware dependence, baseline compatibility, partially distinct GUI and canonical execution paths, heuristic SVG complexity measures, and incomplete Silukman memory instrumentation. Results should therefore be interpreted within the tested software versions, images, configurations, render procedure, and hardware.
+The conclusions are limited by `[TO_BE_COMPUTED]`, including dataset scope, configuration sensitivity, metric coverage, hardware dependence, baseline compatibility, partially distinct GUI and canonical execution paths, heuristic SVG complexity measures, and incomplete Silukman memory instrumentation. Results should therefore be interpreted within the tested software versions, images, configurations, render procedure, and hardware.
 
-Future work will include `(resolved)`, with priorities including population and validation of the benchmark dataset, independent reproduction, cross-platform experiments, parameter-level ablations, complete memory instrumentation, stronger SVG structural metrics, unified GUI and canonical orchestration, broader renderer comparison, and a controlled user study of the desktop workflow.
+Future work will include `[TO_BE_COMPUTED]`, with priorities including population and validation of the benchmark dataset, independent reproduction, cross-platform experiments, parameter-level ablations, complete memory instrumentation, stronger SVG structural metrics, unified GUI and canonical orchestration, broader renderer comparison, and a controlled user study of the desktop workflow.
 
-The evaluated source release, benchmark configuration, dataset manifest, raw run records, generated SVGs, logs, tables, and figures are available through `(resolved)`, `(resolved)`, and `(resolved)`.
+The evaluated source release, benchmark configuration, dataset manifest, raw run records, generated SVGs, logs, tables, and figures are available through `[TO_BE_COMPUTED]`, `[TO_BE_COMPUTED]`, and `[TO_BE_COMPUTED]`.
 
 
 

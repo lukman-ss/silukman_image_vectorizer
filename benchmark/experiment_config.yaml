@@ -5,7 +5,7 @@ experiment:
   timeout_seconds: 60
 
 dataset:
-  manifest: "benchmark/dataset_manifest.csv"
+  manifest: "benchmark/datasets/synthetic/dataset_manifest.csv"
   split: "test"
   categories: ["geometric_shapes", "flat_logo", "gradients", "thin_lines", "curves", "pseudo_text", "transparent_shapes", "noisy_edges", "overlapping_objects", "monochrome_silhouette"]
 

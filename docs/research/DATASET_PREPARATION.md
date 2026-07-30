@@ -70,7 +70,7 @@ Setiap entri gambar harus dilabeli split dengan distribusi konvensional:
 2. Hitung SHA-256 (`shasum -a 256 <file>`).
 3. Beri nama file sesuai **Aturan Naming** dan pindahkan ke direktori `benchmark/samples/`.
 4. Jika lisensinya baru (belum ada di folder lisensi), tambahkan ke `benchmark/licenses/`.
-5. Buka `benchmark/dataset_manifest.csv` dan tambahkan baris data sesuai metadata.
+5. Buka `benchmark/datasets/real_world/dataset_manifest.csv` dan tambahkan baris data sesuai metadata.
 6. Jalankan validator.
 
 ## Cara Menjalankan Validator

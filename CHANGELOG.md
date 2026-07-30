@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.19.6] - 2026-07-30
+## [1.19.7] - 2026-07-30
+
+### Fixed
+- Consolidated dataset structure strictly to `benchmark/datasets/synthetic` and `benchmark/datasets/real_world`.
+- Fixed `benchmark/README.md` to properly document the empty state of the real-world dataset and the testing-only restriction of synthetic data.
+- Rewrote all ambiguous `(resolved)` placeholders in `paper/manuscript.md` with explicit variable placeholders like `[REAL_WORLD_RESULT]`, `[TO_BE_COMPUTED]`, `[PRESET_COUNT]`, and `[REPETITION_COUNT]`.
 
 ### Fixed
 - Restored test compatibility for `validate_dataset.py` by rewriting tests to conform to the updated structural schema and `dataset_role`.

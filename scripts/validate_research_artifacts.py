@@ -22,7 +22,7 @@ def validate_citation():
 
 def validate_dataset_manifest():
     print("Validating dataset manifest schema...")
-    manifest_path = "benchmark/dataset_manifest.csv"
+    manifest_path = "benchmark/datasets/real_world/dataset_manifest.csv"
     if os.path.exists(manifest_path):
         with open(manifest_path) as f:
             reader = csv.reader(f)

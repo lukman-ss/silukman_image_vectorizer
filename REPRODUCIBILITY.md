@@ -62,7 +62,7 @@ Aturan dataset lengkap berada di
 
 1. Simpan image asli tanpa resize atau manipulasi di `benchmark/samples/`.
 2. Simpan teks lisensi yang diperlukan di `benchmark/licenses/`.
-3. Tambahkan satu baris per image ke `benchmark/dataset_manifest.csv`.
+3. Tambahkan satu baris per image ke `benchmark/datasets/real_world/dataset_manifest.csv`.
 4. Isi `filename`, `image_id`, `category`, `split`, metadata sumber/lisensi, dan
    SHA-256 yang sesuai file.
 
