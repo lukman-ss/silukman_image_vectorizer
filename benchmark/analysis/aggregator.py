@@ -1,4 +1,5 @@
 import json
+import os
 import math
 from collections import defaultdict
 from typing import cast
@@ -19,8 +20,18 @@ class BenchmarkAggregator:
     - Spread: Reports standard deviation and IQR (p75 - p25).
     """
 
-    def __init__(self, runs_file: str):
+    def __init__(self, runs_file: str, require_publication_eligible: bool = True):
         self.runs_file = runs_file
+
+        # Check publication eligibility from manifest.json
+        manifest_path = os.path.join(os.path.dirname(self.runs_file), "manifest.json")
+        if os.path.exists(manifest_path):
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                manifest = json.load(f)
+                is_eligible = manifest.get("publication_eligible", False)
+                if require_publication_eligible and not is_eligible:
+                    raise ValueError(f"Experiment {self.runs_file} is not publication eligible.")
+
         self.raw_data = self._load_data()
 
     def _load_data(self) -> List[Dict[str, Any]]:

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="256" height="256" viewBox="0 0 256 256">
+<metadata><app-name>Image Vectorizer v1.14.0</app-name><export-timestamp>2026-07-29 15:11:24</export-timestamp><source-image>gradients.png</source-image></metadata><path d="M0 0 C84.48 0 168.96 0 256 0 C256 84.48 256 168.96 256 256 C171.52 256 87.04 256 0 256 C0 171.52 0 87.04 0 0 Z " fill="#1232ED" transform="translate(0,0)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 38.28 256 76.56 256 116 C171.52 116 87.04 116 0 116 C0 77.72 0 39.44 0 0 Z " fill="#9B3264" transform="translate(0,140)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 22.11 256 44.22 256 67 C171.52 67 87.04 67 0 67 C0 44.89 0 22.78 0 0 Z " fill="#5A32A6" transform="translate(0,73)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 18.15 256 36.3 256 55 C171.52 55 87.04 55 0 55 C0 36.85 0 18.7 0 0 Z " fill="#D73228" transform="translate(0,201)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 11.88 256 23.76 256 36 C171.52 36 87.04 36 0 36 C0 24.12 0 12.24 0 0 Z " fill="#3632C8" transform="translate(0,37)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 10.89 256 21.78 256 33 C171.52 33 87.04 33 0 33 C0 22.11 0 11.22 0 0 Z " fill="#7B3284" transform="translate(0,107)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 9.9 256 19.8 256 30 C171.52 30 87.04 30 0 30 C0 20.1 0 10.2 0 0 Z " fill="#BA3246" transform="translate(0,171)" />
+<path d="M0 0 C84.48 0 168.96 0 256 0 C256 8.91 256 17.82 256 27 C171.52 27 87.04 27 0 27 C0 18.09 0 9.18 0 0 Z " fill="#F2320D" transform="translate(0,229)" />
+</svg>

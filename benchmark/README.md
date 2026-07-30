@@ -21,6 +21,12 @@ The dataset is strictly divided into two distinct subsets to prevent synthetic b
    - A manually curated collection of real-world images used for the final benchmark evaluation.
    - **Publication Eligibility**: Only results derived from this dataset may be reported as actual performance in publications.
 
+## Results Organization
+
+Experiment outputs in `benchmark/results/` are cleanly separated by their validation logic:
+- `smoke/`: Contains outputs from `testing_only` datasets (such as synthetic benchmarks). These runs have `publication_eligible: false` in their manifest and are actively ignored by the main table generators and analysis scripts.
+- `evaluation/`: Contains outputs strictly from full benchmarks running on the real-world dataset. These are the only valid outputs eligible for the research manuscript.
+
 ## Planned Categories
 
 The evaluation dataset is planned to cover diverse graphic types:

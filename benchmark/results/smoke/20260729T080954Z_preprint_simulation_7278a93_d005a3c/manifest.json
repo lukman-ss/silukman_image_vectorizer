@@ -1,0 +1,6 @@
+{
+  "dataset_role": "testing_only",
+  "experiment_role": "smoke",
+  "publication_eligible": false,
+  "result_status": "historical_smoke_result"
+}

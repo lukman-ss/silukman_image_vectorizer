@@ -5,10 +5,10 @@ from benchmark.analysis.aggregator import BenchmarkAggregator
 import os
 import glob
 
-# Find latest result dir
-result_dirs = sorted(glob.glob("benchmark/results/*"))
+# Find latest result dir in evaluation
+result_dirs = sorted([d for d in glob.glob("benchmark/results/evaluation/*") if os.path.isdir(d)])
 if not result_dirs:
-    print("No results found.")
+    print("No evaluation results found.")
     exit(1)
 latest_dir = result_dirs[-1]
 runs_file = os.path.join(latest_dir, "runs.jsonl")
