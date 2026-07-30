@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.19.7] - 2026-07-30
+## [1.19.8] - 2026-07-30
+
+### Fixed
+- Reorganized result directories to cleanly separate `smoke/` and `evaluation/` outputs.
+- Enhanced experiment configuration schema to validate and enforce strict rules on `dataset_role`, `experiment_role`, `publication_eligible`, minimum `repetitions` (3), and minimum `warmup_runs` (1) for full benchmarks.
+- Cleaned up the working tree (removed temporary scripts and cache).
+- Re-ran the quality gate, confirming that all CI checks (pytest, mypy, flake8, artifact validator) pass with exit code 0. Status remains `FULL_BENCHMARK_BLOCKED` strictly due to missing dataset.
 
 ### Fixed
 - Consolidated dataset structure strictly to `benchmark/datasets/synthetic` and `benchmark/datasets/real_world`.

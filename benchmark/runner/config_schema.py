@@ -15,6 +15,9 @@ class ExperimentConfig:
     repetitions: int = 1
     warmup_runs: int = 1
     timeout_seconds: int = 60
+    dataset_role: str = "testing_only"
+    experiment_role: str = "smoke"
+    publication_eligible: bool = False
 
 
 @dataclass
@@ -63,6 +66,18 @@ class BenchmarkConfig:
         if "manifest" not in ds_data:
             raise ConfigError("dataset.manifest is required.")
         dataset = DatasetConfig(**ds_data)
+
+        # Enforce experiment rules
+        if experiment.experiment_role == "full_benchmark":
+            if experiment.repetitions < 3:
+                raise ConfigError("repetitions must be at least 3 for full_benchmark")
+            if experiment.warmup_runs < 1:
+                raise ConfigError("warmup_runs must be at least 1 for full_benchmark")
+            if experiment.dataset_role == "testing_only":
+                raise ConfigError("dataset_role cannot be testing_only for full_benchmark")
+
+        if experiment.publication_eligible and "synthetic" in dataset.manifest:
+            raise ConfigError("publication_eligible cannot be true with a synthetic dataset manifest")
 
         # Validate Backends
         backends = data.get("backends", [])

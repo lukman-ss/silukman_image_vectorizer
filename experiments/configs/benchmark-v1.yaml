@@ -1,8 +1,11 @@
 experiment:
   id: benchmark-v1
-  repetitions: 2
+  repetitions: 3
   warmup_runs: 1
   timeout_seconds: 60
+  dataset_role: "evaluation"
+  experiment_role: "full_benchmark"
+  publication_eligible: true
 
 dataset:
   manifest: benchmark/datasets/real_world/dataset_manifest.csv
