@@ -26,8 +26,8 @@ def validate_dataset_manifest():
     if os.path.exists(manifest_path):
         with open(manifest_path) as f:
             reader = csv.reader(f)
-            headers = next(reader)
-            expected = {"image_id", "file_path", "split", "category"}
+            headers = [h.strip() for h in next(reader)]
+            expected = {"image_id", "filename", "dataset_role", "category"}
             assert expected.issubset(set(headers)), f"Missing headers. Found: {headers}"
 
 
