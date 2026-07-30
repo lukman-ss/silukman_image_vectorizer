@@ -73,9 +73,37 @@
     "notes": {
       "type": "string",
       "description": "Any additional notes or edge cases for this image"
+    },
+    "origin_type": {
+      "type": "string",
+      "enum": ["external_real_world", "api_delivered_real_world", "api_generated", "manual_original", "unverified"]
+    },
+    "api_provider": {
+      "type": "string"
+    },
+    "api_request_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "original_asset_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "work_title": {
+      "type": "string"
+    },
+    "license_verified": {
+      "type": "boolean"
+    },
+    "provenance_status": {
+      "type": "string",
+      "enum": ["verified", "partially_verified", "license_mismatch", "author_missing", "source_missing", "unverified"]
+    },
+    "publication_scope": {
+      "type": "string"
     }
   },
   "required": [
-    "image_id", "filename", "category", "license", "sha256"
+    "image_id", "filename", "category", "license", "sha256", "origin_type", "provenance_status"
   ]
 }

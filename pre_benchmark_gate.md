@@ -18,7 +18,7 @@ All code quality, dataset integrity, and pilot methodological validations must p
 | `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-07-30T07:18:30Z | `working-tree` |
 | `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-07-30T07:18:30Z | `working-tree` |
 | `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-07-30T07:18:30Z | `working-tree` |
-| `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 1 | DATASET_INCOMPLETE | 2026-07-30T07:27:00Z | `working-tree` |
+| `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 1 | REAL_WORLD_DATASET_INSUFFICIENT | 2026-07-30T08:24:33Z | `working-tree` |
 
 ## Audit Checklist
 

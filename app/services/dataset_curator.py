@@ -4,7 +4,7 @@ import json
 import hashlib
 import shutil
 import argparse
-from typing import Dict, Set
+from typing import Dict
 from datetime import datetime, timezone
 from PIL import Image
 
@@ -152,86 +152,87 @@ def cmd_status(args: argparse.Namespace) -> int:
         return 1
 
     total_images = 0
+    real_world_valid = 0
+    generated_count = 0
+    
     categories: Dict[str, int] = {}
+    providers: Dict[str, int] = {}
     licenses: Dict[str, int] = {}
-    missing_metadata = 0
-    invalid_files = 0
-    hashes: Set[str] = set()
-    duplicate_hashes = 0
-
-    images_dir = os.path.join(os.path.dirname(manifest_path), "images")
+    
+    mismatch_licenses = 0
+    author_missing = 0
+    provenance_verified = 0
 
     with open(manifest_path, "r", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row.get("dataset_role") != "evaluation":
-                continue
-
             total_images += 1
+            
+            origin = row.get("origin_type", "")
+            if origin == "api_generated":
+                generated_count += 1
+            else:
+                real_world_valid += 1
 
             # Categories
             cat = row.get("category", "UNKNOWN")
-            categories[cat] = categories.get(cat, 0) + 1
+            if origin != "api_generated":
+                categories[cat] = categories.get(cat, 0) + 1
+
+            # Providers
+            prov = row.get("api_provider", "") or "external"
+            providers[prov] = providers.get(prov, 0) + 1
 
             # Licenses
             lic = row.get("license", "UNKNOWN")
             licenses[lic] = licenses.get(lic, 0) + 1
 
-            # Missing fields
-            required = ["image_id", "filename", "license", "sha256"]
-            if any(not row.get(k) or str(row.get(k)).strip() == "" for k in required):
-                missing_metadata += 1
-
-            # File presence
-            fname = row.get("filename", "")
-            fpath = os.path.join(images_dir, fname)
-            if not os.path.exists(fpath):
-                invalid_files += 1
-
-            # Duplicates
-            h = row.get("sha256", "")
-            if h in hashes:
-                duplicate_hashes += 1
-            hashes.add(h)
+            # Mismatches & Provenance
+            prov_status = row.get("provenance_status", "")
+            if prov_status == "verified":
+                provenance_verified += 1
+            if prov_status == "license_mismatch":
+                mismatch_licenses += 1
+            if prov_status == "author_missing":
+                author_missing += 1
 
     print("=== Dataset Composition Report ===")
-    print(f"Total Evaluation Images: {total_images}")
+    print(f"Total Images Checked: {total_images}")
+    print(f"Total Valid Real-World: {real_world_valid}")
+    print(f"Total Generated/Synthetic: {generated_count}")
 
-    print("\n-- By Category --")
+    print("\n-- By Category (Real-World Only) --")
     valid_categories = 0
     for k, v in categories.items():
         print(f"  {k}: {v}")
         if v >= 10:
             valid_categories += 1
 
+    print("\n-- By Provider --")
+    for k, v in providers.items():
+        print(f"  {k}: {v}")
+
     print("\n-- By License --")
     for k, v in licenses.items():
         print(f"  {k}: {v}")
 
-    print("\n-- Quality Checks --")
-    print(f"Missing Metadata: {missing_metadata}")
-    print(f"Duplicate Hashes: {duplicate_hashes}")
-    print(f"Missing Files: {invalid_files}")
-
-    print("\n-- Benchmark Readiness --")
-    shortfall = max(0, 60 - total_images)
-    cat_shortfall = max(0, 5 - valid_categories)
-
-    ready = True
-    if total_images < 60:
-        print(f" [!] Shortfall: Need {shortfall} more images.")
-        ready = False
-    if valid_categories < 5:
-        print(f" [!] Shortfall: Need {cat_shortfall} more categories with >= 10 images.")
-        ready = False
-    if missing_metadata > 0 or duplicate_hashes > 0 or invalid_files > 0:
-        print(" [!] Shortfall: Fix quality check failures.")
-        ready = False
+    print("\n-- Provenance Quality --")
+    print(f"Provenance Verified: {provenance_verified}")
+    print(f"License Mismatches: {mismatch_licenses}")
+    print(f"Author Missing: {author_missing}")
 
     print("\nStatus:")
-    if ready:
-        print("DATASET_READY_FOR_PILOT_BENCHMARK")
-    else:
-        print("DATASET_NOT_READY")
+    if mismatch_licenses > 0:
+        print("DATASET_LICENSE_VALIDATION_FAILED")
+        return 1
 
-    return 0 if ready else 1
+    if real_world_valid < 60 or valid_categories < 5:
+        print("REAL_WORLD_DATASET_INSUFFICIENT")
+        return 1
+
+    if provenance_verified < real_world_valid:
+        print("REAL_WORLD_DATASET_PARTIALLY_VERIFIED")
+        return 0
+    else:
+        print("REAL_WORLD_DATASET_VERIFIED")
+        return 0

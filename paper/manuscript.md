@@ -1660,9 +1660,9 @@ The rasterizer and evaluator are part of the same repository. Bugs in these modu
 
 ### 8.6 Dataset selection
 
-The current dataset manifest is not populated. Dataset construction can introduce selection bias through convenience sampling, uneven category sizes, exclusion of difficult images, or ambiguous licensing. Inclusion and exclusion rules must be defined before observing system performance.
+The current dataset manifest is not populated. Dataset construction can introduce selection bias through convenience sampling, uneven category sizes, exclusion of difficult images, or ambiguous licensing. Inclusion and exclusion rules must be defined before observing system performance. All synthetically generated images (e.g. from generative APIs) must be strictly segregated from the real-world evaluation dataset to prevent artificial bias.
 
-Duplicate or near-duplicate images can overweight a visual style. Source hashes detect exact duplicates but not semantic or transformed duplicates. Dataset documentation should report provenance and use a near-duplicate review procedure.
+Duplicate or near-duplicate images can overweight a visual style. Source hashes detect exact duplicates but not semantic or transformed duplicates. Dataset documentation must report provenance explicitly, validating real authors and strict licensing terms, and use a near-duplicate review procedure.
 
 ### 8.7 Baseline configuration
 

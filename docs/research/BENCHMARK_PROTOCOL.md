@@ -52,6 +52,8 @@ Analisis lintas kategori hanya boleh dilakukan jika setiap kategori mempunyai
 jumlah sample yang dilaporkan. Dataset tidak boleh diklaim mewakili distribusi
 image umum tanpa bukti sampling yang mendukung.
 
+Evaluasi formal `real_world` secara ketat melarang penggunaan data sintetis/generated (seperti Robohash). Data yang dihasilkan oleh API generator harus dipisahkan ke dataset `synthetic_evaluation` dan dianalisis terpisah. Setiap citra `real_world` harus tervalidasi lisensinya dan penciptanya (provenance diverifikasi).
+
 ## Backends
 
 Registry runner mendukung:

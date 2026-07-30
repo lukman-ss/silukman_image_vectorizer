@@ -100,6 +100,13 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
                 has_error = True
                 continue
 
+            origin_type = row.get("origin_type", "").strip()
+            original_asset_url = row.get("original_asset_url", "").strip()
+            publication_scope = row.get("publication_scope", "").strip()
+            creator = row.get("creator", "").strip()
+            license_url = row.get("license_url", "").strip()
+            source_url = row.get("source_url", "").strip()
+
             # Core validation
             if role not in valid_roles:
                 report["errors"].append(f"Row {row_idx}: Invalid dataset_role '{role}'.")
@@ -122,6 +129,31 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
                     report["errors"].append(
                         f"Row {row_idx}: Redistribution must be allowed for evaluation images.")
                     has_error = True
+
+            # Strict Provenance Rules
+            if license_val.lower() == "cc0" and "by-sa" in license_url.lower():
+                report["errors"].append(f"Row {row_idx}: License mismatch, claimed CC0 but URL is CC BY-SA.")
+                has_error = True
+
+            if origin_type == "api_delivered_real_world" and creator.lower() in ["unsplash contributors", "unknown", "generic"]:
+                report["errors"].append(f"Row {row_idx}: Generic creator not allowed when API provides real author.")
+                has_error = True
+            
+            if "robohash" in source_url.lower() and role == "evaluation" and "real_world" in str(manifest_file):
+                report["errors"].append(f"Row {row_idx}: RoboHash cannot be used as real-world evaluation data.")
+                has_error = True
+
+            if origin_type == "api_generated" and publication_scope == "main_evaluation":
+                report["errors"].append(f"Row {row_idx}: Generated data cannot have publication_scope=main_evaluation.")
+                has_error = True
+            
+            if origin_type == "api_delivered_real_world" and not original_asset_url:
+                report["errors"].append(f"Row {row_idx}: API delivered asset must include original_asset_url.")
+                has_error = True
+
+            if role == "evaluation" and (not license_val or not license_url):
+                report["errors"].append(f"Row {row_idx}: Evaluation data must have a valid license and license_url.")
+                has_error = True
 
             if category and category not in valid_categories:
                 report["errors"].append(f"Row {row_idx}: Invalid category '{category}'.")

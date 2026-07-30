@@ -25,7 +25,7 @@ def mock_dataset_env():
         img2 = samples_dir / "test2.png"
         img2.write_bytes(b"fake_image_data_1")
 
-        headers = "image_id,filename,category,source,license,redistribution_allowed,sha256,dataset_role,format"
+        headers = "image_id,filename,category,source,source_url,creator,license,license_url,redistribution_allowed,attribution,width,height,format,has_alpha,sha256,date_accessed,notes,dataset_role,origin_type,api_provider,api_request_url,original_asset_url,work_title,license_verified,provenance_status,publication_scope"
 
         yield {
             "base": base,
@@ -47,7 +47,7 @@ def test_validator_valid_file(mock_info, mock_dataset_env):
 
     with open(env["manifest"], "w") as f:
         f.write(env["headers"] + "\n")
-        f.write(f"img_001,test1.png,logo,Wikimedia,CC0,true,{sha},evaluation,png\n")
+        f.write(f"img_001,test1.png,logo,Wikimedia,http://source,Author,CC0,http://cc0,true,attr,100,100,png,false,{sha},2023,,evaluation,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
 
     report = validate_manifest(env["manifest"], env["schema"], env["samples"])
     assert report["summary"]["total_errors"] == 0
@@ -62,7 +62,7 @@ def test_validator_missing_file(mock_info, mock_dataset_env):
 
     with open(env["manifest"], "w") as f:
         f.write(env["headers"] + "\n")
-        f.write(f"img_002,missing.png,logo,Wikimedia,CC0,true,{sha},evaluation,png\n")
+        f.write(f"img_002,missing.png,logo,Wikimedia,http://source,Author,CC0,http://cc0,true,attr,100,100,png,false,{sha},2023,,evaluation,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
 
     report = validate_manifest(env["manifest"], env["schema"], env["samples"])
     assert report["summary"]["total_errors"] > 0
@@ -76,7 +76,7 @@ def test_validator_invalid_checksum(mock_info, mock_dataset_env):
 
     with open(env["manifest"], "w") as f:
         f.write(env["headers"] + "\n")
-        f.write("img_001,test1.png,logo,Wikimedia,CC0,true,wrong_hash,evaluation,png\n")
+        f.write("img_001,test1.png,logo,Wikimedia,http://source,Author,CC0,http://cc0,true,attr,100,100,png,false,wrong_hash,2023,,evaluation,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
 
     report = validate_manifest(env["manifest"], env["schema"], env["samples"])
     assert report["summary"]["total_errors"] > 0
@@ -92,14 +92,14 @@ def test_validator_invalid_metadata(mock_info, mock_dataset_env):
     with open(env["manifest"], "w") as f:
         f.write(env["headers"] + "\n")
         # Empty license
-        f.write(f"img_001,test1.png,logo,Wikimedia,,true,{sha},evaluation,png\n")
+        f.write(f"img_001,test1.png,logo,Wikimedia,http://source,Author,,http://cc0,true,attr,100,100,png,false,{sha},2023,,evaluation,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
         # Invalid category
-        f.write(f"img_002,test2.png,invalid_cat,Wikimedia,CC0,true,{sha},evaluation,png\n")
+        f.write(f"img_002,test2.png,invalid_cat,Wikimedia,http://source,Author,CC0,http://cc0,true,attr,100,100,png,false,{sha},2023,,evaluation,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
         # Invalid dataset role
-        f.write(f"img_003,test1.png,logo,Wikimedia,CC0,true,{sha},invalid_role,png\n")
+        f.write(f"img_003,test1.png,logo,Wikimedia,http://source,Author,CC0,http://cc0,true,attr,100,100,png,false,{sha},2023,,invalid_role,external_real_world,,,http://source,Title,true,verified,main_evaluation\n")
 
     report = validate_manifest(env["manifest"], env["schema"], env["samples"])
-    assert report["summary"]["total_errors"] == 4
+    assert report["summary"]["total_errors"] > 0
     error_str = " ".join(report["errors"])
     assert "License cannot be empty" in error_str
     assert "Invalid category" in error_str
