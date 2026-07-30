@@ -218,7 +218,7 @@ class ExperimentRunner:
         base_img_dir = os.path.dirname(self.config.dataset.manifest)
 
         # Try to find a valid image for warmup
-        test_img = os.path.join(base_img_dir, dataset[0]["file_path"])
+        test_img = os.path.join(base_img_dir, "images", dataset[0].get("filename", dataset[0].get("file_path", "")))
         self._run_warmups(test_img)
 
         total_tasks = (
@@ -237,7 +237,7 @@ class ExperimentRunner:
             for item in dataset:
                 image_id = item["image_id"]
                 category = item["category"]
-                input_path = os.path.join(base_img_dir, item["file_path"])
+                input_path = os.path.join(base_img_dir, "images", item.get("filename", item.get("file_path", "")))
 
                 for b_name, backend in self.backends.items():
                     for preset in self.config.presets:

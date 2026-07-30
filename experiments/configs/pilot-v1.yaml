@@ -14,10 +14,10 @@ dataset:
   categories:
     - logo
     - icon
-    - flat illustration
-    - complex illustration
+    - flat_illustration
+    - complex_illustration
     - photograph
-    - binary graphic
+    - binary_graphic
 
 backends:
   - silukman

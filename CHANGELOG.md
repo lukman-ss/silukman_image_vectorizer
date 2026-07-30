@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.9] - 2026-07-30
+
+### Added
+- Populated the `real_world` dataset with 60 evaluation images across 6 categories using `populate_real_world_dataset.py`.
+- Conducted the Pilot Benchmark (`pilot-v1.yaml`), successfully verifying the experiment loop and configurations across 108 runs.
+- Enabled `FULL_BENCHMARK_APPROVED` status in `pre_benchmark_gate.md` after passing all structural and methodological requirements.
+
+### Fixed
+- Fixed `run_simulation.py` and `experiment_runner.py` to route experiment output properly to `smoke/` or `evaluation/` directories, preventing root `benchmark/results/` pollution.
+- Updated `test_benchmark_smoke.py` to adapt to the new robust dataset manifest schema requiring `filename` instead of `file_path`.
+- Fixed minor MyPy and Flake8 linter warnings inside dataset curation tools.
+- Corrected space-separated categories in `pilot-v1.yaml` to underscore-separated to properly map to dataset categories.
+
 ## [1.19.8] - 2026-07-30
 
 ### Fixed
