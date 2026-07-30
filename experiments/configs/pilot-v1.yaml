@@ -1,0 +1,35 @@
+experiment:
+  id: pilot-v1
+  repetitions: 3
+  warmup_runs: 1
+  timeout_seconds: 60
+  dataset_role: "evaluation"
+  experiment_role: "pilot_benchmark"
+  publication_eligible: false
+
+dataset:
+  manifest: benchmark/datasets/real_world/dataset_manifest.csv
+  split: test
+  max_samples_per_category: 2
+  categories:
+    - logo
+    - icon
+    - flat illustration
+    - complex illustration
+    - photograph
+    - binary graphic
+
+backends:
+  - silukman
+  - vtracer
+
+presets:
+  - low_complexity
+  - balanced
+  - high_fidelity
+
+metrics:
+  - mae
+  - ssim
+  - edge_f1
+  - svg_complexity

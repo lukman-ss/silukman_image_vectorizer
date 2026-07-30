@@ -105,13 +105,20 @@ class ExperimentRunner:
             raise FileNotFoundError(f"Dataset manifest not found: {manifest_path}")
 
         dataset = []
+        category_counts = {}
         with open(manifest_path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
+                cat = row.get("category")
                 if (
-                    row.get("split") == self.config.dataset.split
-                    and row.get("category") in self.config.dataset.categories
+                    row.get("dataset_role") == self.config.experiment.dataset_role
+                    and cat in self.config.dataset.categories
                 ):
+                    if self.config.dataset.max_samples_per_category > 0:
+                        if category_counts.get(cat, 0) >= self.config.dataset.max_samples_per_category:
+                            continue
+                        category_counts[cat] = category_counts.get(cat, 0) + 1
+                    
                     dataset.append(row)
         return dataset
 

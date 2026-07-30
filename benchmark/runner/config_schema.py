@@ -24,6 +24,7 @@ class ExperimentConfig:
 class DatasetConfig:
     manifest: str
     split: str = "test"
+    max_samples_per_category: int = 0
     categories: List[str] = field(
         default_factory=lambda: [
             "logo",

@@ -16,8 +16,17 @@ This document records the current readiness of the Silukman Image Vectorizer for
 - **Smoke results not publication eligible**: **PASS** (Configuration validation enforces `publication_eligible: False` for synthetic smoke tests)
 - **Experiment config ready**: **PASS** (Config schema and YAML files enforce and reflect 3 repetitions, 1 warm-up, and timeout handling)
 - **Working tree clean**: **PASS** (Temporary scripts and caches removed)
+- **Dataset curation tooling**: **PASS** (`dataset add` and `dataset status` CLI are available and actively enforce requirements)
 - **Real-world dataset completeness**: **FAIL** (The dataset is strictly empty. Minimum 60 images across 5 categories are required before proceeding)
+- **Pilot benchmark completion**: **FAIL** (Pilot benchmark cannot run until the dataset is populated)
 
 ## Conclusion
 
-The structural, code quality, and methodological requirements for the benchmark are fully implemented. However, the evaluation dataset itself is missing. The official benchmark run remains **BLOCKED** strictly due to the lack of real-world evaluation data.
+The structural, code quality, and methodological requirements for the benchmark are fully implemented. However, the evaluation dataset itself is missing. 
+
+The immediate next steps are:
+1. Populate the evaluation dataset using `silukman-vectorizer dataset add`.
+2. Verify dataset readiness using `silukman-vectorizer dataset status`.
+3. Run the Pilot Benchmark (`experiments/configs/pilot-v1.yaml`).
+
+The official full benchmark run remains **BLOCKED** strictly due to the lack of real-world evaluation data and the pending pilot benchmark run.
