@@ -105,7 +105,7 @@ class ExperimentRunner:
             raise FileNotFoundError(f"Dataset manifest not found: {manifest_path}")
 
         dataset = []
-        category_counts = {}
+        category_counts: dict[str, int] = {}
         with open(manifest_path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:

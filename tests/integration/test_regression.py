@@ -27,9 +27,9 @@ def test_regression_invariants(synth_square, tmp_path):
 
     from unittest.mock import patch
     import datetime
-    
+
     fixed_time = datetime.datetime(2026, 7, 30, 12, 0, 0)
-    
+
     with patch("app.services.svg_exporter.datetime") as mock_datetime:
         mock_datetime.datetime.now.return_value = fixed_time
         res1 = vectorize_image(synth_square, out1, cfg)

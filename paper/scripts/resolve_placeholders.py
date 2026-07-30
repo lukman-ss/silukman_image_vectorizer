@@ -26,9 +26,10 @@ PLACEHOLDER_MAP = {
 }
 
 
-def load_config(config_path: str) -> dict:
+def load_config(config_path: str) -> dict:  # type: ignore[type-arg]
     with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+        data = yaml.safe_load(f)
+        return data if isinstance(data, dict) else {}
 
 
 def resolve_value(data: dict, section: str, key) -> str:

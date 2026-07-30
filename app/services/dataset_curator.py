@@ -4,6 +4,7 @@ import json
 import hashlib
 import shutil
 import argparse
+from typing import Dict, Set
 from datetime import datetime, timezone
 from PIL import Image
 
@@ -71,8 +72,8 @@ def cmd_add(args: argparse.Namespace) -> int:
         ]
         if not args.dry_run:
             with open(manifest_path, "w", newline="") as f:
-                writer = csv.writer(f)
-                writer.writerow(headers)
+                header_writer = csv.writer(f)
+                header_writer.writerow(headers)
 
     existing_hashes = set()
     existing_filenames = set()
@@ -136,7 +137,7 @@ def cmd_add(args: argparse.Namespace) -> int:
         return 1
 
     with open(manifest_path, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=row_data.keys())
+        writer: csv.DictWriter[str] = csv.DictWriter(f, fieldnames=row_data.keys())
         writer.writerow(row_data)
 
     print(f"Successfully added {filename} as {new_id} to the dataset.")
@@ -151,11 +152,11 @@ def cmd_status(args: argparse.Namespace) -> int:
         return 1
 
     total_images = 0
-    categories = {}
-    licenses = {}
+    categories: Dict[str, int] = {}
+    licenses: Dict[str, int] = {}
     missing_metadata = 0
     invalid_files = 0
-    hashes = set()
+    hashes: Set[str] = set()
     duplicate_hashes = 0
 
     images_dir = os.path.join(os.path.dirname(manifest_path), "images")

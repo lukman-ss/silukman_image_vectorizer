@@ -73,10 +73,10 @@ def test_validator_missing_file(mock_info, mock_dataset_env):
 def test_validator_invalid_checksum(mock_info, mock_dataset_env):
     env = mock_dataset_env
     mock_info.return_value = (100, 100, False, False)
-    
+
     with open(env["manifest"], "w") as f:
         f.write(env["headers"] + "\n")
-        f.write(f"img_001,test1.png,logo,Wikimedia,CC0,true,wrong_hash,evaluation,png\n")
+        f.write("img_001,test1.png,logo,Wikimedia,CC0,true,wrong_hash,evaluation,png\n")
 
     report = validate_manifest(env["manifest"], env["schema"], env["samples"])
     assert report["summary"]["total_errors"] > 0

@@ -2,31 +2,90 @@
 
 **Status: FULL_BENCHMARK_BLOCKED**
 
-This document records the current readiness of the Silukman Image Vectorizer for its official real-world benchmark execution.
+> **Sole Blocker:** Real-world evaluation dataset has not reached the required size and category coverage.
 
-## Acceptance Criteria Status
+---
 
-- **Pytest exit code 0**: **PASS** (All tests passed)
-- **Mypy exit code 0**: **PASS** (Strict typing enforced without new errors)
-- **Flake8 exit code 0**: **PASS** (No formatting or unused variable issues)
-- **Research artifact validator exit code 0**: **PASS** (All schemas, metadata, and tables are consistent)
-- **Dataset separation**: **PASS** (Synthetic and real-world datasets are physically separated, each with its own README and manifest)
-- **No unjustified real-world claims**: **PASS** (README and manuscript explicitly state the real-world dataset is NOT POPULATED)
-- **No `(resolved)` placeholders**: **PASS** (Manuscript placeholders use explicit `[TO_BE_COMPUTED]`, `[REAL_WORLD_RESULT]`, `[PRESET_COUNT]`, etc.)
-- **Smoke results not publication eligible**: **PASS** (Configuration validation enforces `publication_eligible: False` for synthetic smoke tests)
-- **Experiment config ready**: **PASS** (Config schema and YAML files enforce and reflect 3 repetitions, 1 warm-up, and timeout handling)
-- **Working tree clean**: **PASS** (Temporary scripts and caches removed)
-- **Dataset curation tooling**: **PASS** (`dataset add` and `dataset status` CLI are available and actively enforce requirements)
-- **Real-world dataset completeness**: **FAIL** (The dataset is strictly empty. Minimum 60 images across 5 categories are required before proceeding)
-- **Pilot benchmark completion**: **FAIL** (Pilot benchmark cannot run until the dataset is populated)
+## Quality Gate Results
 
-## Conclusion
+| Check | Status | Detail |
+|---|---|---|
+| Pytest | **PASS** | 134 passed, 5 skipped |
+| Mypy | **PASS** | No issues found in 117 source files |
+| Flake8 | **PASS** | No formatting or unused variable issues |
+| Research artifact validator | **PASS** | All schemas, metadata, and tables are consistent |
+| Dataset composition CLI | **PASS** | `dataset add` and `dataset status` both available |
+| Smoke results isolated | **PASS** | All historical results in `benchmark/results/smoke/` |
+| Smoke `publication_eligible` | **PASS** | All smoke manifests have `publication_eligible: false` |
+| No experiment folder in results root | **PASS** | Root only contains `smoke/` and `evaluation/` |
+| Manuscript placeholders | **PASS** | No hardcoded repetition counts; uses `[REPETITION_COUNT]`, `[WARMUP_COUNT]`, `[PRESET_COUNT]` |
+| Placeholder resolver script | **PASS** | `paper/scripts/resolve_placeholders.py` resolves values from final YAML config |
+| Config: repetitions >= 3 | **PASS** | `benchmark-v1.yaml`: repetitions=3 |
+| Config: warmup >= 1 | **PASS** | `benchmark-v1.yaml`: warmup_runs=1 |
+| images/ directory in Git | **PASS** | `benchmark/datasets/real_world/images/.gitkeep` committed |
+| licenses/ directory in Git | **PASS** | `benchmark/datasets/real_world/licenses/.gitkeep` committed |
+| Real-world dataset size | **FAIL** | 0/60 images — minimum 60 required |
+| Real-world category coverage | **FAIL** | 0/5 categories with ≥ 10 images |
+| Pilot benchmark | **FAIL** | Cannot run until dataset is populated |
 
-The structural, code quality, and methodological requirements for the benchmark are fully implemented. However, the evaluation dataset itself is missing. 
+---
 
-The immediate next steps are:
-1. Populate the evaluation dataset using `silukman-vectorizer dataset add`.
-2. Verify dataset readiness using `silukman-vectorizer dataset status`.
-3. Run the Pilot Benchmark (`experiments/configs/pilot-v1.yaml`).
+## Dataset Status Output
 
-The official full benchmark run remains **BLOCKED** strictly due to the lack of real-world evaluation data and the pending pilot benchmark run.
+```
+=== Dataset Composition Report ===
+Total Evaluation Images: 0
+
+-- Benchmark Readiness --
+ [!] Shortfall: Need 60 more images.
+ [!] Shortfall: Need 5 more categories with >= 10 images.
+
+Status:
+DATASET_NOT_READY
+```
+
+---
+
+## Acceptance Criteria
+
+| Criterion | Met |
+|---|---|
+| No experiment folder directly in `benchmark/results/` | ✅ |
+| Smoke results in `benchmark/results/smoke/` | ✅ |
+| Smoke results have `publication_eligible: false` | ✅ |
+| Manuscript has no hardcoded repetition values | ✅ |
+| `dataset add` CLI available | ✅ |
+| `dataset status` CLI available | ✅ |
+| `images/` and `licenses/` directories tracked in Git | ✅ |
+| All quality gates pass (pytest, mypy, flake8, artifact validator) | ✅ |
+| Single blocker: real-world dataset size | ✅ |
+
+---
+
+## Next Steps
+
+1. Populate real-world evaluation dataset using the CLI tool:
+   ```bash
+   .venv/bin/python -m app.cli_headless dataset add \
+     --file /path/to/image.png \
+     --category icon \
+     --source-url "https://..." \
+     --creator "Author Name" \
+     --license "CC0" \
+     --license-url "https://creativecommons.org/publicdomain/zero/1.0/" \
+     --dry-run
+   ```
+
+2. Check dataset progress anytime:
+   ```bash
+   .venv/bin/python -m app.cli_headless dataset status \
+     --manifest benchmark/datasets/real_world/dataset_manifest.csv
+   ```
+
+3. When dataset reaches `DATASET_READY_FOR_PILOT_BENCHMARK`, run the pilot:
+   ```bash
+   .venv/bin/python benchmark/run_simulation.py \
+     --config experiments/configs/pilot-v1.yaml
+   ```
+
+4. After pilot completes without methodological blockers, run full benchmark using `experiments/configs/benchmark-v1.yaml`.

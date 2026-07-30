@@ -1,8 +1,8 @@
 import pytest
 import yaml
 import tempfile
-from pathlib import Path
 from benchmark.runner.config_schema import BenchmarkConfig, ConfigError
+
 
 def test_full_benchmark_requires_3_repetitions():
     config = {
@@ -20,7 +20,7 @@ def test_full_benchmark_requires_3_repetitions():
     with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
         yaml.dump(config, f)
         filepath = f.name
-    
+
     with pytest.raises(ConfigError, match="repetitions must be at least 3 for full_benchmark"):
         BenchmarkConfig.from_yaml(filepath)
 
@@ -41,7 +41,7 @@ def test_full_benchmark_requires_1_warmup():
     with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
         yaml.dump(config, f)
         filepath = f.name
-    
+
     with pytest.raises(ConfigError, match="warmup_runs must be at least 1 for full_benchmark"):
         BenchmarkConfig.from_yaml(filepath)
 
@@ -62,7 +62,7 @@ def test_full_benchmark_rejects_testing_only():
     with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
         yaml.dump(config, f)
         filepath = f.name
-    
+
     with pytest.raises(ConfigError, match="dataset_role cannot be testing_only for full_benchmark"):
         BenchmarkConfig.from_yaml(filepath)
 
@@ -84,6 +84,6 @@ def test_publication_eligible_rejects_synthetic():
     with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
         yaml.dump(config, f)
         filepath = f.name
-    
+
     with pytest.raises(ConfigError, match="publication_eligible cannot be true with a synthetic dataset manifest"):
         BenchmarkConfig.from_yaml(filepath)
