@@ -9,7 +9,7 @@ from datetime import datetime
 class UsabilityStudyLogger:
     """
     A local, telemetry-free logger for usability studies.
-    
+
     Requirements satisfied:
     - Does not send data to any server.
     - Requires explicit participant consent to enable logging.

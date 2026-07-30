@@ -62,7 +62,7 @@ def run_benchmark(worker_count, input_paths, output_dir, use_processes=False):
             try:
                 res = f.result()
                 results.append(res)
-            except Exception as e:
+            except Exception:
                 results.append(VectorizationResult(run_id="error", status="failed"))
 
     duration = time.time() - start_time

@@ -5,8 +5,7 @@ import json
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, cast
-
+from typing import Any, Dict
 from PIL import Image
 
 
@@ -22,14 +21,12 @@ def check_image_properties(filepath: str):
     try:
         with Image.open(filepath) as img:
             width, height = img.size
-            format_val = img.format.lower() if img.format else "unknown"
             has_alpha = img.mode in ("RGBA", "LA", "PA")
-            
             # Additional check for transparency in palette
             if img.mode == 'P':
                 if 'transparency' in img.info:
                     has_alpha = True
-                    
+
         return width, height, has_alpha, False
     except Exception:
         return None, None, None, True
@@ -83,7 +80,6 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
 
     with open(manifest_file, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        headers = reader.fieldnames or []
 
         for row_idx, row in enumerate(reader, start=2):
             report["summary"]["total_rows"] += 1
@@ -122,7 +118,7 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
                 if not redist_allowed or redist_allowed not in ["true", "1", "yes"]:
                     report["errors"].append(f"Row {row_idx}: Redistribution must be allowed for evaluation images.")
                     has_error = True
-            
+
             if category and category not in valid_categories:
                 report["errors"].append(f"Row {row_idx}: Invalid category '{category}'.")
                 has_error = True
@@ -148,7 +144,7 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
                     f"Row {row_idx}: Checksum mismatch for '{filename}'. Expected {expected_sha256}, got {actual_sha256}."
                 )
                 has_error = True
-            
+
             if role == "evaluation" and not expected_sha256:
                 report["errors"].append(f"Row {row_idx}: Checksum is missing for evaluation image.")
                 has_error = True
