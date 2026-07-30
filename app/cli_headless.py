@@ -148,6 +148,22 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser_bench_report.add_argument("--run", required=True, help="Path to experiment directory")
 
+    # Dataset Commands
+    parser_dataset = subparsers.add_parser("dataset", help="Manage the evaluation dataset")
+    dataset_subs = parser_dataset.add_subparsers(dest="dataset_cmd", help="Dataset commands")
+
+    parser_dataset_add = dataset_subs.add_parser("add", help="Add an image to the real-world dataset")
+    parser_dataset_add.add_argument("--file", required=True, help="Path to the image file")
+    parser_dataset_add.add_argument("--category", required=True, help="Image category (e.g., icon, logo)")
+    parser_dataset_add.add_argument("--source-url", required=True, help="Source URL")
+    parser_dataset_add.add_argument("--creator", required=True, help="Creator of the image")
+    parser_dataset_add.add_argument("--license", required=True, help="License (e.g., CC0, Public Domain)")
+    parser_dataset_add.add_argument("--license-url", required=True, help="URL to the license")
+    parser_dataset_add.add_argument("--dry-run", action="store_true", help="Do not modify anything, just validate")
+
+    parser_dataset_status = dataset_subs.add_parser("status", help="Check dataset composition and benchmark readiness")
+    parser_dataset_status.add_argument("--manifest", required=True, help="Path to the dataset_manifest.csv")
+
     return parser
 
 
@@ -441,6 +457,11 @@ def cmd_inspect(args: argparse.Namespace) -> int:
         return 1
 
 
+def cmd_dataset(args: argparse.Namespace) -> int:
+    from app.services.dataset_curator import handle_dataset_command
+    return handle_dataset_command(args)
+
+
 def cmd_benchmark(args: argparse.Namespace) -> int:
     if args.benchmark_command == "run":
         try:
@@ -572,6 +593,8 @@ def main(args: Optional[List[str]] = None) -> int:
         return cmd_inspect(parsed_args)
     elif parsed_args.command == "benchmark":
         return cmd_benchmark(parsed_args)
+    elif parsed_args.command == "dataset":
+        return cmd_dataset(parsed_args)
 
     return 1
 

@@ -107,16 +107,20 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
 
             if role == "evaluation":
                 if not license_val:
-                    report["errors"].append(f"Row {row_idx}: License cannot be empty for evaluation.")
+                    report["errors"].append(
+                        f"Row {row_idx}: License cannot be empty for evaluation.")
                     has_error = True
                 if not source:
-                    report["errors"].append(f"Row {row_idx}: Source cannot be empty for evaluation.")
+                    report["errors"].append(
+                        f"Row {row_idx}: Source cannot be empty for evaluation.")
                     has_error = True
                 if category not in valid_categories:
-                    report["errors"].append(f"Row {row_idx}: Invalid category '{category}' for evaluation.")
+                    report["errors"].append(
+                        f"Row {row_idx}: Invalid category '{category}' for evaluation.")
                     has_error = True
                 if not redist_allowed or redist_allowed not in ["true", "1", "yes"]:
-                    report["errors"].append(f"Row {row_idx}: Redistribution must be allowed for evaluation images.")
+                    report["errors"].append(
+                        f"Row {row_idx}: Redistribution must be allowed for evaluation images.")
                     has_error = True
 
             if category and category not in valid_categories:
@@ -160,7 +164,8 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
 
             actual_w, actual_h, actual_alpha, is_corrupted = check_image_properties(str(filepath))
             if is_corrupted:
-                report["errors"].append(f"Row {row_idx}: Image '{filename}' is corrupted or unreadable.")
+                report["errors"].append(
+                    f"Row {row_idx}: Image '{filename}' is corrupted or unreadable.")
                 has_error = True
                 continue
 
@@ -218,8 +223,28 @@ def main():
     if report["errors"]:
         sys.exit(1)
     else:
-        print("\nSuccess: Dataset is valid.")
-        sys.exit(0)
+        # Benchmark gate check for real_world evaluation dataset
+        if "real_world" in args.manifest:
+            total = report["summary"]["total_valid"]
+            valid_cats = sum(1 for _, v in report["summary"]["categories_count"].items() if v >= 10)
+
+            ready = True
+            if total < 60:
+                print(f"  [!] Minimum 60 images required (Found {total})")
+                ready = False
+            if valid_cats < 5:
+                print(f"  [!] Minimum 5 categories with >= 10 images required (Found {valid_cats})")
+                ready = False
+
+            if ready:
+                print("\nDATASET_READY_FOR_PILOT_BENCHMARK")
+                sys.exit(0)
+            else:
+                print("\nDATASET_NOT_READY")
+                sys.exit(1)
+        else:
+            print("\nSuccess: Dataset is valid.")
+            sys.exit(0)
 
 
 if __name__ == "__main__":
