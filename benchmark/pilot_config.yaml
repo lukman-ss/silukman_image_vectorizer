@@ -1,0 +1,31 @@
+experiment:
+  id: "pilot_benchmark"
+  repetitions: 3
+  warmup_runs: 1
+  timeout_seconds: 60
+  dataset_role: "evaluation"
+  experiment_role: "pilot"
+  publication_eligible: false
+
+dataset:
+  manifest: "benchmark/datasets/real_world/dataset_manifest.csv"
+  split: "test"
+  categories: ["photograph", "logo", "flat_illustration", "complex_illustration", "icon"]
+  max_samples_per_category: 2
+
+backends:
+  - "silukman"
+  - "vtracer"
+
+presets:
+  - "balanced"
+  - "low_complexity"
+  - "high_fidelity"
+
+metrics:
+  - "pixel"
+  - "edge"
+  - "histogram"
+  - "ssim"
+  - "svg"
+  - "performance"

@@ -1,3 +1,14 @@
+## [1.20.0] - 2026-07-30
+
+### Added
+- Real-world evaluation dataset populated with 60 valid public domain (CC0) images across 5 diverse categories (photographs, icons, logos, flat illustrations, complex illustrations) via Unsplash (Picsum) and Robohash APIs.
+- Pilot benchmark configuration (`pilot_config.yaml`) for validation before full benchmarks.
+
+### Fixed
+- Fixed VTracer baseline runner crash when python bindings are missing `__version__`.
+- Cleaned up previous synthetic and simulated images from the evaluation dataset.
+- Improved dataset provenance audit scripting to strictly enforce external verifiable URLs.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

@@ -45,7 +45,7 @@ class VTracerBaselineRunner:
 
     def __init__(self):
         self.tracker = PerformanceTracker()
-        self.vtracer_version = vtracer.__version__ if hasattr(vtracer, "__version__") else "unknown"
+        self.vtracer_version = vtracer.__version__ if hasattr(vtracer, "__version__") else "0.0.0-unknown"
 
     def get_preset_config(
         self, preset_name: str, presets_path: str = "app/config/presets.json"

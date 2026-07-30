@@ -5,9 +5,10 @@ All code quality, dataset integrity, and pilot methodological validations must p
 
 ## Current Gate Status
 
-**Status: FULL_BENCHMARK_APPROVED**
+**Status: FULL_BENCHMARK_BLOCKED**
 
-*The evaluation dataset is populated, and the pilot benchmark executed successfully without blockers.*
+**Blocking Reason(s):**
+* Real-world evaluation dataset has not reached the required size and category coverage (Fake synthetic images have been removed/quarantined following an audit).
 
 ## Verification History
 
@@ -17,38 +18,27 @@ All code quality, dataset integrity, and pilot methodological validations must p
 | `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-07-30T07:18:30Z | `working-tree` |
 | `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-07-30T07:18:30Z | `working-tree` |
 | `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-07-30T07:18:30Z | `working-tree` |
-| `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 0 | DATASET_READY_FOR_PILOT_BENCHMARK | 2026-07-30T07:11:35Z | `working-tree` |
+| `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 1 | DATASET_INCOMPLETE | 2026-07-30T07:27:00Z | `working-tree` |
 
 ## Audit Checklist
 
 *   [x] `benchmark/results/` root contains no raw experiment folders.
 *   [x] All historical smoke results are isolated in `benchmark/results/smoke/`.
 *   [x] Smoke manifest explicitly defines `publication_eligible=false`.
-*   [x] Real-world dataset has reached the minimum criteria (60 images, 5 categories).
+*   [ ] Real-world dataset has reached the minimum criteria (60 images, 5 categories).
 *   [x] Manuscript placeholders `[REPETITION_COUNT]`, `[WARMUP_COUNT]`, and `[PRESET_COUNT]` are used.
 *   [x] No hardcoded numbers exist in the manuscript for experiment configurations.
-*   [x] Pilot benchmark completed successfully without any methodological blockers.
+*   [ ] Pilot benchmark completed successfully without any methodological blockers (Must re-run when dataset is ready).
 
 ---
 
 ## Conclusion
 
-**Status: `READY_FOR_FULL_BENCHMARK`**
+**Status: `FULL_BENCHMARK_BLOCKED`**
 
-All requirements met. Proceeding to final production runs using `benchmark-v1.yaml`.
+All code quality, methodology, tooling, and structural requirements are fully satisfied.
+The sole remaining blocker is:
 
----
+> **Real-world evaluation dataset has not reached the required size and category coverage.**
 
-## Next Steps
-
-**Step 1** — Execute pilot confirmation (if not already done):
-```bash
-.venv/bin/python benchmark/run_simulation.py \
-  --config experiments/configs/pilot-v1.yaml
-```
-
-**Step 2** — Run full benchmark:
-```bash
-.venv/bin/python benchmark/run_simulation.py \
-  --config experiments/configs/benchmark-v1.yaml
-```
+No pilot benchmark can run until at least 60 authentic real-world images across at least 5 categories (≥ 10 per category) are added.
