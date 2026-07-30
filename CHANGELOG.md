@@ -1,3 +1,8 @@
+## [1.20.1] - 2026-07-30
+
+### Fixed
+- Fixed GitHub Actions test failure where `benchmark/results/evaluation/` directory was missing because Git does not track empty directories. Added a `.gitkeep` file.
+
 ## [1.20.0] - 2026-07-30
 
 ### Added
