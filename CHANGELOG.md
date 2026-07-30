@@ -1,3 +1,24 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.22.0] - 2026-07-30
+
+### Changed
+- Enforced strict cross-dataset uniqueness for all evaluation images.
+- Added strict validator blocking `api_generated` images from entering the real-world dataset.
+- Added quarantine process to move all unverified images and APIs generated content out of the real-world manifest.
+- Resolved category definitions within the schema and updated benchmark gate reports with neutral scientific terminology.
+- Updated manuscript to accurately reflect the hybrid real-world and synthetic evaluation context.
+
+## [1.21.0] - 2026-07-30
+
+### Changed
+- Segregated all API-generated images (Robohash) into a new `synthetic_evaluation` dataset context.
+- Hardened provenance and attribution rules for `real_world` evaluation dataset to ensure strict metadata extraction of true creator/license from external API aggregators (e.g., Unsplash/Picsum).
+- Updated dataset JSON schema and manifest definition to record exact data origin `origin_type`, `api_provider`, `original_asset_url`, and `license_verified` tracking.
+- Updated `app.cli_headless dataset status` CLI command to report exact provenance numbers and strict benchmark validation gates.
+
 ## [1.20.1] - 2026-07-30
 
 ### Fixed
@@ -13,10 +34,6 @@
 - Fixed VTracer baseline runner crash when python bindings are missing `__version__`.
 - Cleaned up previous synthetic and simulated images from the evaluation dataset.
 - Improved dataset provenance audit scripting to strictly enforce external verifiable URLs.
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 ## [1.19.9] - 2026-07-30
 
