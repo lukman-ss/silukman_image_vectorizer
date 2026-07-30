@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_compl
 from pathlib import Path
 from app.core.vectorization_service import vectorize_image
 from app.config.settings import VectorizationConfig
+from app.core.result import VectorizationResult
 
 
 def create_dummy_images(num_images, tmp_dir):
@@ -38,7 +39,7 @@ def hash_file(filepath):
 
 
 def run_benchmark(worker_count, input_paths, output_dir, use_processes=False):
-    config = VectorizationConfig(engine="opencv_legacy")
+    config = VectorizationConfig(engine_type="OpenCV Legacy")
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -62,13 +63,13 @@ def run_benchmark(worker_count, input_paths, output_dir, use_processes=False):
                 res = f.result()
                 results.append(res)
             except Exception as e:
-                results.append({"status": "failed", "error": str(e)})
+                results.append(VectorizationResult(run_id="error", status="failed"))
 
     duration = time.time() - start_time
     end_memory = process.memory_info().rss
     mem_diff_mb = (end_memory - start_memory) / (1024 * 1024)
 
-    success_count = sum(1 for r in results if getattr(r, "status", None) == "success")
+    success_count = sum(1 for r in results if r.error_message is None)
     failure_count = len(results) - success_count
     throughput = len(input_paths) / duration if duration > 0 else 0
 

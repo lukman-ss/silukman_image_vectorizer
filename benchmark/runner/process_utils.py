@@ -35,13 +35,13 @@ def run_isolated_process(cmd: List[str], timeout_sec: int) -> Tuple[int, str, st
     }
 
     if os.name == "posix":
-        kwargs["preexec_fn"] = os.setsid
+        kwargs["preexec_fn"] = os.setsid  # type: ignore[assignment] # complex typing/external library
     elif os.name == "nt":
         # CREATE_NEW_PROCESS_GROUP for Windows
         kwargs["creationflags"] = 0x00000200
 
     try:
-        proc = subprocess.Popen(cmd, **kwargs)
+        proc = subprocess.Popen(cmd, **kwargs)  # type: ignore[call-overload] # complex typing/external library
     except FileNotFoundError:
         raise ProcessExecutionError(f"Executable not found: {cmd[0]}")
     except Exception as e:
@@ -60,7 +60,7 @@ def run_isolated_process(cmd: List[str], timeout_sec: int) -> Tuple[int, str, st
         elif os.name == "nt":
             # Send CTRL_BREAK_EVENT
             try:
-                os.kill(proc.pid, signal.CTRL_BREAK_EVENT)
+                os.kill(proc.pid, getattr(signal, "CTRL_BREAK_EVENT", 1))
             except Exception:
                 proc.kill()
         else:

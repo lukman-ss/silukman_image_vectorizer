@@ -1,7 +1,8 @@
 import json
 import math
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import cast
+from typing import Any, Dict, List, DefaultDict
 
 import numpy as np
 import scipy.stats as st
@@ -91,21 +92,21 @@ class BenchmarkAggregator:
     def aggregate(self) -> Dict[str, Any]:
         # Groupings
         # backend -> preset -> category -> metric -> values
-        by_bpc = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
-        by_bp = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
-        by_bpi = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
+        by_bpc: DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, list[Any]]]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
+        by_bp: DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, list[Any]]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+        by_bpi: DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, list[Any]]]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
 
         # Track success/failures
         # backend -> preset -> category -> status_counts
-        status_bpc = defaultdict(
+        status_bpc: DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, Dict[str, int]]]] = defaultdict(
             lambda: defaultdict(
                 lambda: defaultdict(lambda: {"total": 0, "success": 0, "failed": 0, "skipped": 0})
             )
         )
-        status_bp = defaultdict(
+        status_bp: DefaultDict[Any, DefaultDict[Any, Dict[str, int]]] = defaultdict(
             lambda: defaultdict(lambda: {"total": 0, "success": 0, "failed": 0, "skipped": 0})
         )
-        status_bpi = defaultdict(
+        status_bpi: DefaultDict[Any, DefaultDict[Any, DefaultDict[Any, Dict[str, int]]]] = defaultdict(
             lambda: defaultdict(
                 lambda: defaultdict(lambda: {"total": 0, "success": 0, "failed": 0, "skipped": 0})
             )
@@ -149,13 +150,13 @@ class BenchmarkAggregator:
                     by_bp[b][p][m_key].append(m_val)
 
         # Build report
-        report = {"overall": {}, "by_category": {}, "by_image": {}}
+        report: Dict[str, Any] = {"overall": {}, "by_category": {}, "by_image": {}}
 
         # Aggregate overall (Backend + Preset)
         for b, presets in by_bp.items():
             report["overall"][b] = {}
             for p, metrics in presets.items():
-                rep = {"runs": status_bp[b][p], "warnings": [], "metrics": {}}
+                rep: Dict[str, Any] = {"runs": status_bp[b][p], "warnings": [], "metrics": {}}
                 if status_bp[b][p]["success"] < 3:
                     rep["warnings"].append("Low run count for robust statistics (n < 3)")
 
@@ -164,28 +165,28 @@ class BenchmarkAggregator:
                 report["overall"][b][p] = rep
 
         # Aggregate by Category (Backend + Preset + Category)
-        for b, presets in by_bpc.items():
+        for b, presets in by_bpc.items():  # type: ignore[assignment] # complex typing/external library
             if b not in report["by_category"]:
-                report["by_category"][b] = {}
-            for p, categories in presets.items():
-                report["by_category"][b][p] = {}
+                report["by_category"][b] = cast(Any, {})
+            for p, categories in cast(Any, presets).items():
+                report["by_category"][b][p] = cast(Any, {})
                 for c, metrics in categories.items():
-                    rep = {"runs": status_bpc[b][p][c], "metrics": {}}
+                    rep_cat: Dict[str, Any] = {"runs": status_bpc[b][p][c], "metrics": {}}
                     for m_key, vals in metrics.items():
-                        rep["metrics"][m_key] = self._calculate_stats(vals)
-                    report["by_category"][b][p][c] = rep
+                        rep_cat["metrics"][m_key] = self._calculate_stats(vals)
+                    report["by_category"][b][p][c] = cast(Any, rep_cat)
 
         # Aggregate by Image (Backend + Preset + Image)
-        for b, presets in by_bpi.items():
+        for b, presets in by_bpi.items():  # type: ignore[assignment] # complex typing/external library
             if b not in report["by_image"]:
-                report["by_image"][b] = {}
-            for p, images in presets.items():
-                report["by_image"][b][p] = {}
+                report["by_image"][b] = cast(Any, {})
+            for p, images in cast(Any, presets).items():
+                report["by_image"][b][p] = cast(Any, {})
                 for i, metrics in images.items():
-                    rep = {"runs": status_bpi[b][p][i], "metrics": {}}
+                    rep_img: Dict[str, Any] = {"runs": status_bpi[b][p][i], "metrics": {}}
                     for m_key, vals in metrics.items():
-                        rep["metrics"][m_key] = self._calculate_stats(vals)
-                    report["by_image"][b][p][i] = rep
+                        rep_img["metrics"][m_key] = self._calculate_stats(vals)
+                    report["by_image"][b][p][i] = cast(Any, rep_img)
 
         return report
 

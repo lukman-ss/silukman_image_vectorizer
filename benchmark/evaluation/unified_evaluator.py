@@ -44,7 +44,7 @@ class UnifiedQualityEvaluator:
         appended to the metadata. Default values (like 0) are strictly avoided
         for failed computations to prevent silent corruption of benchmark data.
         """
-        record = {
+        record: Dict[str, Any] = {
             "image_id": image_id,
             "preset": preset,
             "quality": {

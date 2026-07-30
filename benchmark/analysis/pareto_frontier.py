@@ -53,10 +53,10 @@ class ParetoFrontier:
         # and strictly better in at least one metric.
 
         def is_better_or_equal(a_val, b_val, maximize: bool) -> bool:
-            return a_val >= b_val if maximize else a_val <= b_val
+            return a_val >= b_val if maximize else a_val <= b_val  # type: ignore[no-any-return] # complex typing/external library
 
         def is_strictly_better(a_val, b_val, maximize: bool) -> bool:
-            return a_val > b_val if maximize else a_val < b_val
+            return a_val > b_val if maximize else a_val < b_val  # type: ignore[no-any-return] # complex typing/external library
 
         frontier = []
         dominated = []

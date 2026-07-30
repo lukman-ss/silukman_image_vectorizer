@@ -85,7 +85,7 @@ def test_corrupted_inputs(scenario_key, corrupted_inputs, tmp_path):
     try:
         result = vectorize_image(str(input_path), str(output_path), config)
         assert result.status == "failed"
-        assert "error" in result.error.lower() or "fail" in result.error.lower() or "unsupported" in result.error.lower() or "could not" in result.error.lower()
+        assert "error" in result.error.lower() or "fail" in result.error.lower() or "unsupported" in result.error.lower() or "could not" in result.error.lower()  # type: ignore[attr-defined] # complex typing/external library
     except InputImageError:
         # Expected behavior: fails safely by raising an explicit InputImageError
         pass

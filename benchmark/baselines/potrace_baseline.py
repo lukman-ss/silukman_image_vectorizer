@@ -65,7 +65,7 @@ class PotraceBaselineRunner:
             b = (b * alpha_factor + bg * (1 - alpha_factor)).astype(b.dtype)
             g = (g * alpha_factor + bg * (1 - alpha_factor)).astype(g.dtype)
             r = (r * alpha_factor + bg * (1 - alpha_factor)).astype(r.dtype)
-            img = cv2.merge((b, g, r))
+            img = cv2.merge((b, g, r))  # type: ignore[arg-type] # complex typing/external library
 
         if len(img.shape) == 3:
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

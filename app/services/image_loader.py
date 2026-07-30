@@ -32,7 +32,7 @@ class ImageInfo:
         for unit in ("B", "KB", "MB", "GB"):
             if size < 1024:
                 return f"{size:.1f} {unit}"
-            size /= 1024
+            size /= 1024  # type: ignore[assignment] # complex typing/external library
         return f"{size:.1f} TB"
 
     @property
@@ -68,7 +68,7 @@ def load_image(file_path: str) -> tuple[Optional[QPixmap], Optional[ImageInfo], 
     if not reader.canRead():
         return None, None, f"Cannot read image: {reader.errorString()}"
 
-    image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()
+    image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()  # type: ignore[call-overload] # complex typing/external library
     if image_format not in SUPPORTED_IMAGE_FORMATS:
         return (
             None,

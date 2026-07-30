@@ -52,10 +52,10 @@ def test_svg_metrics_valid(mock_svg):
     # Path 1: M L L Z = 4 commands
     # Path 2: M C = 2 commands
     assert result["total_path_command_count"] == 6
-    assert result["command_distribution"]["M"] == 2
-    assert result["command_distribution"]["L"] == 2
-    assert result["command_distribution"]["Z"] == 1
-    assert result["command_distribution"]["C"] == 1
+    assert result["command_distribution"]["M"] == 2  # type: ignore[index] # complex typing/external library
+    assert result["command_distribution"]["L"] == 2  # type: ignore[index] # complex typing/external library
+    assert result["command_distribution"]["Z"] == 1  # type: ignore[index] # complex typing/external library
+    assert result["command_distribution"]["C"] == 1  # type: ignore[index] # complex typing/external library
 
     # Unique colors: #ff0000, #000000 (none is ignored)
     assert result["unique_color_count"] == 2
@@ -68,8 +68,8 @@ def test_svg_metrics_valid(mock_svg):
     # Total coords: 14
     assert result["estimated_coordinate_count"] == 14
 
-    assert result["svg_bytes"] > 0
-    assert result["compressed_svg_bytes"] > 0
+    assert result["svg_bytes"] > 0  # type: ignore[operator] # complex typing/external library
+    assert result["compressed_svg_bytes"] > 0  # type: ignore[operator] # complex typing/external library
 
     json.dumps(result)
 

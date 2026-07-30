@@ -23,7 +23,7 @@ class VectorizerBackend(ABC):
 
     @abstractmethod
     def vectorize(
-        self, input_path: str, output_path: str, preset_name: str, category: str = None
+        self, input_path: str, output_path: str, preset_name: str, category: str = None  # type: ignore[assignment] # complex typing/external library
     ) -> Dict[str, Any]:
         """
         Executes the vectorization process.

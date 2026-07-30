@@ -37,8 +37,8 @@ def test_pixel_metrics_different_rgb():
     assert result["mse"] == 10000.0
     assert result["rmse"] == 100.0
     # psnr = 20 * log10(255/100) = 20 * log10(2.55) approx 8.13
-    assert 8.0 < result["psnr"] < 8.2
-    assert abs(result["normalized_mae"] - (100.0 / 255.0)) < 1e-6
+    assert 8.0 < result["psnr"] < 8.2  # type: ignore[operator] # complex typing/external library
+    assert abs(result["normalized_mae"] - (100.0 / 255.0)) < 1e-6  # type: ignore[operator] # complex typing/external library
 
 
 def test_pixel_metrics_rgba_compositing():
@@ -55,7 +55,7 @@ def test_pixel_metrics_rgba_compositing():
     result = calc.calculate(img1, img2)
 
     # Since composited img1 is approx 127, the difference should be near 0
-    assert result["mae"] < 1.0
+    assert result["mae"] < 1.0  # type: ignore[operator] # complex typing/external library
 
 
 def test_pixel_metrics_size_mismatch():

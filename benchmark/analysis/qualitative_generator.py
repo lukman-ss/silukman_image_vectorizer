@@ -14,7 +14,7 @@ class QualitativeGenerator:
         self.raw_data = self._load_data()
 
     def _load_data(self) -> List[Dict[str, Any]]:
-        data = []
+        data = []  # type: ignore[var-annotated] # complex typing/external library
         if not os.path.exists(self.runs_file):
             return data
         with open(self.runs_file, "r", encoding="utf-8") as f:
@@ -35,7 +35,7 @@ class QualitativeGenerator:
         This guarantees we don't cherry-pick only the best looking results.
         """
         # Group by category -> image -> median SSIM for a standard config
-        cat_img_scores = defaultdict(lambda: defaultdict(list))
+        cat_img_scores = defaultdict(lambda: defaultdict(list))  # type: ignore[var-annotated] # complex typing/external library
 
         for r in self.raw_data:
             if (

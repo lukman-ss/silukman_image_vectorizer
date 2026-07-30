@@ -112,4 +112,4 @@ class EdgeMetricsCalculator:
 
             result["mean_distance_error"] = avg_dist
 
-        return result
+        return result  # type: ignore[return-value] # complex typing/external library

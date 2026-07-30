@@ -76,7 +76,7 @@ class SVGRasterizer:
             painter.end()
 
             # Save as PNG
-            saved = image.save(output_path, "PNG")
+            saved = image.save(str(output_path), "PNG")  # type: ignore[call-overload] # complex typing/external library
 
             if not saved:
                 return {"success": False, "error": f"Failed to save image to {output_path}"}

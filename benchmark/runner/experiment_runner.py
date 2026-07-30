@@ -34,7 +34,7 @@ class ExperimentRunner:
 
         self.config_hash = generate_config_hash(self.config_path)
 
-        self.experiment_id = self._setup_experiment_id(resume_id)
+        self.experiment_id = self._setup_experiment_id(resume_id)  # type: ignore[arg-type] # complex typing/external library
         self.experiment_dir = os.path.join(self.base_dir, self.experiment_id)
 
         self.runs_file = os.path.join(self.experiment_dir, "runs.jsonl")

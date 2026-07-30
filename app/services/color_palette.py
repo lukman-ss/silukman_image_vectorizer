@@ -55,12 +55,12 @@ def extract_dominant_colors(file_path: str, max_colors: int = 10) -> list[ColorR
         cv2.KMEANS_PP_CENTERS,
     )
     centers = np.uint8(np.clip(np.rint(centers), 0, 255))
-    counts = np.bincount(labels.flatten(), minlength=len(centers))
+    counts = np.bincount(labels.flatten(), minlength=len(centers))  # type: ignore[arg-type] # complex typing/external library
     order = np.argsort(counts)[::-1]
 
     palette: list[ColorRGB] = []
     for index in order:
-        color = _bgr_to_rgb_tuple(centers[index])
+        color = _bgr_to_rgb_tuple(centers[index])  # type: ignore[index] # complex typing/external library
         if color not in palette:
             palette.append(color)
     return palette[:max_colors]

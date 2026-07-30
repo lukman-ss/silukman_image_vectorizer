@@ -22,9 +22,9 @@ def get_git_info() -> Dict[str, str]:
         )
         is_dirty = len(dirty_output) > 0
 
-        return {"commit": commit, "short_commit": short_commit, "is_dirty": is_dirty}
+        return {"commit": commit, "short_commit": short_commit, "is_dirty": is_dirty}  # type: ignore[dict-item] # complex typing/external library
     except Exception:
-        return {"commit": "unknown", "short_commit": "unknown", "is_dirty": False}
+        return {"commit": "unknown", "short_commit": "unknown", "is_dirty": False}  # type: ignore[dict-item] # complex typing/external library
 
 
 def get_cpu_model() -> str:

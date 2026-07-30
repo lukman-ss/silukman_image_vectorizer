@@ -17,12 +17,12 @@ def test_edge_metrics_identical():
     result = calc.calculate(img1, img2)
 
     # F1 should be 1.0
-    assert abs(result["f1"] - 1.0) < 1e-6
-    assert abs(result["precision"] - 1.0) < 1e-6
-    assert abs(result["recall"] - 1.0) < 1e-6
+    assert abs(result["f1"] - 1.0) < 1e-6  # type: ignore[operator] # complex typing/external library
+    assert abs(result["precision"] - 1.0) < 1e-6  # type: ignore[operator] # complex typing/external library
+    assert abs(result["recall"] - 1.0) < 1e-6  # type: ignore[operator] # complex typing/external library
 
-    if result["parameters"]["compute_distance_transform"]:
-        assert abs(result["mean_distance_error"] - 0.0) < 1e-6
+    if result["parameters"]["compute_distance_transform"]:  # type: ignore[index] # complex typing/external library
+        assert abs(result["mean_distance_error"] - 0.0) < 1e-6  # type: ignore[operator] # complex typing/external library
 
     json.dumps(result)
 
@@ -41,10 +41,10 @@ def test_edge_metrics_shifted():
 
     # Because edges are 1 pixel thin usually, a 2 pixel shift means NO overlap
     # F1 should be very low (close to 0)
-    assert result["f1"] < 0.1
+    assert result["f1"] < 0.1  # type: ignore[operator] # complex typing/external library
 
     # But distance transform should reflect the 2 pixel shift (approx 2.0 to 2.8 distance)
-    assert 1.0 < result["mean_distance_error"] < 3.0
+    assert 1.0 < result["mean_distance_error"] < 3.0  # type: ignore[operator] # complex typing/external library
 
 
 def test_edge_metrics_no_edges():
@@ -57,7 +57,7 @@ def test_edge_metrics_no_edges():
     result = calc.calculate(img1, img2)
 
     # If both have no edges, Precision, Recall and F1 should safely default to 1.0
-    assert abs(result["f1"] - 1.0) < 1e-6
+    assert abs(result["f1"] - 1.0) < 1e-6  # type: ignore[operator] # complex typing/external library
 
-    if result["parameters"]["compute_distance_transform"]:
-        assert abs(result["mean_distance_error"] - 0.0) < 1e-6
+    if result["parameters"]["compute_distance_transform"]:  # type: ignore[index] # complex typing/external library
+        assert abs(result["mean_distance_error"] - 0.0) < 1e-6  # type: ignore[operator] # complex typing/external library

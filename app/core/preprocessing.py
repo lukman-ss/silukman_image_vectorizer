@@ -75,7 +75,7 @@ def apply_palette_replacements(
         )
         new_bgr = np.array([new_color[2], new_color[1], new_color[0]], dtype=np.uint8)
 
-        mask = cv2.inRange(result[:, :, :3], orig_bgr, orig_bgr)
+        mask = cv2.inRange(result[:, :, :3], orig_bgr, orig_bgr)  # type: ignore[arg-type]
         count = int(np.sum(mask > 0))
         if count > 0:
             result[mask > 0, :3] = new_bgr
@@ -155,7 +155,7 @@ def apply_color_quantization(
     center_values = centers.astype(np.int32)
     for start in range(0, len(pixels), chunk_size):
         chunk = pixels[start : start + chunk_size].astype(np.int32)
-        distances = np.sum((chunk[:, None, :] - center_values[None, :, :]) ** 2, axis=2)
+        distances = np.sum((chunk[:, np.newaxis, :] - center_values[np.newaxis, :, :]) ** 2, axis=2)  # type: ignore[index]
         quantized_labels[start : start + chunk_size] = np.argmin(distances, axis=1)
 
     result = img.copy()
@@ -164,16 +164,16 @@ def apply_color_quantization(
     kernel_size = 3 if preserve_edges else 5
     filtered_labels = cv2.medianBlur(label_map, kernel_size)
     invalid_filtered = filtered_labels >= cluster_count
-    filtered_labels[invalid_filtered] = label_map[invalid_filtered]
+    filtered_labels[invalid_filtered] = label_map[invalid_filtered]  # type: ignore[index]
 
     if has_alpha:
-        result[foreground, :3] = centers[filtered_labels[foreground]]
+        result[foreground, :3] = centers[filtered_labels[foreground]]  # type: ignore[index]
     else:
         if result.ndim == 3:
-            result[foreground] = centers[filtered_labels[foreground]]
+            result[foreground] = centers[filtered_labels[foreground]]  # type: ignore[index]
         else:
             gray_centers = np.mean(centers, axis=1).astype(np.uint8)
-            result[foreground] = gray_centers[filtered_labels[foreground]]
+            result[foreground] = gray_centers[filtered_labels[foreground]]  # type: ignore[index]
 
     metadata = {
         "operation": "color_quantization",

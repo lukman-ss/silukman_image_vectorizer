@@ -334,7 +334,7 @@ def _quantize_colors(
     for start in range(0, len(pixels), chunk_size):
         chunk = pixels[start : start + chunk_size].astype(np.int32)
         distances = np.sum(
-            (chunk[:, None, :] - center_values[None, :, :]) ** 2,
+            (chunk[:, np.newaxis, :] - center_values[np.newaxis, :, :]) ** 2,  # type: ignore[index]
             axis=2,
         )
         quantized_labels[start : start + chunk_size] = np.argmin(distances, axis=1)
@@ -346,15 +346,15 @@ def _quantize_colors(
     kernel_size = 3 if preserve_edges else 5
     filtered_labels = cv2.medianBlur(label_map, kernel_size)
     invalid_filtered = filtered_labels >= cluster_count
-    filtered_labels[invalid_filtered] = label_map[invalid_filtered]
-    result[foreground] = centers[filtered_labels[foreground]]
+    filtered_labels[invalid_filtered] = label_map[invalid_filtered]  # type: ignore[index]
+    result[foreground] = centers[filtered_labels[foreground]]  # type: ignore[index]
     return result
 
 
 def _mean_contour_color(
     contour: np.ndarray,
     color_array: np.ndarray | None,
-    image_shape: tuple[int, int],
+    image_shape: tuple[int, ...],
 ) -> tuple[int, int, int]:
     """Return the average RGB color inside a contour."""
     if color_array is None:

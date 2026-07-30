@@ -47,9 +47,9 @@ class SSIMCalculator:
             rgb = img[..., :3]
             alpha = img[..., 3:] / 255.0
             composited = rgb * alpha + self.bg_color * (1.0 - alpha)
-            return np.clip(np.round(composited), 0, 255).astype(np.uint8)
+            return np.clip(np.round(composited), 0, 255).astype(np.uint8)  # type: ignore[no-any-return] # complex typing/external library
         elif img.shape[2] == 3:
-            return np.clip(np.round(img), 0, 255).astype(np.uint8)
+            return np.clip(np.round(img), 0, 255).astype(np.uint8)  # type: ignore[no-any-return] # complex typing/external library
         else:
             raise ValueError(f"Unsupported number of channels: {img.shape[2]}")
 

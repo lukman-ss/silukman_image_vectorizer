@@ -47,7 +47,7 @@ def _validate_batch_file(file_path: str) -> BatchFileValidation:
 
     from app.services.image_loader import SUPPORTED_IMAGE_FORMATS
 
-    image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()
+    image_format = bytes(reader.format()).decode("ascii", errors="ignore").upper()  # type: ignore[call-overload] # complex typing/external library
     if image_format not in SUPPORTED_IMAGE_FORMATS:
         return BatchFileValidation(
             file_path,
@@ -129,7 +129,7 @@ def process_batch(
                     fallback_settings = copy.deepcopy(active_settings)
                     fallback_settings.engine_type = "OpenCV Legacy"
                     try:
-                        backend = OpenCVVectorizerBackend()
+                        backend = OpenCVVectorizerBackend()  # type: ignore[assignment] # complex typing/external library
                         vector_result = backend.vectorize(path, fallback_settings)
                         vector_result.fallback_error = str(vt_error)
                     except Exception as cv_error:
@@ -137,7 +137,7 @@ def process_batch(
                             f"VTracer failed: {str(vt_error)}. Fallback OpenCV Legacy also failed: {str(cv_error)}"
                         ) from cv_error
             else:
-                backend = OpenCVVectorizerBackend()
+                backend = OpenCVVectorizerBackend()  # type: ignore[assignment] # complex typing/external library
                 vector_result = backend.vectorize(path, active_settings)
 
             # 3. Safe filename handling to avoid overwrite

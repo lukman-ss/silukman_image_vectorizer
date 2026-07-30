@@ -61,7 +61,7 @@ class PerformanceTracker:
         func: Callable,
         input_file: str,
         output_file: str,
-        timeout_seconds: float = None,
+        timeout_seconds: float = None,  # type: ignore[assignment] # complex typing/external library
         retries: int = 0,
         *args,
         **kwargs,

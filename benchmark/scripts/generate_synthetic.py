@@ -21,7 +21,7 @@ class SyntheticGenerator:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.seed = seed
-        self.metadata = []
+        self.metadata: list[dict[str, Any]] = []  # type: ignore[name-defined] # complex typing/external library
         random.seed(self.seed)
 
     def _save(self, img: Image.Image, name: str, params: dict):

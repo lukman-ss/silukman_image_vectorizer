@@ -74,18 +74,18 @@ def is_system_dark_mode() -> bool:
         return False
 
     try:
-        color_scheme = application.styleHints().colorScheme()
+        color_scheme = application.styleHints().colorScheme()  # type: ignore[attr-defined] # complex typing/external library
         if color_scheme != Qt.ColorScheme.Unknown:
-            return color_scheme == Qt.ColorScheme.Dark
+            return color_scheme == Qt.ColorScheme.Dark  # type: ignore[no-any-return] # complex typing/external library
     except (AttributeError, RuntimeError):
         pass
 
-    background = application.palette().color(
+    background = application.palette().color(  # type: ignore[attr-defined] # complex typing/external library
         QPalette.ColorGroup.Active,
         QPalette.ColorRole.Window,
     )
     luma = 0.299 * background.red() + 0.587 * background.green() + 0.114 * background.blue()
-    return luma < 128
+    return luma < 128  # type: ignore[no-any-return] # complex typing/external library
 
 
 def normalize_theme_mode(theme_name: str) -> str:

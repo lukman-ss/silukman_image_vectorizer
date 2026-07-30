@@ -17,8 +17,8 @@ def test_histogram_identical():
 
     result = calc.calculate(img1, img2)
 
-    assert abs(result["aggregate_correlation"] - 1.0) < 1e-7
-    assert result["aggregate_bhattacharyya"] < 1e-7
+    assert abs(result["aggregate_correlation"] - 1.0) < 1e-7  # type: ignore[operator] # complex typing/external library
+    assert result["aggregate_bhattacharyya"] < 1e-7  # type: ignore[operator] # complex typing/external library
 
     # Check JSON serializability
     json.dumps(result)
@@ -36,8 +36,8 @@ def test_histogram_different():
     result = calc.calculate(img1, img2)
 
     # They should not correlate well and Bhattacharyya distance should be high (closer to 1.0)
-    assert result["aggregate_correlation"] < 0.5
-    assert result["aggregate_bhattacharyya"] > 0.5
+    assert result["aggregate_correlation"] < 0.5  # type: ignore[operator] # complex typing/external library
+    assert result["aggregate_bhattacharyya"] > 0.5  # type: ignore[operator] # complex typing/external library
 
 
 def test_histogram_spatially_invariant():

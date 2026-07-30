@@ -21,4 +21,5 @@ def test_image_hash(tmp_path):
     img.write_bytes(b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR")
 
     h = calculate_file_hash(str(img))
+    assert h is not None
     assert len(h) == 64  # SHA256 hex digest length

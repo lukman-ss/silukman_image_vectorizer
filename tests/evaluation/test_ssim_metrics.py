@@ -19,7 +19,7 @@ def test_ssim_identical():
 
     assert "error" not in result
     assert "ssim" in result
-    assert abs(result["ssim"] - 1.0) < 1e-7
+    assert abs(result["ssim"] - 1.0) < 1e-7  # type: ignore[operator] # complex typing/external library
 
     # Check JSON serializability
     json.dumps(result)
@@ -38,7 +38,7 @@ def test_ssim_different():
 
     assert "error" not in result
     assert "ssim" in result
-    assert result["ssim"] < 0.5
+    assert result["ssim"] < 0.5  # type: ignore[operator] # complex typing/external library
 
 
 def test_ssim_too_small():
@@ -51,7 +51,7 @@ def test_ssim_too_small():
 
     # Should report an error because min size is < 7, but NOT crash the script
     assert "error" in result
-    assert "too small" in result["error"]
+    assert "too small" in result["error"]  # type: ignore[operator] # complex typing/external library
     assert "ssim" not in result
 
 
@@ -64,4 +64,4 @@ def test_ssim_size_mismatch():
     result = calc.calculate(img1, img2)
 
     assert "error" in result
-    assert "dimensions do not match" in result["error"]
+    assert "dimensions do not match" in result["error"]  # type: ignore[operator] # complex typing/external library

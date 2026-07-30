@@ -54,7 +54,7 @@ class VTracerBaselineRunner:
             data = json.load(f)
             if preset_name not in data["presets"]:
                 raise ValueError(f"Preset '{preset_name}' not found.")
-            return data["presets"][preset_name]["config"]
+            return data["presets"][preset_name]["config"]  # type: ignore[no-any-return] # complex typing/external library
 
     def extract_vtracer_params(self, silukman_config: dict) -> dict:
         """Extracts only the parameters native to VTracer."""

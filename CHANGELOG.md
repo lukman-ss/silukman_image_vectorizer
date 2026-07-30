@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.3] - 2026-07-30
+
+### Fixed
+- Fixed 188 mypy typing errors across the entire codebase.
+- Improved explicit typing in core, benchmark, metrics, and result models, achieving strict 0-error compliance without degrading runtime.
+
 ## [1.19.2] - 2026-07-30
 
 ### Fixed

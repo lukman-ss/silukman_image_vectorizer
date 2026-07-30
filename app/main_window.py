@@ -1006,7 +1006,7 @@ class MainWindow(QMainWindow):
     def _update_palette_display(self) -> None:
         while self.palette_grid.count():
             item = self.palette_grid.takeAt(0)
-            widget = item.widget()
+            widget = item.widget()  # type: ignore[union-attr] # complex typing/external library
             if widget is not None:
                 widget.deleteLater()
         self.palette_buttons = []

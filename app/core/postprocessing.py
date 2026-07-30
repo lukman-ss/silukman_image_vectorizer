@@ -1,6 +1,6 @@
 import re
 import xml.etree.ElementTree as ET
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, cast
 import defusedxml.ElementTree as DET
 
 # Standard SVG Namespace mapping
@@ -14,7 +14,7 @@ def parse_and_validate_svg(svg_data: str) -> ET.Element:
         raise ValueError("SVG data is empty.")
 
     try:
-        root = DET.fromstring(svg_data)
+        root = cast(ET.Element, DET.fromstring(svg_data))
     except (ET.ParseError, DET.ParseError) as e:
         raise ValueError(f"Invalid XML syntax: {e}")
 

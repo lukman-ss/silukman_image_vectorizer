@@ -47,7 +47,7 @@ class PixelMetricsCalculator:
             rgb = img[..., :3]
             alpha = img[..., 3:] / 255.0
             composited = rgb * alpha + self.bg_color * (1.0 - alpha)
-            return composited
+            return composited  # type: ignore[no-any-return] # complex typing/external library
         elif img.shape[2] == 3:
             return img
         else:

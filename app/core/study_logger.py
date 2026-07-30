@@ -23,11 +23,11 @@ class UsabilityStudyLogger:
     def __init__(self, log_dir: str = "study_logs"):
         self.enabled = False
         self.consent_given = False
-        self.participant_id = None
+        self.participant_id: Optional[str] = None
         self.log_dir = Path(log_dir)
-        self.current_task = None
-        self.task_start_time = None
-        self.events = []
+        self.current_task: Optional[str] = None
+        self.task_start_time: Optional[float] = None
+        self.events: list[Dict[str, Any]] = []
 
     def enable(self, consent_given: bool):
         """Enable logging if consent is given. Generates a new pseudonymous ID."""

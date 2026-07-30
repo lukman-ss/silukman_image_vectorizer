@@ -9,19 +9,19 @@ from benchmark.evaluation.performance_metrics import PerformanceTracker
 def dummy_vectorization(delay: float, fail: bool = False, fail_times: int = 0):
     """Simulates a core vectorization function."""
     if not hasattr(dummy_vectorization, "fail_counter"):
-        dummy_vectorization.fail_counter = 0
+        dummy_vectorization.fail_counter = 0  # type: ignore[attr-defined] # complex typing/external library
 
     time.sleep(delay)
 
     if fail:
         raise RuntimeError("Fatal vectorization error")
 
-    if dummy_vectorization.fail_counter < fail_times:
-        dummy_vectorization.fail_counter += 1
+    if dummy_vectorization.fail_counter < fail_times:  # type: ignore[attr-defined] # complex typing/external library
+        dummy_vectorization.fail_counter += 1  # type: ignore[attr-defined] # complex typing/external library
         raise RuntimeError("Transient error")
 
     # Reset for next tests
-    dummy_vectorization.fail_counter = 0
+    dummy_vectorization.fail_counter = 0  # type: ignore[attr-defined] # complex typing/external library
 
 
 @pytest.fixture

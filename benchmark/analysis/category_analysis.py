@@ -31,9 +31,9 @@ class CategoryAnalyzer:
 
         # We need to analyze per backend + preset
         for backend, presets in self.data["by_category"].items():
-            report["backend_category_profiles"][backend] = {}
+            report["backend_category_profiles"][backend] = {}  # type: ignore[index] # complex typing/external library
             for preset, categories in presets.items():
-                cat_profile = {
+                cat_profile: Dict[str, Any] = {
                     "best_quality_category": None,
                     "highest_failure_category": None,
                     "category_metrics": {},
@@ -68,7 +68,7 @@ class CategoryAnalyzer:
                         "complexity_path_count_median": metrics.get("path_count", {}).get("median"),
                     }
 
-                report["backend_category_profiles"][backend][preset] = cat_profile
+                report["backend_category_profiles"][backend][preset] = cat_profile  # type: ignore[index] # complex typing/external library
 
         return report
 
