@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.23.1] - 2026-07-31
+
+### Fixed
+- Fixed an omitted placeholder sentence in `paper/manuscript.md` that still falsely claimed the real-world dataset was entirely empty.
+
 ## [1.23.0] - 2026-07-31
 
 ### Changed

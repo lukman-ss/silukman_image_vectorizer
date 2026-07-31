@@ -26,7 +26,7 @@ Implemented and available for description:
 
 Not yet available for empirical claims:
 
-- A populated benchmark dataset. The current `benchmark/datasets/real_world/dataset_manifest.csv` contains only its header.
+- A partially populated real-world benchmark dataset containing 15 provenance-verified images is available. The dataset has not yet reached the predefined requirement of 60 images across at least five categories with a minimum of ten images per included category.
 - Completed benchmark runs.
 - Final aggregate statistics.
 - Validated cross-platform benchmark results.
