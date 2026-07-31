@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.24.0] - 2026-07-31
+
+### Added
+- Populated the real-world dataset with 45 verified, legally compliant images (CC BY 4.0) from Twemoji across four categories (logos, icons, illustrations, and binary graphics).
+- Satisfied the 60-image strict quota for the real-world evaluation dataset and unlocked the pilot benchmark gate.
+
 ## [1.23.1] - 2026-07-31
 
 ### Fixed
