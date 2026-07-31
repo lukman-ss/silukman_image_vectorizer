@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.23.0] - 2026-07-31
+
+### Changed
+- Enforced exact license suffix matching for all dataset attribution entries to eliminate ambiguity between CC0, CC BY-SA 4.0, Unsplash, and Public Domain.
+- Restructured `validate_dataset.py` to automatically detect attribution mismatches and reject incorrect suffixes.
+- Formally blocked the full benchmark gate strictly on insufficient dataset size (15/60 images).
+- Updated manuscript text to accurately report the 15 proven provenance-verified images, resolving generic filler text.
+
 ## [1.22.1] - 2026-07-31
 
 ### Fixed

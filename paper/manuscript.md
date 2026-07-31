@@ -1660,7 +1660,7 @@ The rasterizer and evaluator are part of the same repository. Bugs in these modu
 
 ### 8.6 Dataset selection
 
-The dataset consists of a combination of verified real-world images and segregated synthetic images. Dataset construction can introduce selection bias through convenience sampling, uneven category sizes, exclusion of difficult images, or ambiguous licensing. Inclusion and exclusion rules must be defined before observing system performance. All synthetically generated images (e.g. from generative APIs) must be strictly segregated from the real-world evaluation dataset to prevent artificial bias.
+The current real-world dataset is partially populated with 15 provenance-verified images but has not yet reached the predefined requirement of 60 images across at least five categories with a minimum of ten images per included category. Dataset construction can introduce selection bias through convenience sampling, uneven category sizes, exclusion of difficult images, or ambiguous licensing. Inclusion and exclusion rules must be defined before observing system performance. All synthetically generated images (e.g. from generative APIs) must be strictly segregated from the real-world evaluation dataset to prevent artificial bias.
 
 Duplicate or near-duplicate images can overweight a visual style. Source hashes detect exact duplicates but not semantic or transformed duplicates. Dataset documentation must report provenance explicitly, validating real authors and strict licensing terms, and use a near-duplicate review procedure.
 
