@@ -56,9 +56,12 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
     valid_categories = {
         "logo",
         "icon",
+        "illustration",
         "flat illustration",
         "complex illustration",
+        "complex_artwork",
         "photograph",
+        "binary_graphic",
         "binary graphic",
         "geometric_shapes",
         "gradients",
@@ -143,6 +146,10 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
                 report["errors"].append(f"Row {row_idx}: RoboHash cannot be used as real-world evaluation data.")
                 has_error = True
 
+            if origin_type == "api_generated" and "real_world" in str(manifest_file):
+                report["errors"].append(f"Row {row_idx}: Origin type api_generated cannot be used in real-world manifest.")
+                has_error = True
+
             if origin_type == "api_generated" and publication_scope == "main_evaluation":
                 report["errors"].append(f"Row {row_idx}: Generated data cannot have publication_scope=main_evaluation.")
                 has_error = True
@@ -213,6 +220,35 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
     return report
 
 
+def check_cross_dataset_duplicates():
+    import glob
+    from typing import Dict, Tuple
+    manifests = glob.glob("benchmark/datasets/*/dataset_manifest.csv")
+    global_hashes: Dict[str, Tuple[str, str]] = {}
+    errors = []
+    
+    for manifest_path in manifests:
+        dataset_name = Path(manifest_path).parent.name
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                sha = row.get("sha256", "").strip()
+                img_id = row.get("image_id", "").strip()
+                if not sha:
+                    continue
+                if sha in global_hashes:
+                    prev_dataset, prev_id = global_hashes[sha]
+                    if prev_dataset != dataset_name:
+                        errors.append(
+                            f"Cross-dataset duplicate hash detected: {sha} "
+                            f"is in both '{prev_dataset}' (id: {prev_id}) "
+                            f"and '{dataset_name}' (id: {img_id})."
+                        )
+                else:
+                    global_hashes[sha] = (dataset_name, img_id)
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description="Dataset Manifest Validator")
     parser.add_argument("--manifest", default="benchmark/datasets/synthetic/dataset_manifest.csv")
@@ -223,8 +259,15 @@ def main():
 
     args = parser.parse_args()
 
+    print("Checking for cross-dataset duplicate hashes...")
+    cross_errors = check_cross_dataset_duplicates()
+    
     print("Validating dataset manifest...")
     report = validate_manifest(args.manifest, args.schema, args.samples)
+
+    if cross_errors:
+        report["errors"].extend(cross_errors)
+        report["summary"]["total_errors"] += len(cross_errors)
 
     if args.format == "json":
         with open(args.output, "w") as f:

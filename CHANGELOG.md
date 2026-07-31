@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.22.1] - 2026-07-31
+
+### Fixed
+- Included omitted dataset migration and validation scripts (`scripts/audit_provenance.py`, `benchmark/scripts/validate_dataset.py`).
+- Included omitted markdown updates (`paper/manuscript.md`, `pre_benchmark_gate.md`, `benchmark/datasets/real_world/README.md`) from v1.22.0 release.
+
 ## [1.22.0] - 2026-07-30
 
 ### Changed

@@ -1,6 +1,6 @@
 # Real-World Evaluation Dataset
 
-**Status: INSUFFICIENT**
+**Status: INSUFFICIENT (15 / 60 images)**
 
 This dataset is intended for the official benchmark evaluation of the Silukman Image Vectorizer. It strictly contains exclusively real-world images from the following categories:
 - Logos

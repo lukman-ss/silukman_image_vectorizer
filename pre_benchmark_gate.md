@@ -8,7 +8,7 @@ All code quality, dataset integrity, and pilot methodological validations must p
 **Status: FULL_BENCHMARK_BLOCKED**
 
 **Blocking Reason(s):**
-* Real-world evaluation dataset has not reached the required size and category coverage (Fake synthetic images have been removed/quarantined following an audit).
+* Real-world evaluation dataset has not reached the required size and category coverage (API-generated images not eligible for real-world evaluation have been removed/quarantined following an audit).
 
 ## Verification History
 

@@ -1,6 +1,5 @@
 import csv
 import json
-import os
 import shutil
 import urllib.request
 import urllib.error
@@ -9,6 +8,20 @@ from pathlib import Path
 def setup_synthetic_dir():
     Path("benchmark/datasets/synthetic_evaluation/images").mkdir(parents=True, exist_ok=True)
     manifest = Path("benchmark/datasets/synthetic_evaluation/dataset_manifest.csv")
+    if not manifest.exists():
+        with open(manifest, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                "image_id", "filename", "category", "source", "source_url", "creator", "license",
+                "license_url", "redistribution_allowed", "attribution", "width", "height", "format",
+                "has_alpha", "sha256", "date_accessed", "notes", "dataset_role", "origin_type",
+                "api_provider", "api_request_url", "original_asset_url", "work_title",
+                "license_verified", "provenance_status", "publication_scope"
+            ])
+
+def setup_quarantine_dir():
+    Path("benchmark/datasets/quarantine/images").mkdir(parents=True, exist_ok=True)
+    manifest = Path("benchmark/datasets/quarantine/dataset_manifest.csv")
     if not manifest.exists():
         with open(manifest, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
@@ -31,7 +44,22 @@ def append_to_synthetic(row):
     ]
     with open(manifest, "a", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
-        # Ensure all fields exist
+        for k in fields:
+            if k not in row:
+                row[k] = ""
+        writer.writerow(row)
+
+def append_to_quarantine(row):
+    manifest = Path("benchmark/datasets/quarantine/dataset_manifest.csv")
+    fields = [
+        "image_id", "filename", "category", "source", "source_url", "creator", "license",
+        "license_url", "redistribution_allowed", "attribution", "width", "height", "format",
+        "has_alpha", "sha256", "date_accessed", "notes", "dataset_role", "origin_type",
+        "api_provider", "api_request_url", "original_asset_url", "work_title",
+        "license_verified", "provenance_status", "publication_scope"
+    ]
+    with open(manifest, "a", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
         for k in fields:
             if k not in row:
                 row[k] = ""
@@ -51,6 +79,7 @@ def fetch_picsum_info(seed_id):
 
 def main():
     setup_synthetic_dir()
+    setup_quarantine_dir()
     
     real_world_manifest = Path("benchmark/datasets/real_world/dataset_manifest.csv")
     with open(real_world_manifest, "r", encoding="utf-8") as f:
@@ -119,6 +148,11 @@ def main():
                 new_real_world.append(row)
             else:
                 print(f"Failed to fetch info for {row['filename']}")
+                src_path = Path("benchmark/datasets/real_world/images") / row["filename"]
+                dst_path = Path("benchmark/datasets/quarantine/images") / row["filename"]
+                if src_path.exists():
+                    shutil.move(str(src_path), str(dst_path))
+                append_to_quarantine(row)
                 
         elif "commons.wikimedia.org" in source_url:
             row["origin_type"] = "external_real_world"
@@ -135,7 +169,12 @@ def main():
             
         else:
             # Other unverified
-            new_real_world.append(row)
+            print(f"Quarantining unverified image: {row['filename']}")
+            src_path = Path("benchmark/datasets/real_world/images") / row["filename"]
+            dst_path = Path("benchmark/datasets/quarantine/images") / row["filename"]
+            if src_path.exists():
+                shutil.move(str(src_path), str(dst_path))
+            append_to_quarantine(row)
 
     # Write back to real_world
     with open(real_world_manifest, "w", encoding="utf-8", newline="") as f:
