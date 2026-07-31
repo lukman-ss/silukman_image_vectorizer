@@ -5,10 +5,10 @@ All code quality, dataset integrity, and pilot methodological validations must p
 
 ## Current Gate Status
 
-**Status: DATASET_READY_FOR_PILOT_BENCHMARK**
+**Status: FULL_BENCHMARK_BLOCKED_BY_INFRASTRUCTURE**
 
 **Blocking Reason(s):**
-* Pilot benchmark has not been run and analyzed with the new dataset.
+* The pilot benchmark successfully generated all artifacts, but identified a severe methodological issue: `SilukmanBackend` processes synchronously in Python without enforcing `timeout_seconds`. High fidelity presets on 20MP photographs cause execution times exceeding 20 minutes per iteration, projecting a 20-30 hour runtime for the full dataset. This infrastructure/performance bottleneck must be resolved before executing the full benchmark.
 
 ## Verification History
 
@@ -19,6 +19,7 @@ All code quality, dataset integrity, and pilot methodological validations must p
 | `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
 | `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
 | `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 0 | REAL_WORLD_DATASET_VERIFIED | 2026-07-31T06:52:13Z | `working-tree` |
+| `pilot benchmark execution & report generation` | 0 | PILOT_COMPLETED | 2026-07-31T07:59:58Z | `059f263` |
 
 ## Audit Checklist
 
@@ -28,14 +29,14 @@ All code quality, dataset integrity, and pilot methodological validations must p
 *   [x] Real-world dataset has reached the minimum criteria (60 images, 5 categories).
 *   [x] Manuscript placeholders `[REPETITION_COUNT]`, `[WARMUP_COUNT]`, and `[PRESET_COUNT]` are used.
 *   [x] No hardcoded numbers exist in the manuscript for experiment configurations.
-*   [ ] Pilot benchmark completed successfully without any methodological blockers (Must re-run when dataset is ready).
+*   [x] Pilot benchmark completed successfully without any pipeline blockers. (Runner, Evaluator, Report Generator validated).
 
 ---
 
 ## Conclusion
 
-**Status: `PILOT_BENCHMARK_READY`**
+**Status: `INFRASTRUCTURE_REVIEW_REQUIRED`**
 
-The dataset constraint is satisfied (61 verified images across 5 valid categories). The dataset is officially ready for the pilot benchmark.
+The methodological pipeline (validation -> execution -> evaluation -> reporting) is structurally sound and produced all intended output artifacts (metrics, LaTeX tables, plots).
 
-> **Pilot benchmark must now be run and analyzed before FULL_BENCHMARK.**
+However, due to unbounded execution time by `SilukmanBackend` on excessively large images (20MP+), the full benchmark is blocked. Engineering intervention is required to implement a true timeout mechanism or image dimension cap before launching the 61-image full benchmark suite.

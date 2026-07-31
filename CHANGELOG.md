@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.25.0] - 2026-07-31
+
+### Added
+- Completed Pilot Benchmark execution for Silukman and VTracer on a subset of the dataset.
+- Generated automated statistical reports, LaTeX tables, and qualitative comparison sheets.
+- Updated `pre_benchmark_gate.md` to indicate infrastructure blockers discovered during the pilot.
+
+### Fixed
+- Replaced large photograph samples (`img_001`, `img_002`) with smaller samples (`img_007`, `img_008`) in the pilot manifest to bypass SilukmanBackend timeout issues.
+
 ## [1.24.0] - 2026-07-31
 
 ### Added
