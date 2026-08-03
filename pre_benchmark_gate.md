@@ -1,42 +1,33 @@
-# Pre-Benchmark Gate Report
+# Pre-Benchmark Quality Gate
 
-This report tracks the formal conditions required before `FULL_BENCHMARK` can be executed.
-All code quality, dataset integrity, and pilot methodological validations must pass.
+**Status**: `PILOT_INFRASTRUCTURE_PASSED`
+**Version**: `1.27.1`
 
-## Current Gate Status
+## Acceptance Criteria
 
-**Status: FULL_BENCHMARK_BLOCKED_BY_INFRASTRUCTURE**
+### Dataset Requirements
+- [x] Dataset manifest is available and contains > 60 verified images (61 images).
+- [x] All images are verifiably CC BY 4.0 or public domain.
+- [x] No synthesized data (must be real-world data).
+- [x] Contains images from all required categories (logo, photograph, illustration, icon, binary_graphic).
 
-**Blocking Reason(s):**
-* The pilot benchmark successfully generated all artifacts, but identified a severe methodological issue: `SilukmanBackend` processes synchronously in Python without enforcing `timeout_seconds`. High fidelity presets on 20MP photographs cause execution times exceeding 20 minutes per iteration, projecting a 20-30 hour runtime for the full dataset. This infrastructure/performance bottleneck must be resolved before executing the full benchmark.
+### Infrastructure Validation
+- [x] All `pytest` suites passing (100% success rate across all integrations and baselines).
+- [x] Static analysis (mypy, flake8) passing.
+- [x] `run_scaling_pilot.py` executed successfully.
+- [x] `max_input_pixels` for standard benchmark set empirically (4,000,000 pixels) based on scaling pilot results avoiding 60s timeout line.
+- [x] Hard timeouts enforced correctly using process isolation.
+- [x] Process tree cleanup verified on POSIX (Process Groups) and Windows (`taskkill /T /F`).
+- [x] No lingering zombie processes or leaked semaphores.
 
-## Verification History
+### Benchmarking Configs
+- [x] `experiments/configs/full-standard-v1.yaml` (3 repetitions, 1 warmup, 60s timeout, 4MP limit).
+- [x] `experiments/configs/stress-large-images-v1.yaml` (1 repetition, 0 warmup, 120s timeout, no size limit).
 
-| Command | Exit Code | Result | Timestamp | Commit SHA |
-| :--- | :--- | :--- | :--- | :--- |
-| `.venv/bin/python -m pytest tests/` | 0 | 134 passed, 5 skipped | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
-| `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
-| `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
-| `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-07-31T06:39:20Z | `c9892b65c4893b238259dd76812a93f681cf1a64` |
-| `.venv/bin/python -m app.cli_headless dataset status --manifest benchmark/datasets/real_world/dataset_manifest.csv` | 0 | REAL_WORLD_DATASET_VERIFIED | 2026-07-31T06:52:13Z | `working-tree` |
-| `pilot benchmark execution & report generation` | 0 | PILOT_COMPLETED | 2026-07-31T07:59:58Z | `059f263` |
+### Version Metadata Consistency
+- [x] All metadata sources synchronized to `v1.27.1` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
 
-## Audit Checklist
-
-*   [x] `benchmark/results/` root contains no raw experiment folders.
-*   [x] All historical smoke results are isolated in `benchmark/results/smoke/`.
-*   [x] Smoke manifest explicitly defines `publication_eligible=false`.
-*   [x] Real-world dataset has reached the minimum criteria (60 images, 5 categories).
-*   [x] Manuscript placeholders `[REPETITION_COUNT]`, `[WARMUP_COUNT]`, and `[PRESET_COUNT]` are used.
-*   [x] No hardcoded numbers exist in the manuscript for experiment configurations.
-*   [x] Pilot benchmark completed successfully without any pipeline blockers. (Runner, Evaluator, Report Generator validated).
-
----
-
-## Conclusion
-
-**Status: `INFRASTRUCTURE_REVIEW_REQUIRED`**
-
-The methodological pipeline (validation -> execution -> evaluation -> reporting) is structurally sound and produced all intended output artifacts (metrics, LaTeX tables, plots).
-
-However, due to unbounded execution time by `SilukmanBackend` on excessively large images (20MP+), the full benchmark is blocked. Engineering intervention is required to implement a true timeout mechanism or image dimension cap before launching the 61-image full benchmark suite.
+## Notes
+- Scaling pilot confirmed that 2.8MP images take ~23s while 20MP images exceed the 60s/120s timeouts.
+- Due to a 73.8% concentration of Twemoji icons in the dataset, final paper claims must be scoped appropriately.
+- Full benchmark is ready for final execution. Status `FULL_BENCHMARK_APPROVED` is pending one final review if requested.

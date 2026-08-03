@@ -29,7 +29,12 @@ def _kill_process_tree(pid: int, grace_seconds: float = 3.0) -> None:
     """
     if os.name != "posix":
         try:
-            os.kill(pid, getattr(signal, "CTRL_BREAK_EVENT", 1))
+            import subprocess
+            subprocess.run(
+                ["taskkill", "/PID", str(pid), "/T", "/F"],
+                capture_output=True,
+                check=False
+            )
         except Exception:
             pass
         return

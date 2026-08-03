@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.1] - 2026-08-03
+
+### Changed
+- Synchronized all academic and package version metadata to `1.27.1`.
+- Implemented robust `taskkill` process isolation timeout logic for Windows.
+
 ## [1.27.0] - 2026-08-03
+*Superseded by v1.27.1 because package and academic metadata in this tag still referenced older versions.*
 
 ### Added
 - Implemented robust `ResourcePolicy` via `max_input_pixels` configuration parameter for experiments.

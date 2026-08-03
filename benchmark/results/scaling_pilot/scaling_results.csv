@@ -1,0 +1,127 @@
+image_id,category,resolution_tier,actual_width,actual_height,total_pixels,backend,preset,status,wall_clock_time_seconds,svg_size_bytes,svg_size_kb,path_count,error
+img_wiki_logo_0,logo,256,256,113,28928,silukman,low_complexity,success,0.7239,13247,12.94,55,
+img_wiki_logo_0,logo,256,256,113,28928,silukman,balanced,success,0.3927,15375,15.01,62,
+img_wiki_logo_0,logo,256,256,113,28928,silukman,high_fidelity,success,0.3417,41609,40.63,133,
+img_wiki_logo_0,logo,256,256,113,28928,vtracer,low_complexity,success,0.1531,7491,7.32,55,
+img_wiki_logo_0,logo,256,256,113,28928,vtracer,balanced,success,0.1512,12797,12.5,64,
+img_wiki_logo_0,logo,256,256,113,28928,vtracer,high_fidelity,success,0.2872,41328,40.36,133,
+img_wiki_logo_0,logo,512,512,227,116224,silukman,low_complexity,success,0.2494,26523,25.9,100,
+img_wiki_logo_0,logo,512,512,227,116224,silukman,balanced,success,0.2641,31163,30.43,112,
+img_wiki_logo_0,logo,512,512,227,116224,silukman,high_fidelity,success,0.3815,60111,58.7,213,
+img_wiki_logo_0,logo,512,512,227,116224,vtracer,low_complexity,success,0.1626,19504,19.05,106,
+img_wiki_logo_0,logo,512,512,227,116224,vtracer,balanced,success,0.1611,24139,23.57,116,
+img_wiki_logo_0,logo,512,512,227,116224,vtracer,high_fidelity,success,0.2375,59750,58.35,213,
+img_wiki_logo_0,logo,1024,1024,455,465920,silukman,low_complexity,success,0.3718,50253,49.08,207,
+img_wiki_logo_0,logo,1024,1024,455,465920,silukman,balanced,success,0.4394,71540,69.86,223,
+img_wiki_logo_0,logo,1024,1024,455,465920,silukman,high_fidelity,success,0.3614,72086,70.4,287,
+img_wiki_logo_0,logo,1024,1024,455,465920,vtracer,low_complexity,success,0.1724,39026,38.11,207,
+img_wiki_logo_0,logo,1024,1024,455,465920,vtracer,balanced,success,0.1761,46021,44.94,213,
+img_wiki_logo_0,logo,1024,1024,455,465920,vtracer,high_fidelity,success,0.2951,71649,69.97,287,
+img_wiki_logo_0,logo,2048,1613,718,1158134,silukman,low_complexity,success,0.4013,53433,52.18,30,
+img_wiki_logo_0,logo,2048,1613,718,1158134,silukman,balanced,success,0.5407,69925,68.29,30,
+img_wiki_logo_0,logo,2048,1613,718,1158134,silukman,high_fidelity,success,0.3563,41785,40.81,31,
+img_wiki_logo_0,logo,2048,1613,718,1158134,vtracer,low_complexity,success,0.1951,28031,27.37,30,
+img_wiki_logo_0,logo,2048,1613,718,1158134,vtracer,balanced,success,0.1952,34493,33.68,30,
+img_wiki_logo_0,logo,2048,1613,718,1158134,vtracer,high_fidelity,success,0.2958,41604,40.63,31,
+img_wiki_logo_0,logo,original,1613,718,1158134,silukman,low_complexity,success,0.3918,53437,52.18,30,
+img_wiki_logo_0,logo,original,1613,718,1158134,silukman,balanced,success,0.5431,69929,68.29,30,
+img_wiki_logo_0,logo,original,1613,718,1158134,silukman,high_fidelity,success,0.3831,41789,40.81,31,
+img_wiki_logo_0,logo,original,1613,718,1158134,vtracer,low_complexity,success,0.1957,28031,27.37,30,
+img_wiki_logo_0,logo,original,1613,718,1158134,vtracer,balanced,success,0.1948,34493,33.68,30,
+img_wiki_logo_0,logo,original,1613,718,1158134,vtracer,high_fidelity,success,0.2845,41604,40.63,31,
+img_001,photograph,256,256,170,43520,silukman,low_complexity,success,0.3377,85456,83.45,36,
+img_001,photograph,256,256,170,43520,silukman,balanced,success,0.8119,216387,211.32,202,
+img_001,photograph,256,256,170,43520,silukman,high_fidelity,success,0.4915,704888,688.37,1703,
+img_001,photograph,256,256,170,43520,vtracer,low_complexity,success,0.3863,72724,71.02,35,
+img_001,photograph,256,256,170,43520,vtracer,balanced,success,0.1944,249556,243.71,227,
+img_001,photograph,256,256,170,43520,vtracer,high_fidelity,success,0.2423,703045,686.57,1703,
+img_001,photograph,512,512,341,174592,silukman,low_complexity,success,0.5425,206685,201.84,94,
+img_001,photograph,512,512,341,174592,silukman,balanced,success,0.7422,953362,931.02,723,
+img_001,photograph,512,512,341,174592,silukman,high_fidelity,success,0.9598,2934525,2865.75,6610,
+img_001,photograph,512,512,341,174592,vtracer,low_complexity,success,0.3627,316061,308.65,122,
+img_001,photograph,512,512,341,174592,vtracer,balanced,success,0.3927,1142522,1115.74,908,
+img_001,photograph,512,512,341,174592,vtracer,high_fidelity,success,0.6238,2927775,2859.16,6610,
+img_001,photograph,1024,1024,683,699392,silukman,low_complexity,success,1.5732,813553,794.49,300,
+img_001,photograph,1024,1024,683,699392,silukman,balanced,success,2.566,3930979,3838.85,2689,
+img_001,photograph,1024,1024,683,699392,silukman,high_fidelity,success,5.5821,12666037,12369.18,26030,
+img_001,photograph,1024,1024,683,699392,vtracer,low_complexity,success,0.9202,1535435,1499.45,414,
+img_001,photograph,1024,1024,683,699392,vtracer,balanced,success,1.7261,4834692,4721.38,3344,
+img_001,photograph,1024,1024,683,699392,vtracer,high_fidelity,success,3.0785,12639865,12343.62,26030,
+img_001,photograph,2048,2048,1367,2799616,silukman,low_complexity,success,2.5517,2892066,2824.28,944,
+img_001,photograph,2048,2048,1367,2799616,silukman,balanced,success,9.0199,15517393,15153.7,9978,
+img_001,photograph,2048,2048,1367,2799616,silukman,high_fidelity,success,22.741,50305431,49126.4,99093,
+img_001,photograph,2048,2048,1367,2799616,vtracer,low_complexity,success,4.5772,4372870,4270.38,1209,
+img_001,photograph,2048,2048,1367,2799616,vtracer,balanced,success,9.7306,19437466,18981.9,12145,
+img_001,photograph,2048,2048,1367,2799616,vtracer,high_fidelity,success,17.8824,50206195,49029.49,99093,
+img_001,photograph,original,5495,3669,20161155,silukman,low_complexity,success,24.3767,23533158,22981.6,7685,
+img_001,photograph,original,5495,3669,20161155,silukman,balanced,success,73.9524,89361982,87267.56,56281,
+img_001,photograph,original,5495,3669,20161155,silukman,high_fidelity,timeout,120.071,0,0.0,0,BackendTimeoutError
+img_001,photograph,original,5495,3669,20161155,vtracer,low_complexity,failed,0.6922,0,0.0,0,"
+thread '<unnamed>' (5588613) panicked at cmdapp/src/python.rs:42:61:
+called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Traceback (most recent call last):
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 87, in _run_code
+    exec(code, run_globals)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 38, in <module>
+    main()
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 27, in main
+    result = run_backend_vectorize(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker.py"", line 59, in run_backend_vectorize
+    return backend.vectorize(input_path, output_path, preset, category=category)  # type: ignore[call-arg]
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/backends.py"", line 76, in vectorize
+    return self.runner.run(input_path, output_path, preset_name)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/vtracer_baseline.py"", line 105, in run
+    performance = self.tracker.measure(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/evaluation/performance_metrics.py"", line 99, in measure
+    func(*args, **kwargs)
+pyo3_runtime.PanicException: called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+"
+img_001,photograph,original,5495,3669,20161155,vtracer,balanced,failed,0.1438,0,0.0,0,"
+thread '<unnamed>' (5588617) panicked at cmdapp/src/python.rs:42:61:
+called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Traceback (most recent call last):
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 87, in _run_code
+    exec(code, run_globals)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 38, in <module>
+    main()
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 27, in main
+    result = run_backend_vectorize(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker.py"", line 59, in run_backend_vectorize
+    return backend.vectorize(input_path, output_path, preset, category=category)  # type: ignore[call-arg]
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/backends.py"", line 76, in vectorize
+    return self.runner.run(input_path, output_path, preset_name)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/vtracer_baseline.py"", line 105, in run
+    performance = self.tracker.measure(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/evaluation/performance_metrics.py"", line 99, in measure
+    func(*args, **kwargs)
+pyo3_runtime.PanicException: called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+"
+img_001,photograph,original,5495,3669,20161155,vtracer,high_fidelity,failed,0.1429,0,0.0,0,"
+thread '<unnamed>' (5588621) panicked at cmdapp/src/python.rs:42:61:
+called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Traceback (most recent call last):
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File ""/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py"", line 87, in _run_code
+    exec(code, run_globals)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 38, in <module>
+    main()
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker_cli.py"", line 27, in main
+    result = run_backend_vectorize(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/runner/_backend_worker.py"", line 59, in run_backend_vectorize
+    return backend.vectorize(input_path, output_path, preset, category=category)  # type: ignore[call-arg]
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/backends.py"", line 76, in vectorize
+    return self.runner.run(input_path, output_path, preset_name)
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/baselines/vtracer_baseline.py"", line 105, in run
+    performance = self.tracker.measure(
+  File ""/Users/tthi/Documents/LUKMAN/silukman_image_vectorizer/benchmark/evaluation/performance_metrics.py"", line 99, in measure
+    func(*args, **kwargs)
+pyo3_runtime.PanicException: called `Result::unwrap()` on an `Err` value: ""No image file found at specified input path""
+"
