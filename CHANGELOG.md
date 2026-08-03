@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.26.0] - 2026-08-03
+
+### Changed
+- Added `experiments/` directory to `.gitignore` to exclude raw benchmark output artifacts from version control.
+
 ## [1.25.0] - 2026-07-31
 
 ### Added
