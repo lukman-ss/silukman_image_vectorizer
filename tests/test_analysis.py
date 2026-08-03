@@ -73,13 +73,13 @@ def test_smoke_results_not_in_root():
     if not os.path.exists(results_root):
         pytest.skip("benchmark/results not found")
 
-    allowed_subdirs = {"smoke", "evaluation"}
+    allowed_subdirs = {"smoke", "evaluation", "diversity", "pilot", "scaling_pilot"}
     for entry in os.listdir(results_root):
         full_path = os.path.join(results_root, entry)
         if os.path.isdir(full_path):
             assert entry in allowed_subdirs, (
                 f"Unexpected experiment directory in root results: {entry}. "
-                "All experiments must be under smoke/ or evaluation/."
+                "All experiments must be under smoke/, evaluation/, diversity/, pilot/, or scaling_pilot/."
             )
 
 

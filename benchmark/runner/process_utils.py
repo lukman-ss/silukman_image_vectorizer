@@ -103,9 +103,9 @@ def run_in_isolated_process(
     fd, result_file = tempfile.mkstemp(suffix=".json", prefix="iso_result_")
     os.close(fd)
 
-    # Use fork on POSIX (no pickling needed); spawn on Windows
-    ctx_name = "fork" if os.name == "posix" else "spawn"
-    ctx = multiprocessing.get_context(ctx_name)
+    # Use spawn everywhere; fork causes segmentation faults on macOS/Linux if
+    # Qt or other native libraries have been initialized in the parent process.
+    ctx = multiprocessing.get_context("spawn")
 
     proc = ctx.Process(
         target=_child_entrypoint,
