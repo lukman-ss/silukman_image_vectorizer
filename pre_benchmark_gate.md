@@ -17,7 +17,7 @@
 
 ### Dataset Requirements
 - [x] Dataset manifest is available and contains > 60 verified images (61 images).
-- [x] All images are verifiably CC BY 4.0 or public domain.
+- [x] All dataset assets have verified redistributable licenses recorded individually in the dataset manifest.
 - [x] No synthesized data (must be real-world data).
 - [x] Contains images from all required categories (logo, photograph, illustration, icon, binary_graphic).
 
