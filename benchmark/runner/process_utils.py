@@ -44,6 +44,17 @@ def _kill_process_tree(pid: int, grace_seconds: float = 3.0) -> None:
     except (ProcessLookupError, PermissionError):
         return
 
+    # CRITICAL SAFEGUARD: Never send SIGTERM to the parent's own process group.
+    # This can happen if the child hasn't executed os.setpgid(0, 0) yet.
+    if pgid == os.getpgid(0):
+        try:
+            os.kill(pid, signal.SIGTERM)
+            time.sleep(0.1)
+            os.kill(pid, signal.SIGKILL)
+        except Exception:
+            pass
+        return
+
     # SIGTERM to whole group
     try:
         os.killpg(pgid, signal.SIGTERM)
@@ -74,6 +85,13 @@ def _kill_process_tree(pid: int, grace_seconds: float = 3.0) -> None:
 
 def _child_entrypoint(result_file: str, module_path: str, callable_name: str, kwargs: Dict[str, Any]) -> None:
     """Target function for the child process."""
+    import os
+    if os.name == "posix":
+        try:
+            os.setpgid(0, 0)
+        except Exception:
+            pass
+
     from benchmark.runner.isolated_worker import worker_main
     worker_main(result_file, module_path, callable_name, kwargs)
 
