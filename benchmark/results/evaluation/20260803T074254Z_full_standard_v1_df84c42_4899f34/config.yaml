@@ -1,0 +1,49 @@
+# Full Standard Benchmark Configuration — v1
+#
+# PURPOSE: Quality, complexity, and runtime comparison on controlled input sizes.
+# This is the authoritative benchmark for main paper results.
+#
+# max_input_pixels: Set to 4MP based on scaling pilot limits (v1.27.2).
+experiment:
+  id: "full_standard_v1"
+  repetitions: 3
+  warmup_runs: 1
+  timeout_seconds: 60
+  parallelism: 1
+  dataset_role: "evaluation"
+  experiment_role: "full_benchmark"
+  publication_eligible: true
+
+dataset:
+  manifest: "benchmark/datasets/real_world/dataset_manifest.csv"
+  categories:
+    - "photograph"
+    - "logo"
+    - "binary_graphic"
+    - "icon"
+    - "illustration"
+
+resource_policy:
+  max_input_pixels: 4000000  # Set based on scaling pilot (2.8MP took ~23s, 20MP timed out)
+  max_width: null
+  max_height: null
+  resize_policy: reject
+  memory_limit_mb: null
+
+backends:
+  - "silukman"
+  - "vtracer"
+
+presets:
+  - "low_complexity"
+  - "balanced"
+  - "high_fidelity"
+
+metrics:
+  - "ssim"
+  - "rmse"
+  - "edge_f1"
+  - "svg_size"
+  - "path_count"
+  - "wall_clock_time"
+  - "peak_memory"

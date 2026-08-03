@@ -1,0 +1,686 @@
+[
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_low_complexity_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_low_complexity_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_low_complexity_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_balanced_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_balanced_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_balanced_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_high_fidelity_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_high_fidelity_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_silukman_high_fidelity_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_low_complexity_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_low_complexity_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_low_complexity_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_balanced_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_balanced_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_balanced_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_high_fidelity_rep1",
+    "repetition": 1,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_high_fidelity_rep2",
+    "repetition": 2,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_001_vtracer_high_fidelity_rep3",
+    "repetition": 3,
+    "image_id": "img_001",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "06ba531b5a3600dfecb4821544d55cd508f7d6db8bb0beaa6ec263746989a71a",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_0.jpg exceeds resource policy limits (5495x3669=20161155px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_low_complexity_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_low_complexity_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_low_complexity_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_balanced_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_balanced_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_balanced_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_high_fidelity_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_high_fidelity_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_silukman_high_fidelity_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "silukman",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_low_complexity_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_low_complexity_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_low_complexity_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "low_complexity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_balanced_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_balanced_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_balanced_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "balanced",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_high_fidelity_rep1",
+    "repetition": 1,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_high_fidelity_rep2",
+    "repetition": 2,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  },
+  {
+    "experiment_id": "20260803T074254Z_full_standard_v1_df84c42_4899f34",
+    "run_id": "img_002_vtracer_high_fidelity_rep3",
+    "repetition": 3,
+    "image_id": "img_002",
+    "category": "photograph",
+    "backend": "vtracer",
+    "preset": "high_fidelity",
+    "config_hash": "4899f34",
+    "input_hash": "20d5158b81edc2d889c17a6923033313048acb90d3f3ec746397dfeddf065814",
+    "output_hash": null,
+    "status": "rejected",
+    "error_type": "ResourcePolicyError",
+    "errors": [
+      "Image photograph_1.jpg exceeds resource policy limits (5184x3308=17148672px). resize_policy=reject."
+    ],
+    "metrics": null,
+    "environment_reference": "manifest.json"
+  }
+]

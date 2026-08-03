@@ -1,0 +1,51 @@
+{
+  "total_runs": 180,
+  "total_failures": 0,
+  "failure_rate_percent": 0.0,
+  "by_class": {
+    "unsupported format": {
+      "count": 0,
+      "examples": []
+    },
+    "decode failure": {
+      "count": 0,
+      "examples": []
+    },
+    "preprocessing failure": {
+      "count": 0,
+      "examples": []
+    },
+    "backend unavailable": {
+      "count": 0,
+      "examples": []
+    },
+    "backend timeout": {
+      "count": 0,
+      "examples": []
+    },
+    "invalid SVG": {
+      "count": 0,
+      "examples": []
+    },
+    "empty SVG": {
+      "count": 0,
+      "examples": []
+    },
+    "rasterization failure": {
+      "count": 0,
+      "examples": []
+    },
+    "metric failure": {
+      "count": 0,
+      "examples": []
+    },
+    "resource exhaustion": {
+      "count": 0,
+      "examples": []
+    },
+    "unknown failure": {
+      "count": 0,
+      "examples": []
+    }
+  }
+}
