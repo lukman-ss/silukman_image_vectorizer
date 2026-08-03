@@ -1,13 +1,13 @@
 # Pre-Benchmark Quality Gate
 
 **Status**: `FULL_BENCHMARK_APPROVED`
-**Version**: `1.27.6`
+**Version**: `1.27.7`
 
 ## Verification History
 
 | Command | Exit Code | Result | Timestamp | Commit SHA |
 | :--- | :--- | :--- | :--- | :--- |
-| 1.27.6  | `2dff955`  | `pytest`, `mypy`, `flake8`, `validate_research_artifacts.py` | All Pass                            | 2026-08-03T15:15:00+07:00 |
+| 1.27.7  | `2dff955`  | `pytest`, `mypy`, `flake8`, `validate_research_artifacts.py` | All Pass                            | 2026-08-03T15:15:00+07:00 |
 | `.venv/bin/python -m pytest tests/` | 0 | 149 passed, 6 skipped | 2026-08-03T15:15:00Z | `2dff955` |
 | `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-08-03T15:15:00Z | `2dff955` |
 | `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-08-03T15:15:00Z | `2dff955` |
@@ -36,7 +36,7 @@
 - [x] `experiments/configs/stress-large-images-v1.yaml` (1 repetition, 0 warmup, 120s timeout, no size limit).
 
 ### Version Metadata Consistency
-- [x] All metadata sources synchronized to `v1.27.6` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
+- [x] All metadata sources synchronized to `v1.27.7` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
 
 ## Notes
 - Scaling pilot confirmed that 2.8MP images take ~23s while 20MP images exceed the 60s/120s timeouts.

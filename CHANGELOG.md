@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.7] - 2026-08-03
+
+### Added
+- Completed full benchmark run and published results including raw runs, subset manifest, and configuration artifacts.
+- Generated and included data-driven manuscript snippets outlining evaluation results.
+
 ## [1.27.6] - 2026-08-03
 
 ### Fixed
