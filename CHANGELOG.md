@@ -2,8 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.27.2] - 2026-08-03
+## [1.27.3] - 2026-08-03
 
+### Fixed
+- Restored pre_benchmark_gate.md audit evidence and synchronized version to 1.27.3.
+- Removed obsolete BLOCKED comments from full-standard-v1.yaml benchmark config.
+
+## [1.27.2] - 2026-08-03
 ### Fixed
 - Identified `max_input_pixels` (4,000,000) for full benchmark based on scaling pilot limits.
 - Validated process isolation timeout at exactly 60 seconds.

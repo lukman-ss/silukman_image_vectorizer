@@ -3,14 +3,7 @@
 # PURPOSE: Quality, complexity, and runtime comparison on controlled input sizes.
 # This is the authoritative benchmark for main paper results.
 #
-# BLOCKED: Do NOT execute until:
-#   1. pre_benchmark_gate.md status = FULL_BENCHMARK_APPROVED
-#   2. scaling pilot completes and informs max_input_pixels value below
-#   3. All acceptance criteria in pre_benchmark_gate.md are checked
-#
-# max_input_pixels: Set from scaling_pilot_report.md findings.
-#   Current value: null (TBD — fill after running benchmark/scripts/run_scaling_pilot.py)
-
+# max_input_pixels: Set to 4MP based on scaling pilot limits (v1.27.2).
 experiment:
   id: "full_standard_v1"
   repetitions: 3
