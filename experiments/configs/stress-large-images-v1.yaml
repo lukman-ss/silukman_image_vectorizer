@@ -1,0 +1,49 @@
+# Stress Benchmark Configuration — v1
+#
+# PURPOSE: Timeout stress tests and resource testing for extremely large images.
+# Excluded from the main "full standard" academic results.
+#
+
+experiment:
+  id: "stress_large_images_v1"
+  repetitions: 1
+  warmup_runs: 0
+  timeout_seconds: 120
+  parallelism: 1
+  dataset_role: "evaluation"
+  experiment_role: "stress_benchmark"
+  publication_eligible: false
+
+dataset:
+  manifest: "benchmark/datasets/real_world/dataset_manifest.csv"
+  categories:
+    - "photograph"
+    - "logo"
+    - "binary_graphic"
+    - "icon"
+    - "illustration"
+
+resource_policy:
+  max_input_pixels: null
+  max_width: null
+  max_height: null
+  resize_policy: reject
+  memory_limit_mb: null
+
+backends:
+  - "silukman"
+  - "vtracer"
+
+presets:
+  - "low_complexity"
+  - "balanced"
+  - "high_fidelity"
+
+metrics:
+  - "ssim"
+  - "rmse"
+  - "edge_f1"
+  - "svg_size"
+  - "path_count"
+  - "wall_clock_time"
+  - "peak_memory"

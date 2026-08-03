@@ -14,7 +14,6 @@ import os
 
 import pytest
 
-from benchmark.runner.config_schema import BenchmarkConfig
 from benchmark.runner.experiment_runner import ExperimentRunner
 
 

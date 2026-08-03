@@ -24,4 +24,14 @@ samples/
 
 
 # Benchmark experiment outputs (raw, not versioned)
-experiments/
+experiments/runs/
+experiments/**/outputs/
+experiments/**/logs/
+
+!experiments/configs/
+!experiments/configs/*.yaml
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/

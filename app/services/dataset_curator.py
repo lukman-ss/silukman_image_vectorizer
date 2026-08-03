@@ -154,11 +154,11 @@ def cmd_status(args: argparse.Namespace) -> int:
     total_images = 0
     real_world_valid = 0
     generated_count = 0
-    
+
     categories: Dict[str, int] = {}
     providers: Dict[str, int] = {}
     licenses: Dict[str, int] = {}
-    
+
     mismatch_licenses = 0
     author_missing = 0
     provenance_verified = 0
@@ -167,7 +167,7 @@ def cmd_status(args: argparse.Namespace) -> int:
         reader = csv.DictReader(f)
         for row in reader:
             total_images += 1
-            
+
             origin = row.get("origin_type", "")
             if origin == "api_generated":
                 generated_count += 1

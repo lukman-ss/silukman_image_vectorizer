@@ -9,10 +9,11 @@
       "name": "Lukman-ss"
     }
   ],
-  "version": "1.27.1",
+  "version": "1.27.2",
   "license": "https://spdx.org/licenses/MIT",
+  "softwareRequirements": "Python >= 3.9",
   "codeRepository": "https://github.com/lukman-ss/silukman_image_vectorizer",
-  "datePublished": "2026-07-29",
+  "datePublished": "2026-08-03",
   "keywords": [
     "raster-to-vector",
     "SVG",

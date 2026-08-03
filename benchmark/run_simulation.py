@@ -6,8 +6,8 @@ from pathlib import Path
 # Add project root to path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from benchmark.runner.config_schema import BenchmarkConfig
-from benchmark.runner.experiment_runner import ExperimentRunner
+from benchmark.runner.config_schema import BenchmarkConfig  # noqa: E402
+from benchmark.runner.experiment_runner import ExperimentRunner  # noqa: E402
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run vectorization benchmark simulation.")

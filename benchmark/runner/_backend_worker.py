@@ -55,5 +55,5 @@ def run_backend_vectorize(
             "error": f"Backend '{backend_name}' is not available on this system.",
             "performance": {"success": False, "error": f"Backend '{backend_name}' not available"},
         }
-
-    return backend.vectorize(input_path, output_path, preset, category=category)  # type: ignore[call-arg]
+    result: Dict[str, Any] = backend.vectorize(input_path, output_path, preset, category=category)  # type: ignore[call-arg]
+    return result

@@ -14,6 +14,7 @@ from benchmark.baselines.backends import (
 from benchmark.evaluation.unified_evaluator import UnifiedQualityEvaluator
 from benchmark.runner.config_schema import BenchmarkConfig
 from benchmark.runner.env_capture import capture_environment, get_git_info
+from app.core.result import calculate_file_hash
 from benchmark.runner.process_utils import run_in_isolated_process
 from app.core.logging import logger
 
@@ -113,7 +114,7 @@ class ExperimentRunner:
         tmp_file.close()
 
         with PILImage.open(input_path) as img:
-            resized = img.resize((new_w, new_h), PILImage.LANCZOS)
+            resized = img.resize((new_w, new_h), getattr(PILImage, "Resampling", PILImage).LANCZOS)
             resized.save(tmp_path)
 
         processed_hash = calculate_file_hash(tmp_path)
@@ -347,7 +348,6 @@ class ExperimentRunner:
 
                             if policy_result is not None:
                                 if policy_result["status"] == "rejected":
-                                    from app.core.result import calculate_file_hash
                                     input_hash = item.get("sha256") or calculate_file_hash(input_path)
                                     base_record = {
                                         "experiment_id": self.experiment_id,
@@ -404,7 +404,6 @@ class ExperimentRunner:
                             is_timeout = iso_result.get("status") == "timeout"
 
                             if is_timeout:
-                                from app.core.result import calculate_file_hash
                                 input_hash = item.get("sha256") or calculate_file_hash(input_path)
                                 base_record = {
                                     "experiment_id": self.experiment_id,
@@ -453,8 +452,6 @@ class ExperimentRunner:
                             is_skipped = str(err1).startswith("Skipped") or str(err2).startswith(
                                 "Skipped"
                             )
-
-                            from app.core.result import calculate_file_hash
 
                             input_hash = item.get("sha256") or calculate_file_hash(input_path)
 

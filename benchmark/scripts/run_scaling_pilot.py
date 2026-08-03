@@ -25,7 +25,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -69,8 +69,8 @@ def _pick_representative_images() -> List[Dict[str, str]]:
             })
 
     # Pick smallest and largest by pixel count
-    candidates.sort(key=lambda r: r["width"] * r["height"])
-    selected = []
+    candidates.sort(key=lambda r: int(r["width"]) * int(r["height"]))
+    selected: List[Dict[str, Any]] = []
     if candidates:
         selected.append(candidates[0])   # smallest
         if len(candidates) > 1:
@@ -90,7 +90,7 @@ def _resize_image(src: str, max_side: Optional[int], dest: str) -> bool:
             ratio = min(max_side / w, max_side / h, 1.0)
             new_w = max(1, int(w * ratio))
             new_h = max(1, int(h * ratio))
-            resized = img.resize((new_w, new_h), PILImage.LANCZOS)
+            resized = img.resize((new_w, new_h), getattr(PILImage, "Resampling", PILImage).LANCZOS)
             resized.save(dest)
             return True
     except Exception as e:
@@ -98,12 +98,13 @@ def _resize_image(src: str, max_side: Optional[int], dest: str) -> bool:
         return False
 
 
-def _get_actual_size(path: str) -> tuple:
+def _get_actual_size(path: str) -> Tuple[int, int]:
     """Return (width, height) of image using PIL."""
     try:
         from PIL import Image as PILImage
         with PILImage.open(path) as img:
-            return img.size
+            size: Tuple[int, int] = img.size
+            return size
     except Exception:
         return (0, 0)
 
@@ -138,7 +139,8 @@ def _run_backend(
         elapsed = time.perf_counter() - start
         if proc.returncode == 0:
             try:
-                result = json.loads(proc.stdout)
+                parsed: Dict[str, Any] = json.loads(proc.stdout)
+                result = parsed
             except json.JSONDecodeError:
                 result = {"performance": {"success": True}}
             result["wall_clock_time_seconds"] = elapsed

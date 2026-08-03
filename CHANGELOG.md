@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.2] - 2026-08-03
+
+### Fixed
+- Identified `max_input_pixels` (4,000,000) for full benchmark based on scaling pilot limits.
+- Validated process isolation timeout at exactly 60 seconds.
+
 ## [1.27.1] - 2026-08-03
 
 ### Changed

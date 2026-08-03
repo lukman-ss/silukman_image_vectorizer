@@ -24,12 +24,14 @@ TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
+
 def sha256(path: str) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
     return h.hexdigest()
+
 
 def load_existing(manifest: str) -> Tuple[Dict[str, str], set]:
     hashes: Dict[str, str] = {}
@@ -44,6 +46,7 @@ def load_existing(manifest: str) -> Tuple[Dict[str, str], set]:
                 filenames.add(row["filename"])
     return hashes, filenames
 
+
 def next_id(manifest: str) -> str:
     n = 0
     if os.path.exists(manifest):
@@ -54,6 +57,7 @@ def next_id(manifest: str) -> str:
                 except (ValueError, IndexError):
                     pass
     return f"real_{n + 1:05d}"
+
 
 def append_row(manifest: str, row: dict) -> None:
     fieldnames = [
@@ -68,6 +72,7 @@ def append_row(manifest: str, row: dict) -> None:
         if write_header:
             w.writeheader()
         w.writerow(row)
+
 
 def add_image(
     src: str,
@@ -98,7 +103,7 @@ def add_image(
     # Assuming these are all JPEGs or PNGs without alpha for these public domain photos
     fmt = Path(src).suffix.lstrip(".").upper()
     has_alpha = False
-    
+
     # Optional width/height extraction (since we removed PIL dependency, we just put "unknown")
     width = 0
     height = 0
@@ -154,6 +159,7 @@ NASA_IMAGES = [
     },
 ]
 
+
 def download_image(url: str, dest: str) -> bool:
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "silukman-dataset-curator/1.0"})
@@ -164,6 +170,7 @@ def download_image(url: str, dest: str) -> bool:
     except Exception as e:
         print(f"  [download-error] {url}: {e}")
         return False
+
 
 def run(dry_run: bool = False) -> None:
     print(f"=== Populating Real-World Dataset (dry_run={dry_run}) ===\n")
@@ -202,6 +209,7 @@ def run(dry_run: bool = False) -> None:
             do_add(tmp, dict(meta, category="photograph"))
 
     print(f"\n=== Done. Added {added} images ===")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Populate real-world evaluation dataset")

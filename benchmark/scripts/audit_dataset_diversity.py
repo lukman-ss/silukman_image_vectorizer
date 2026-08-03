@@ -30,7 +30,7 @@ import csv
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -39,9 +39,10 @@ DEFAULT_MANIFEST = REPO_ROOT / "benchmark" / "datasets" / "real_world" / "datase
 OUTPUT_DIR = REPO_ROOT / "benchmark" / "results" / "diversity"
 
 
-def _load_manifest(path: Path) -> List[Dict[str, str]]:
+def _load_manifest(path: Path) -> List[Dict[str, Any]]:
     with open(path, "r", encoding="utf-8") as f:
-        return list(csv.DictReader(f))
+        reader = csv.DictReader(f)
+        return [dict(r) for r in reader]
 
 
 def _hhi(counts: Counter) -> float:
@@ -248,13 +249,16 @@ def audit(manifest_path: Path) -> None:
         print(f"CSV saved to: {csv_path}")
 
     # Print summary
-    print(f"\n=== Diversity Summary ===")
+    print("\n=== Diversity Summary ===")
     print(f"Total images    : {total}")
     print(f"Dominant source : {dominant_source} ({dominant_count}, {dominant_pct:.1f}%)")
     print(f"Source HHI      : {source_hhi:.3f} (0=diverse, 1=monopoly)")
     print(f"Resolution HHI  : {resolution_hhi:.3f}")
     if twemoji_pct > 60:
-        print(f"\n[!] Twemoji concentration: {twemoji_pct:.1f}% — aggregate results may not generalize.")
+        print(
+            "WARNING: Diversity metrics indicate high concentration in dominant sources. "
+            "Aggregate results may not generalize."
+        )
 
 
 def main() -> None:

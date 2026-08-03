@@ -136,47 +136,59 @@ def validate_manifest(manifest_path: str, schema_path: str, samples_dir: str):
 
             # Strict Provenance Rules
             if license_val.lower() == "cc0" and "by-sa" in license_url.lower():
-                report["errors"].append(f"Row {row_idx}: License mismatch, claimed CC0 but URL is CC BY-SA.")
+                report["errors"].append(
+                    f"Row {row_idx}: License mismatch, claimed CC0 but URL is CC BY-SA.")
                 has_error = True
 
-            if origin_type == "api_delivered_real_world" and creator.lower() in ["unsplash contributors", "unknown", "generic"]:
-                report["errors"].append(f"Row {row_idx}: Generic creator not allowed when API provides real author.")
+            if origin_type == "api_delivered_real_world" and creator.lower(
+            ) in ["unsplash contributors", "unknown", "generic"]:
+                report["errors"].append(
+                    f"Row {row_idx}: Generic creator not allowed when API provides real author.")
                 has_error = True
-            
+
             if "robohash" in source_url.lower() and role == "evaluation" and "real_world" in str(manifest_file):
-                report["errors"].append(f"Row {row_idx}: RoboHash cannot be used as real-world evaluation data.")
+                report["errors"].append(
+                    f"Row {row_idx}: RoboHash cannot be used as real-world evaluation data.")
                 has_error = True
 
             if origin_type == "api_generated" and "real_world" in str(manifest_file):
-                report["errors"].append(f"Row {row_idx}: Origin type api_generated cannot be used in real-world manifest.")
+                report["errors"].append(
+                    f"Row {row_idx}: Origin type api_generated cannot be used in real-world manifest.")
                 has_error = True
 
             if origin_type == "api_generated" and publication_scope == "main_evaluation":
-                report["errors"].append(f"Row {row_idx}: Generated data cannot have publication_scope=main_evaluation.")
+                report["errors"].append(
+                    f"Row {row_idx}: Generated data cannot have publication_scope=main_evaluation.")
                 has_error = True
-            
+
             if origin_type == "api_delivered_real_world" and not original_asset_url:
-                report["errors"].append(f"Row {row_idx}: API delivered asset must include original_asset_url.")
+                report["errors"].append(
+                    f"Row {row_idx}: API delivered asset must include original_asset_url.")
                 has_error = True
-                
+
             if attribution:
                 if "(" in attribution and attribution.endswith(")"):
                     attr_license = attribution.rsplit("(", 1)[1][:-1]
                     if license_val == "CC BY-SA 4.0" and attr_license != "CC BY-SA 4.0":
-                        report["errors"].append(f"Row {row_idx}: Attribution suffix '({attr_license})' does not match license 'CC BY-SA 4.0'.")
+                        report["errors"].append(
+                            f"Row {row_idx}: Attribution suffix '({attr_license})' does not match license 'CC BY-SA 4.0'.")
                         has_error = True
                     elif license_val == "Unsplash License" and attr_license == "CC0":
-                        report["errors"].append(f"Row {row_idx}: Unsplash License cannot have attribution (CC0).")
+                        report["errors"].append(
+                            f"Row {row_idx}: Unsplash License cannot have attribution (CC0).")
                         has_error = True
                     elif license_val == "Public Domain" and attr_license != "Public Domain":
-                        report["errors"].append(f"Row {row_idx}: Public Domain license must have attribution (Public Domain).")
+                        report["errors"].append(
+                            f"Row {row_idx}: Public Domain license must have attribution (Public Domain).")
                         has_error = True
                     elif license_val == "CC0" and attr_license != "CC0":
-                        report["errors"].append(f"Row {row_idx}: CC0 license must have attribution (CC0).")
+                        report["errors"].append(
+                            f"Row {row_idx}: CC0 license must have attribution (CC0).")
                         has_error = True
 
             if role == "evaluation" and (not license_val or not license_url):
-                report["errors"].append(f"Row {row_idx}: Evaluation data must have a valid license and license_url.")
+                report["errors"].append(
+                    f"Row {row_idx}: Evaluation data must have a valid license and license_url.")
                 has_error = True
 
             if category and category not in valid_categories:
@@ -243,7 +255,7 @@ def check_cross_dataset_duplicates():
     manifests = glob.glob("benchmark/datasets/*/dataset_manifest.csv")
     global_hashes: Dict[str, Tuple[str, str]] = {}
     errors = []
-    
+
     for manifest_path in manifests:
         dataset_name = Path(manifest_path).parent.name
         with open(manifest_path, "r", encoding="utf-8") as f:
@@ -278,7 +290,7 @@ def main():
 
     print("Checking for cross-dataset duplicate hashes...")
     cross_errors = check_cross_dataset_duplicates()
-    
+
     print("Validating dataset manifest...")
     report = validate_manifest(args.manifest, args.schema, args.samples)
 

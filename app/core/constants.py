@@ -1,5 +1,6 @@
-APP_VERSION = "1.27.1"
+APP_VERSION = "1.27.2"
 APPLICATION_TITLE = f"Image Vectorizer v{APP_VERSION}"
+APP_NAME = "Silukman Image Vectorizer"
 SIDEBAR_TITLE = "Sidebar"
 PREVIEW_AREA_TITLE = "Preview Area"
 CONTROL_PANEL_TITLE = "Control Panel"

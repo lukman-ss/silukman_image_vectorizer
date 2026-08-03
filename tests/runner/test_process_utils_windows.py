@@ -1,6 +1,6 @@
-import os
 from unittest.mock import patch
 from benchmark.runner.process_utils import _kill_process_tree
+
 
 @patch("subprocess.run")
 @patch("benchmark.runner.process_utils.os.name", "nt")
@@ -13,6 +13,7 @@ def test_windows_kill_process_tree_calls_taskkill(mock_run):
         capture_output=True,
         check=False
     )
+
 
 @patch("subprocess.run")
 @patch("benchmark.runner.process_utils.os.name", "nt")

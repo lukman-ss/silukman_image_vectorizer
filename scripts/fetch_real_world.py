@@ -2,9 +2,10 @@ import os
 import urllib.request
 import subprocess
 
+
 def run():
     os.makedirs("/tmp/silukman_dataset", exist_ok=True)
-    
+
     categories = {
         "photograph": {
             "url": "https://picsum.photos/seed/{id}/256/256",
@@ -44,7 +45,7 @@ def run():
         for i in range(12):
             url = meta["url"].format(id=i)
             tmp_path = f"/tmp/silukman_dataset/{cat}_{i}.{meta['ext']}"
-            
+
             try:
                 print(f"Downloading {url}...")
                 req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -53,7 +54,7 @@ def run():
             except Exception as e:
                 print(f"Failed to download: {e}")
                 continue
-                
+
             cmd = [
                 ".venv/bin/python", "-m", "app.cli_headless", "dataset", "add",
                 "--file", tmp_path,
@@ -63,7 +64,7 @@ def run():
                 "--license", "CC0",
                 "--license-url", "https://creativecommons.org/publicdomain/zero/1.0/"
             ]
-            
+
             res = subprocess.run(cmd, capture_output=True, text=True)
             if res.returncode != 0:
                 print(f"Error adding {cat}_{i}: {res.stderr}")
@@ -72,6 +73,7 @@ def run():
                 added += 1
 
     print(f"\nTotal added: {added}")
+
 
 if __name__ == "__main__":
     run()
