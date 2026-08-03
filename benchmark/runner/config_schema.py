@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional
 
 import yaml
 
@@ -18,6 +18,19 @@ class ExperimentConfig:
     dataset_role: str = "testing_only"
     experiment_role: str = "smoke"
     publication_eligible: bool = False
+
+
+_VALID_EXPERIMENT_ROLES = {"smoke", "pilot", "full_benchmark", "stress_benchmark"}
+_VALID_RESIZE_POLICIES = {"reject", "fit_within", "none"}
+
+
+@dataclass
+class ResourcePolicyConfig:
+    max_input_pixels: Optional[int] = None
+    max_width: Optional[int] = None
+    max_height: Optional[int] = None
+    resize_policy: str = "reject"  # reject | fit_within | none
+    memory_limit_mb: Optional[int] = None
 
 
 @dataclass
@@ -44,6 +57,7 @@ class BenchmarkConfig:
     backends: List[str]
     presets: List[str]
     metrics: List[str]
+    resource_policy: ResourcePolicyConfig = field(default_factory=ResourcePolicyConfig)
 
     @classmethod
     def from_yaml(cls, filepath: str) -> "BenchmarkConfig":
@@ -60,6 +74,9 @@ class BenchmarkConfig:
         exp_data = data.get("experiment", {})
         if "id" not in exp_data:
             raise ConfigError("experiment.id is required.")
+        role = exp_data.get("experiment_role", "smoke")
+        if role not in _VALID_EXPERIMENT_ROLES:
+            raise ConfigError(f"experiment_role must be one of {sorted(_VALID_EXPERIMENT_ROLES)}, got: '{role}'")
         experiment = ExperimentConfig(**exp_data)
 
         # Validate Dataset
@@ -69,13 +86,13 @@ class BenchmarkConfig:
         dataset = DatasetConfig(**ds_data)
 
         # Enforce experiment rules
-        if experiment.experiment_role == "full_benchmark":
+        if experiment.experiment_role in {"full_benchmark", "stress_benchmark"}:
             if experiment.repetitions < 3:
-                raise ConfigError("repetitions must be at least 3 for full_benchmark")
+                raise ConfigError("repetitions must be at least 3 for full_benchmark/stress_benchmark")
             if experiment.warmup_runs < 1:
-                raise ConfigError("warmup_runs must be at least 1 for full_benchmark")
+                raise ConfigError("warmup_runs must be at least 1 for full_benchmark/stress_benchmark")
             if experiment.dataset_role == "testing_only":
-                raise ConfigError("dataset_role cannot be testing_only for full_benchmark")
+                raise ConfigError("dataset_role cannot be testing_only for full_benchmark/stress_benchmark")
 
         if experiment.publication_eligible and "synthetic" in dataset.manifest:
             raise ConfigError("publication_eligible cannot be true with a synthetic dataset manifest")
@@ -93,10 +110,24 @@ class BenchmarkConfig:
         # Validate Metrics
         metrics = data.get("metrics", [])
 
+        # Validate Resource Policy
+        rp_data = data.get("resource_policy", {})
+        resize_policy = rp_data.get("resize_policy", "reject")
+        if resize_policy not in _VALID_RESIZE_POLICIES:
+            raise ConfigError(f"resource_policy.resize_policy must be one of {sorted(_VALID_RESIZE_POLICIES)}, got: '{resize_policy}'")
+        resource_policy = ResourcePolicyConfig(
+            max_input_pixels=rp_data.get("max_input_pixels"),
+            max_width=rp_data.get("max_width"),
+            max_height=rp_data.get("max_height"),
+            resize_policy=resize_policy,
+            memory_limit_mb=rp_data.get("memory_limit_mb"),
+        )
+
         return cls(
             experiment=experiment,
             dataset=dataset,
             backends=backends,
             presets=presets,
             metrics=metrics,
+            resource_policy=resource_policy,
         )

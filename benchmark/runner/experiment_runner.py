@@ -14,6 +14,7 @@ from benchmark.baselines.backends import (
 from benchmark.evaluation.unified_evaluator import UnifiedQualityEvaluator
 from benchmark.runner.config_schema import BenchmarkConfig
 from benchmark.runner.env_capture import capture_environment, get_git_info
+from benchmark.runner.process_utils import run_in_isolated_process
 from app.core.logging import logger
 
 
@@ -48,6 +49,89 @@ class ExperimentRunner:
 
         # Tracking states
         self.completed_runs: Set[str] = set()
+
+    def _check_resource_policy(self, input_path: str) -> Optional[Dict[str, Any]]:
+        """
+        Enforce resource_policy limits before passing an image to a backend.
+
+        Returns:
+            None if the image is within limits.
+            A rejection dict (status="rejected") if the image violates limits
+            and resize_policy="reject".
+            A resize metadata dict (status="resized") if resize_policy="fit_within".
+        """
+        from PIL import Image as PILImage
+        from app.core.result import calculate_file_hash
+
+        rp = self.config.resource_policy
+        if rp.max_input_pixels is None and rp.max_width is None and rp.max_height is None:
+            return None  # no limits configured
+
+        try:
+            with PILImage.open(input_path) as img:
+                w, h = img.size
+        except Exception as e:
+            return {"status": "rejected", "error_type": "ResourcePolicyError",
+                    "error": f"Cannot read image dimensions: {e}"}
+
+        pixels = w * h
+        too_wide = rp.max_width is not None and w > rp.max_width
+        too_tall = rp.max_height is not None and h > rp.max_height
+        too_large = rp.max_input_pixels is not None and pixels > rp.max_input_pixels
+
+        if not (too_wide or too_tall or too_large):
+            return None  # within limits
+
+        if rp.resize_policy == "reject":
+            return {
+                "status": "rejected",
+                "error_type": "ResourcePolicyError",
+                "error": (
+                    f"Image {os.path.basename(input_path)} exceeds resource policy limits "
+                    f"({w}x{h}={pixels}px). resize_policy=reject."
+                ),
+                "original_width": w,
+                "original_height": h,
+                "original_pixels": pixels,
+            }
+
+        if rp.resize_policy == "none":
+            return None  # silently allow even over-limit
+
+        # resize_policy == "fit_within": downscale, log metadata
+        max_px = rp.max_input_pixels or (rp.max_width or w) * (rp.max_height or h)
+        ratio = (max_px / pixels) ** 0.5
+        new_w = int(w * ratio)
+        new_h = int(h * ratio)
+
+        original_hash = calculate_file_hash(input_path)
+
+        import tempfile
+        suffix = os.path.splitext(input_path)[1] or ".png"
+        tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+        tmp_path = tmp_file.name
+        tmp_file.close()
+
+        with PILImage.open(input_path) as img:
+            resized = img.resize((new_w, new_h), PILImage.LANCZOS)
+            resized.save(tmp_path)
+
+        processed_hash = calculate_file_hash(tmp_path)
+
+        return {
+            "status": "resized",
+            "resize_metadata": {
+                "original_width": w,
+                "original_height": h,
+                "processed_width": new_w,
+                "processed_height": new_h,
+                "resize_ratio": round(ratio, 6),
+                "resampling_method": "LANCZOS",
+                "original_hash": original_hash,
+                "processed_hash": processed_hash,
+                "processed_path": tmp_path,
+            },
+        }
 
     def _initialize_backends(self) -> dict:
         registry = {
@@ -153,7 +237,7 @@ class ExperimentRunner:
                         status = data.get("status")
                         if run_id:
                             # Skip adding to completed if retry_failed is true and status was failed
-                            if self.retry_failed and status == "failed":
+                            if self.retry_failed and status in {"failed", "timeout", "rejected"}:
                                 continue
                             self.completed_runs.add(run_id)
                         valid_lines.append(line)
@@ -256,10 +340,112 @@ class ExperimentRunner:
                             output_filename = f"{run_id}.svg"
                             output_path = os.path.join(self.outputs_dir, output_filename)
 
-                            # 1. Run Vectorization
-                            vectorize_result = backend.vectorize(
-                                input_path, output_path, preset, category=category
+                            # 0. Resource policy check
+                            policy_result = self._check_resource_policy(input_path)
+                            effective_input_path = input_path
+                            resize_metadata: Optional[Dict[str, Any]] = None
+
+                            if policy_result is not None:
+                                if policy_result["status"] == "rejected":
+                                    from app.core.result import calculate_file_hash
+                                    input_hash = item.get("sha256") or calculate_file_hash(input_path)
+                                    base_record = {
+                                        "experiment_id": self.experiment_id,
+                                        "run_id": run_id,
+                                        "repetition": rep,
+                                        "image_id": image_id,
+                                        "category": category,
+                                        "backend": b_name,
+                                        "preset": preset,
+                                        "config_hash": self.config_hash,
+                                        "input_hash": input_hash,
+                                        "output_hash": None,
+                                        "status": "rejected",
+                                        "error_type": "ResourcePolicyError",
+                                        "errors": [policy_result.get("error", "")],
+                                        "metrics": None,
+                                        "environment_reference": "manifest.json",
+                                    }
+                                    rf.write(json.dumps(base_record) + "\n")
+                                    rf.flush()
+                                    self.completed_runs.add(run_id)
+                                    completed += 1
+                                    logger.warning(f"Run {run_id} rejected by resource policy", extra={
+                                        "run_id": run_id, "experiment_id": self.experiment_id
+                                    })
+                                    continue
+                                elif policy_result["status"] == "resized":
+                                    resize_metadata = policy_result["resize_metadata"]
+                                    effective_input_path = resize_metadata["processed_path"]  # type: ignore[index]
+
+                            # 1. Run Vectorization in isolated process
+                            iso_result = run_in_isolated_process(
+                                module_path="benchmark.runner._backend_worker",
+                                callable_name="run_backend_vectorize",
+                                kwargs={
+                                    "backend_name": b_name,
+                                    "input_path": effective_input_path,
+                                    "output_path": output_path,
+                                    "preset": preset,
+                                    "category": category,
+                                },
+                                output_path=output_path,
+                                timeout_sec=self.config.experiment.timeout_seconds,
                             )
+
+                            # Clean up temp resized file if used
+                            if resize_metadata and os.path.exists(resize_metadata.get("processed_path", "")):
+                                try:
+                                    os.remove(resize_metadata["processed_path"])
+                                except OSError:
+                                    pass
+
+                            vectorize_result: Dict[str, Any] = {}
+                            is_timeout = iso_result.get("status") == "timeout"
+
+                            if is_timeout:
+                                from app.core.result import calculate_file_hash
+                                input_hash = item.get("sha256") or calculate_file_hash(input_path)
+                                base_record = {
+                                    "experiment_id": self.experiment_id,
+                                    "run_id": run_id,
+                                    "repetition": rep,
+                                    "image_id": image_id,
+                                    "category": category,
+                                    "backend": b_name,
+                                    "preset": preset,
+                                    "config_hash": self.config_hash,
+                                    "input_hash": input_hash,
+                                    "output_hash": None,
+                                    "status": "timeout",
+                                    "error_type": "BackendTimeoutError",
+                                    "errors": [f"Timed out after {iso_result.get('duration_seconds', self.config.experiment.timeout_seconds)}s"],
+                                    "metrics": None,
+                                    "output_valid": False,
+                                    "duration_seconds": iso_result.get("duration_seconds"),
+                                    "environment_reference": "manifest.json",
+                                }
+                                if resize_metadata:
+                                    base_record["resize_metadata"] = resize_metadata
+                                rf.write(json.dumps(base_record) + "\n")
+                                rf.flush()
+                                self.completed_runs.add(run_id)
+                                completed += 1
+                                fail_count += 1
+                                logger.warning(f"Run {run_id} timed out", extra={
+                                    "run_id": run_id, "experiment_id": self.experiment_id,
+                                    "backend": b_name, "preset": preset
+                                })
+                                continue
+
+                            elif iso_result.get("status") == "ok":
+                                vectorize_result = iso_result.get("result", {})
+                            else:
+                                # Isolation-level error (serialization, import, etc.)
+                                vectorize_result = {
+                                    "error": iso_result.get("error", "Unknown isolation error"),
+                                    "performance": {"success": False, "error": iso_result.get("error", "")},
+                                }
 
                             # Check if skipped or failed
                             err1 = vectorize_result.get("error") or ""

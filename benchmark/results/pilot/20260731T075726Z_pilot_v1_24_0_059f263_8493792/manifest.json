@@ -1,0 +1,21 @@
+{
+  "experiment_id": "20260731T075726Z_pilot_v1_24_0_059f263_8493792",
+  "experiment_role": "pilot",
+  "publication_eligible": false,
+  "git_commit": "059f263",
+  "git_tag": "v1.24.0",
+  "timestamp_utc": "2026-07-31T07:57:26Z",
+  "dataset_manifest": "benchmark/datasets/real_world/pilot_manifest.csv",
+  "config": "benchmark/pilot_config.yaml",
+  "backends": ["silukman", "vtracer"],
+  "presets": ["low_complexity", "balanced", "high_fidelity"],
+  "repetitions": 3,
+  "warmup_runs": 1,
+  "timeout_seconds": 60,
+  "total_runs": 180,
+  "backend_stats": {
+    "silukman": {"success": 90, "failed": 0, "skipped": 0},
+    "vtracer": {"success": 90, "failed": 0, "skipped": 0}
+  },
+  "note": "Pilot benchmark validated pipeline infrastructure. Large photograph images (img_001/img_002 20MP) caused timeout on previous runs. Replaced with 256x256 photographs (img_007/img_008) in pilot_manifest.csv. Hard timeout enforcement not yet implemented at time of this run — fixed in v1.27.0."
+}

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.0] - 2026-08-03
+
+### Added
+- Implemented robust `ResourcePolicy` via `max_input_pixels` configuration parameter for experiments.
+- Added scaling pilot script (`run_scaling_pilot.py`) to systematically determine safe resolution boundaries.
+- Added `audit_dataset_diversity.py` script to enforce bias reporting and calculate category/source concentration.
+- Drafted `full-standard-v1.yaml` and `stress-large-images-v1.yaml` benchmark configurations.
+
+### Changed
+- Refactored `ExperimentRunner` to execute all backends inside isolated child processes to enforce hard timeouts without leaking system resources.
+- Runner now automatically kills hanging subprocesses (like those parsing 20MP photographs) and logs them as `timeout` without crashing the overall experiment.
+- Experiment runs resulting in `timeout` are now correctly retried alongside `failed` runs when using `--resume --retry-failed`.
+
 ## [1.26.0] - 2026-08-03
 
 ### Changed

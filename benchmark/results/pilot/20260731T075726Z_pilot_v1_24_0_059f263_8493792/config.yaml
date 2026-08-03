@@ -1,0 +1,26 @@
+experiment:
+  id: "pilot_v1_24_0"
+  repetitions: 3
+  warmup_runs: 1
+  timeout_seconds: 60
+  dataset_role: "evaluation"
+  experiment_role: "pilot"
+  publication_eligible: false
+
+dataset:
+  manifest: "benchmark/datasets/real_world/pilot_manifest.csv"
+  categories:
+    - "photograph"
+    - "logo"
+    - "binary_graphic"
+    - "icon"
+    - "illustration"
+
+backends:
+  - "silukman"
+  - "vtracer"
+
+presets:
+  - "low_complexity"
+  - "balanced"
+  - "high_fidelity"

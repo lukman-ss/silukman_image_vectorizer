@@ -1,0 +1,9 @@
+{
+  "platform": "darwin",
+  "python_version": "3.9.6",
+  "git_commit": "059f263",
+  "git_tag": "v1.24.0",
+  "git_dirty": false,
+  "os": "macOS",
+  "note": "Full system environment captured in original experiment manifest.json (not committed, gitignored)"
+}

@@ -1,5 +1,9 @@
 from typing import Any, Dict, Optional
 
+# NOTE: Timeout enforcement is the responsibility of ExperimentRunner,
+# which calls each backend's vectorize() in an isolated child process.
+# Backends must NOT implement their own timeout mechanisms.
+
 from app.config.preset_manager import PresetManager
 from app.core.vectorization_service import vectorize_image
 from benchmark.baselines.backend_interface import VectorizerBackend

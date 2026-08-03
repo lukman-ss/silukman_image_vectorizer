@@ -1,0 +1,32 @@
+| Backend   | Preset         | Category       |   Success |   SSIM (Median) |
+|:----------|:---------------|:---------------|----------:|----------------:|
+| silukman  | low_complexity | photograph     |         6 |          0.5458 |
+| silukman  | low_complexity | logo           |         6 |          0.8944 |
+| silukman  | low_complexity | binary_graphic |         6 |          0.8059 |
+| silukman  | low_complexity | icon           |         6 |          0.8185 |
+| silukman  | low_complexity | illustration   |         6 |          0.8408 |
+| silukman  | balanced       | photograph     |         6 |          0.6349 |
+| silukman  | balanced       | logo           |         6 |          0.9289 |
+| silukman  | balanced       | binary_graphic |         6 |          0.8279 |
+| silukman  | balanced       | icon           |         6 |          0.8309 |
+| silukman  | balanced       | illustration   |         6 |          0.8546 |
+| silukman  | high_fidelity  | photograph     |         6 |          0.8206 |
+| silukman  | high_fidelity  | logo           |         6 |          0.9632 |
+| silukman  | high_fidelity  | binary_graphic |         6 |          0.8906 |
+| silukman  | high_fidelity  | icon           |         6 |          0.9219 |
+| silukman  | high_fidelity  | illustration   |         6 |          0.8686 |
+| vtracer   | low_complexity | photograph     |         6 |          0.5965 |
+| vtracer   | low_complexity | logo           |         6 |          0.9159 |
+| vtracer   | low_complexity | binary_graphic |         6 |          0.8509 |
+| vtracer   | low_complexity | icon           |         6 |          0.8702 |
+| vtracer   | low_complexity | illustration   |         6 |          0.8539 |
+| vtracer   | balanced       | photograph     |         6 |          0.7008 |
+| vtracer   | balanced       | logo           |         6 |          0.963  |
+| vtracer   | balanced       | binary_graphic |         6 |          0.8576 |
+| vtracer   | balanced       | icon           |         6 |          0.9229 |
+| vtracer   | balanced       | illustration   |         6 |          0.8566 |
+| vtracer   | high_fidelity  | photograph     |         6 |          0.8208 |
+| vtracer   | high_fidelity  | logo           |         6 |          0.9632 |
+| vtracer   | high_fidelity  | binary_graphic |         6 |          0.8906 |
+| vtracer   | high_fidelity  | icon           |         6 |          0.9219 |
+| vtracer   | high_fidelity  | illustration   |         6 |          0.8686 |

@@ -1,0 +1,62 @@
+image_id,category,source_family,creator,width,height,total_pixels,resolution_bucket,license,is_dominant_family
+img_001,photograph,curation_cli,Dietmar Rabich,5495,3669,20161155,very large (>1920×1080),CC BY-SA 4.0,false
+img_002,photograph,curation_cli,Agnes Monkelbaan,5184,3308,17148672,very large (>1920×1080),CC BY-SA 4.0,false
+img_003,photograph,curation_cli,Agnes Monkelbaan,960,552,529920,large (≤1920×1080),CC BY-SA 4.0,false
+img_004,logo,curation_cli,Nvile Media,960,960,921600,large (≤1920×1080),Public Domain,false
+img_005,binary_graphic,curation_cli,إبراهيم الشعيبي,216,217,46872,small (≤256×256),CC BY-SA 4.0,false
+img_006,binary_graphic,curation_cli,Alistair Cockburn,52,52,2704,tiny (≤72×72),CC0,false
+img_007,photograph,curation_cli,Vadim Sherbakov,256,256,65536,small (≤256×256),Unsplash License,false
+img_008,photograph,curation_cli,Josefa Holland-Merten,256,256,65536,small (≤256×256),Unsplash License,false
+img_009,photograph,curation_cli,veeterzy,256,256,65536,small (≤256×256),Unsplash License,false
+img_010,photograph,curation_cli,Talia Cohen,256,256,65536,small (≤256×256),Unsplash License,false
+img_011,photograph,curation_cli,Oscar Keys,256,256,65536,small (≤256×256),Unsplash License,false
+img_012,photograph,curation_cli,Maria Carrasco,256,256,65536,small (≤256×256),Unsplash License,false
+img_013,photograph,curation_cli,Namphuong Van,256,256,65536,small (≤256×256),Unsplash License,false
+img_014,photograph,curation_cli,Josh Felise,256,256,65536,small (≤256×256),Unsplash License,false
+img_015,photograph,curation_cli,Caleb George,256,256,65536,small (≤256×256),Unsplash License,false
+img_wiki_logo_0,logo,Wikimedia Commons,ThomasSparda,0,0,0,tiny (≤72×72),CC BY-SA 4.0,false
+img_twemoji_1,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_2,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_3,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_4,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_5,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_6,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_7,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_8,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_9,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_10,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_11,logo,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_12,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_13,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_14,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_15,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_16,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_17,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_18,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_19,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_20,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_21,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_22,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_23,icon,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_24,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_25,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_26,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_27,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_28,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_29,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_30,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_31,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_32,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_33,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_34,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_35,illustration,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_36,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_37,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_38,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_39,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_40,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_41,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_42,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_43,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_44,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
+img_twemoji_45,binary_graphic,Twemoji,"Twitter, Inc and other contributors",72,72,5184,tiny (≤72×72),CC BY 4.0,true
