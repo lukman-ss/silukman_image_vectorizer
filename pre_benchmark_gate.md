@@ -1,16 +1,16 @@
 # Pre-Benchmark Quality Gate
 
 **Status**: `FULL_BENCHMARK_APPROVED`
-**Version**: `1.27.4`
+**Version**: `1.27.5`
 
 ## Verification History
 
 | Command | Exit Code | Result | Timestamp | Commit SHA |
 | :--- | :--- | :--- | :--- | :--- |
-| `.venv/bin/python -m pytest tests/` | 0 | 146 passed, 6 skipped | 2026-08-03T07:28:37Z | `80b9f04` |
-| `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-08-03T07:28:37Z | `80b9f04` |
-| `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-08-03T07:28:37Z | `80b9f04` |
-| `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-08-03T07:28:37Z | `80b9f04` |
+| `.venv/bin/python -m pytest tests/` | 0 | 149 passed, 6 skipped | 2026-08-03T15:03:00Z | `de3f60a` |
+| `.venv/bin/python -m mypy benchmark app tests scripts paper --ignore-missing-imports` | 0 | 0 errors | 2026-08-03T15:03:00Z | `de3f60a` |
+| `.venv/bin/python -m flake8 benchmark app tests scripts paper` | 0 | 0 errors | 2026-08-03T15:03:00Z | `de3f60a` |
+| `.venv/bin/python scripts/validate_research_artifacts.py` | 0 | All validated | 2026-08-03T15:03:00Z | `de3f60a` |
 | `scaling pilot execution` | 0 | PILOT_COMPLETED | 2026-08-03T07:18:00Z | `80b9f04` |
 
 ## Acceptance Criteria
@@ -35,7 +35,7 @@
 - [x] `experiments/configs/stress-large-images-v1.yaml` (1 repetition, 0 warmup, 120s timeout, no size limit).
 
 ### Version Metadata Consistency
-- [x] All metadata sources synchronized to `v1.27.4` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
+- [x] All metadata sources synchronized to `v1.27.5` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
 
 ## Notes
 - Scaling pilot confirmed that 2.8MP images take ~23s while 20MP images exceed the 60s/120s timeouts.

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.5] - 2026-08-03
+
+### Fixed
+- Enforced strict validation for `parallelism >= 1` in `config_schema.py` and added tests.
+- Fixed dataset license statement in `pre_benchmark_gate.md` to reflect manifest-level granularity.
+- Updated Quality Gate Verification History with the latest tested commit SHA.
+
+
 ## [1.27.4] - 2026-08-03
 
 ### Fixed
