@@ -15,6 +15,7 @@ class ExperimentConfig:
     repetitions: int = 1
     warmup_runs: int = 1
     timeout_seconds: int = 60
+    parallelism: int = 1
     dataset_role: str = "testing_only"
     experiment_role: str = "smoke"
     publication_eligible: bool = False
