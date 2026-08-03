@@ -1,30 +1,27 @@
 ## Generated Manuscript Snippets
 
 ### Dataset and Success Rate
-The evaluation dataset consisted of 10 unique images.
-Across all configured conditions, the overall execution success rate was 100.0%.
+The evaluation dataset consisted of 61 unique images.
+Across all configured conditions, the overall execution success rate was 96.7%.
 
 ### Baseline Ranking (Factual)
 Based on the primary quality metric, the evaluated backends achieved the following mean scores:
-- silukman: mean = 0.8793, median = 0.9539 (n=20)
+- vtracer: mean = 0.8550, median = 0.8920 (n=531)
+- silukman: mean = 0.8307, median = 0.8601 (n=531)
 
 ### Preset Trade-offs (Silukman)
 For the Silukman backend, the presets yielded the following measurements:
-- balanced: quality mean = 0.9053, runtime mean = 0.0613s
-- low_complexity: quality mean = 0.8533, runtime mean = 0.0504s
+- low_complexity: quality mean = 0.7713, runtime mean = 0.0712s
+- balanced: quality mean = 0.8218, runtime mean = 0.1068s
+- high_fidelity: quality mean = 0.8990, runtime mean = 0.0950s
 
 ### Category Results
 Performance observed across dataset categories:
-- geometric_shapes: mean quality = 0.9772, median = 0.9772
-- flat_logo: mean quality = 0.9868, median = 0.9868
-- gradients: mean quality = 0.9075, median = 0.9075
-- thin_lines: mean quality = 0.5251, median = 0.5251
-- curves: mean quality = 0.9197, median = 0.9197
-- pseudo_text: mean quality = 0.8116, median = 0.8116
-- transparent_shapes: mean quality = 0.7735, median = 0.7735
-- noisy_edges: mean quality = 0.9586, median = 0.9586
-- overlapping_objects: mean quality = 0.9602, median = 0.9602
-- monochrome_silhouette: mean quality = 0.9724, median = 0.9724
+- photograph: mean quality = 0.7225, median = 0.7549
+- logo: mean quality = 0.9035, median = 0.9185
+- binary_graphic: mean quality = 0.8805, median = 0.8927
+- icon: mean quality = 0.8381, median = 0.8643
+- illustration: mean quality = 0.8445, median = 0.8696
 
 ### Table & Figure References
 - **Table 10**: Summary of dataset dimensions, categories, and execution status.
