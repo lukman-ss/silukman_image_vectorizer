@@ -1,7 +1,7 @@
 # Pre-Benchmark Quality Gate
 
 **Status**: `FULL_BENCHMARK_APPROVED`
-**Version**: `1.27.3`
+**Version**: `1.27.4`
 
 ## Verification History
 
@@ -35,7 +35,7 @@
 - [x] `experiments/configs/stress-large-images-v1.yaml` (1 repetition, 0 warmup, 120s timeout, no size limit).
 
 ### Version Metadata Consistency
-- [x] All metadata sources synchronized to `v1.27.3` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
+- [x] All metadata sources synchronized to `v1.27.4` (pyproject.toml, CITATION.cff, codemeta.json, .zenodo.json, app constants).
 
 ## Notes
 - Scaling pilot confirmed that 2.8MP images take ~23s while 20MP images exceed the 60s/120s timeouts.

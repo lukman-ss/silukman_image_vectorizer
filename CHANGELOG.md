@@ -2,8 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.27.3] - 2026-08-03
+## [1.27.4] - 2026-08-03
 
+### Fixed
+- Added missing `parallelism` schema validation to `ExperimentConfig` in `benchmark/runner/config_schema.py`.
+
+## [1.27.3] - 2026-08-03
 ### Fixed
 - Restored pre_benchmark_gate.md audit evidence and synchronized version to 1.27.3.
 - Removed obsolete BLOCKED comments from full-standard-v1.yaml benchmark config.
