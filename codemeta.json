@@ -9,7 +9,7 @@
       "name": "Lukman-ss"
     }
   ],
-  "version": "1.27.5",
+  "version": "1.27.6",
   "license": "https://spdx.org/licenses/MIT",
   "softwareRequirements": "Python >= 3.9",
   "codeRepository": "https://github.com/lukman-ss/silukman_image_vectorizer",

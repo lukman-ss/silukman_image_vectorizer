@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.27.6] - 2026-08-03
+
+### Fixed
+- Pushed missing commit for `parallelism >= 1` schema validation in `config_schema.py` which was inadvertently excluded from `v1.27.5`.
+- Re-ran and verified all quality gates.
+
 ## [1.27.5] - 2026-08-03
 
 ### Fixed
