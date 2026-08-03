@@ -79,6 +79,8 @@ class BenchmarkConfig:
         if role not in _VALID_EXPERIMENT_ROLES:
             raise ConfigError(f"experiment_role must be one of {sorted(_VALID_EXPERIMENT_ROLES)}, got: '{role}'")
         experiment = ExperimentConfig(**exp_data)
+        if experiment.parallelism < 1:
+            raise ConfigError("parallelism must be at least 1")
 
         # Validate Dataset
         ds_data = data.get("dataset", {})
