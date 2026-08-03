@@ -22,3 +22,6 @@ samples/
 *.tar.gz
 *.7z
 
+
+# Benchmark experiment outputs (raw, not versioned)
+experiments/
